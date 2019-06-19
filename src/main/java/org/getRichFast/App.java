@@ -1,4 +1,4 @@
-package org.getRichFast;
+git package org.getRichFast;
 
 /**
  * Hello world!
