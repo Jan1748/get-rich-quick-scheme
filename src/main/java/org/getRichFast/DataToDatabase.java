@@ -22,5 +22,4 @@ public class DataToDatabase {
       System.out.println(" ");
     }
   }
-
 }
