@@ -15,19 +15,17 @@ public class GetQuandlData {
 
   private String quandlApiKey;
 
-  public void downloadDataFromQuandl(String quandlCode) {
+  private ArrayList<String> downloadDataFromQuandl(String quandlCode) {
+    ArrayList<String> content = new ArrayList<>();
     try {
       String url =
           "https://www.quandl.com/api/v3/datasets/" + quandlCode + ".csv?api_key=" + quandlApiKey;
       URL apiUrl = new URL(url);
-      //Desktop.getDesktop().browse(apiUri);
       HttpURLConnection apiConnection = (HttpURLConnection) apiUrl.openConnection();
       apiConnection.setRequestMethod("GET");
-
       int status = apiConnection.getResponseCode();
       BufferedReader in = new BufferedReader(new InputStreamReader(apiConnection.getInputStream()));
       String inputline;
-      ArrayList<String> content = new ArrayList<>();
       while ((inputline = in.readLine()) != null) {
         content.add(inputline);
       }
@@ -36,5 +34,10 @@ public class GetQuandlData {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    return content;
+  }
+
+  public ArrayList<String> getNotParsedDataArraylist(String quandlCode) {
+    return downloadDataFromQuandl(quandlCode);
   }
 }

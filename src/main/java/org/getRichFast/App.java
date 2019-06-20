@@ -6,8 +6,9 @@ package org.getRichFast;
 public class App {
 
   public static void main(String[] args) {
-    String userName = System.getProperty("user.name");
-    GetQuandlData getQuandlData = new GetQuandlData("4nAVrexhFHXrX1TuYNsF");
-    getQuandlData.downloadDataFromQuandl("FSE/WAC_X");
+      String userName = System.getProperty("user.name");
+      GetQuandlData getQuandlData = new GetQuandlData("4nAVrexhFHXrX1TuYNsF");
+      getQuandlData.getNotParsedDataArraylist("FSE/WAC_X");
+
   }
 }
