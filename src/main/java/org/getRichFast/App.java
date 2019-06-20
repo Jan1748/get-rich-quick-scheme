@@ -9,6 +9,5 @@ public class App {
     String userName = System.getProperty("user.name");
     DataToDatabase data = new DataToDatabase();
     data.getAndParseData();
-
   }
 }
