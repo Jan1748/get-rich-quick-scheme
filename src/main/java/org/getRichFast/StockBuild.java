@@ -3,16 +3,18 @@ package org.getRichFast;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class StokeBuild {
-  private String name;
+//stock
+
+public class StockBuild {
+  private String symbol;
   private Date date;
   private BigDecimal open;
   private BigDecimal close;
   private BigDecimal low;
   private BigDecimal high;
 
-  StokeBuild(String name, Date date, BigDecimal open, BigDecimal close, BigDecimal low, BigDecimal high){
-    this.name = name;
+  StockBuild(String symbol, Date date, BigDecimal open, BigDecimal close, BigDecimal low, BigDecimal high){
+    this.symbol = symbol;
     this.date = date;
     this.open = open;
     this.close = close;
@@ -20,8 +22,8 @@ public class StokeBuild {
     this.high = high;
   }
 
-  public String getName() {
-    return name;
+  public String getSymbol() {
+    return symbol;
   }
 
   public Date getDate() {
