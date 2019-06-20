@@ -13,6 +13,7 @@ public class StockBuild {
   private BigDecimal low;
   private BigDecimal high;
 
+  //FIXME: visibility modifier
   StockBuild(String symbol, Date date, BigDecimal open, BigDecimal close, BigDecimal low, BigDecimal high){
     this.symbol = symbol;
     this.date = date;

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class GetQuandlData {
 
+  //FIXME: visibility modifier
   GetQuandlData(String quandlApiKey) {
     this.quandlApiKey = quandlApiKey;
   }
@@ -17,6 +18,7 @@ public class GetQuandlData {
 
   private ArrayList<String> downloadDataFromQuandl(String quandlCode) {
     ArrayList<String> content = new ArrayList<>();
+    //FIXME: improve error handling and logging output
     try {
       String url =
           "https://www.quandl.com/api/v3/datasets/" + quandlCode + ".csv?api_key=" + quandlApiKey;

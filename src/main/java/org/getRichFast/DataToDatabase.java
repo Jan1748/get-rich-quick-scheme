@@ -2,6 +2,7 @@ package org.getRichFast;
 
 import java.util.ArrayList;
 
+//FIXME: Classes should not be verbs/functions but objects
 public class DataToDatabase {
 
   public void getAndParseData() {
@@ -15,6 +16,7 @@ public class DataToDatabase {
     testOutput(parsedData);
   }
 
+  //FIXME: make this a unit test
   private void testOutput(ArrayList<String[]> data) {
     String[] names = data.get(0);
     for (int i = 1; i < data.size(); i++) {
