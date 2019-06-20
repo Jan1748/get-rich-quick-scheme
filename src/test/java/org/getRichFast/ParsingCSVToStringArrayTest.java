@@ -1,14 +1,14 @@
 package org.getRichFast;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class ParsingCSVToStringArrayTest {
-  @Test
+
+  //@ParameterizedTest(name = {""})
+  @CsvFileSource(resources = "C:/Users/lteschner/Downloads/Test1.csv")
   public void testParsing(){
     ParsingCSVToStringArray parsingCSVToStringArray = new ParsingCSVToStringArray();
-    String[] expactet = new String[]{"Gaming", "Games"};
-    //assertEquals(expactet, parsingCSVToStringArray.ParsingStringLine("Gaming, Games", 1));
+    
   }
 }
