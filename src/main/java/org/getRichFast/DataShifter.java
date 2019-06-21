@@ -16,7 +16,7 @@ public class DataShifter {
     ArrayList<String[]> csvParsedData = csvParser.getDataArrayList(data);
     StockBuildFiller stockBuildFiller = new StockBuildFiller();
     StockBuild[] stock = stockBuildFiller.fillStockBuild(csvParsedData, quandlCode);
-    for(int x = 0; x < stock.length; x++) {
+    for (int x = 0; x < stock.length; x++) {
       System.out.println(stock[x].toString());
     }
 

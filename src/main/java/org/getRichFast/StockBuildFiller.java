@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class StockBuildFiller {
 
@@ -18,15 +17,16 @@ public class StockBuildFiller {
     BigDecimal[] stockBuildBigDecimal = new BigDecimal[data.get(0).length];
     Calendar date = null;
 
-    for(int x = 1; x < data.size(); x++) {
-      for(int y = 0; y <= 4; y++) {
+    for (int x = 1; x < data.size(); x++) {
+      for (int y = 0; y <= 4; y++) {
         if (y == 0) {
           date = lineParser.parseToCalendar(data.get(x)[y]);
         } else {
           stockBuildBigDecimal[y - 1] = lineParser.parseToBigDecimal(data.get(x)[y]);
         }
       }
-      StockBuild stockBuild = new StockBuild(name, date, stockBuildBigDecimal[0], stockBuildBigDecimal[1], stockBuildBigDecimal[2], stockBuildBigDecimal[3]);
+      StockBuild stockBuild = new StockBuild(name, date, stockBuildBigDecimal[0],
+          stockBuildBigDecimal[1], stockBuildBigDecimal[2], stockBuildBigDecimal[3]);
       stock[x - 1] = stockBuild;
       System.out.println("\tstockBuild " + x + " filled");
     }
