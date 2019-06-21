@@ -1,15 +1,16 @@
 package org.getRichFast;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Menu {
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, ParseException {
     menu(args);
   }
 
-  private static void menu(String[] args) throws IOException {
+  private static void menu(String[] args) throws IOException, ParseException {
     String menuChoice;
     Scanner scanner = new Scanner(System.in);
     DataShifter data = new DataShifter();
@@ -17,17 +18,17 @@ public class Menu {
     System.out.println("1: Start download and parsing (Please enter your choice)");
     menuChoice = scanner.nextLine();
     System.out.println(menuChoice);
-    if(menuChoice.equals("1")){
+    if (menuChoice.equals("1")) {
       System.out.println("Enter your api-code:");
       String apiCode = scanner.nextLine();
       System.out.println("Enter the Quandl-code:");
       String quandlCode = scanner.nextLine();
-      System.out.println("Start downloading Quandl data: " + apiCode + "with api-code: " + apiCode + "? (y/n)");
-      if(scanner.nextLine().equals("y")){
+      System.out.println(
+          "Start downloading Quandl data: " + apiCode + "with api-code: " + apiCode + "? (y/n)");
+      if (scanner.nextLine().equals("y")) {
         data.getAndParseData(args);
       }
-    }
-    else {
+    } else {
       System.out.println("This is not a option");
     }
   }

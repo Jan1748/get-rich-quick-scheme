@@ -18,7 +18,6 @@ public class QuandlDownloader {
   private ArrayList<String> downloadDataFromQuandl(String quandlCode) throws IOException {
     System.out.println("Start download data");
     ArrayList<String> content = new ArrayList<>();
-    //FIXME: improve error handling and logging output
     String url =
         "https://www.quandl.com/api/v3/datasets/" + quandlCode + ".csv?api_key=" + quandlApiKey;
     URL apiUrl = new URL(url);

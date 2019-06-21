@@ -1,6 +1,7 @@
 package org.getRichFast;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 //stock
@@ -8,13 +9,13 @@ import java.util.Date;
 public class StockBuild {
 
   private String symbol;
-  private Date date;
+  private Calendar date;
   private BigDecimal open;
   private BigDecimal close;
   private BigDecimal low;
   private BigDecimal high;
 
-  public StockBuild(String symbol, Date date, BigDecimal open, BigDecimal close, BigDecimal low,
+  public StockBuild(String symbol, Calendar date, BigDecimal open, BigDecimal close, BigDecimal low,
       BigDecimal high) {
     this.symbol = symbol;
     this.date = date;
@@ -28,7 +29,7 @@ public class StockBuild {
     return symbol;
   }
 
-  public Date getDate() {
+  public Calendar getDate() {
     return date;
   }
 
@@ -46,5 +47,16 @@ public class StockBuild {
 
   public BigDecimal getHigh() {
     return high;
+  }
+
+  @Override
+  public String toString() {
+    return "StockBuild{" +
+        "symbol='" + symbol + '\'' +
+        ", open=" + open +
+        ", close=" + close +
+        ", low=" + low +
+        ", high=" + high +
+        '}';
   }
 }

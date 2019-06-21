@@ -15,7 +15,7 @@ public class CsvParser {
     for (int i = 0; i < lines.size(); i++) {
       data.add(splitingStringLine(lines.get(i)));
     }
-    System.out.println("\tParsing successfully completed");
+    System.out.println("\tCsv parsing successfully completed");
     return data;
   }
 }
