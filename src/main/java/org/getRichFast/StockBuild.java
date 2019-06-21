@@ -6,6 +6,7 @@ import java.util.Date;
 //stock
 
 public class StockBuild {
+
   private String symbol;
   private Date date;
   private BigDecimal open;
@@ -13,8 +14,8 @@ public class StockBuild {
   private BigDecimal low;
   private BigDecimal high;
 
-  //FIXME: visibility modifier
-  StockBuild(String symbol, Date date, BigDecimal open, BigDecimal close, BigDecimal low, BigDecimal high){
+  public StockBuild(String symbol, Date date, BigDecimal open, BigDecimal close, BigDecimal low,
+      BigDecimal high) {
     this.symbol = symbol;
     this.date = date;
     this.open = open;
