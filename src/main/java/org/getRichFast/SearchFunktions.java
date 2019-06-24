@@ -9,5 +9,11 @@ public class SearchFunktions {
     }
     return false;
   }
+  public Boolean exactCalendarDate(Calendar input, Calendar search){
+    if(input.equals(search)){
+      return true;
+    }
+    return false;
+  }
 
 }

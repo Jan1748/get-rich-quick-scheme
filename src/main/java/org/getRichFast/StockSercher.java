@@ -14,30 +14,51 @@ public class StockSercher {
     this.stocks = stocks;
   }
 
-  public void serchInStocks() {
+  public ArrayList<StockBuild> serchInStocks() {
     System.out.println("What would you serch? Date or Open or High or Low or Close.");
     //TODO: Scanner abfrage
     String serch = "Date";
     switch (serch) {
       case "Date":
-        serchForDate();
-        break;
+        return serchForDate();
+
 
     }
+    return null;
   }
 
-  private void serchForDate() {
-    ArrayList<StockBuild> foundStocks = new ArrayList<>();
+  private ArrayList<StockBuild> serchForDate(String choice) {
+    choice = "exact";
+    ArrayList<StockBuild> stockFounds = new ArrayList<>();
     InputFunktions inputFunktions = new InputFunktions();
-    Calendar start = inputFunktions.getInputCalendar();
-    Calendar end = inputFunktions.getInputCalendar();
     SearchFunktions searchFunktions = new SearchFunktions();
-    for (int i = 0; i < stocks.length-1; i++) {
-      StockBuild stock = stocks[i];
-      if(searchFunktions.calendarInterval(stock.getDate(), start, end)){
-        foundStocks.add(stock);
-        System.out.println("Stock nr " + i + " wurde geaddet" + stock.toString());
-      }
+    int counter = 0;
+    switch (choice) {
+      case "exact":
+        for (int i = 0; i < stocks.length; i++) {
+          StockBuild stock = stocks[i];
+          if (searchFunktions.exactCalendarDate(stock.getDate(), inputFunktions.getInputCalendar())) {
+            counter++;
+            stockFounds.add(stock);
+            System.out
+                .println("#" + counter + " Stock nr " + i + " was added. " + stock.toString());
+          }
+        }
+        System.out.println(counter + " results were found");
+        return stockFounds;
+      case "intervall":
+        for (int i = 0; i < stocks.length; i++) {
+          StockBuild stock = stocks[i];
+          if (searchFunktions.calendarInterval(stock.getDate(), inputFunktions.getInputCalendar(), inputFunktions.getInputCalendar())) {
+            counter++;
+            stockFounds.add(stock);
+            System.out
+                .println("#" + counter + " Stock nr " + i + " was added. " + stock.toString());
+          }
+        }
+        System.out.println(counter + " results were found");
+        return stockFounds;
     }
+    return null;
   }
 }
