@@ -1,6 +1,8 @@
 package org.getRichFast;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -51,8 +53,12 @@ public class StockBuild {
 
   @Override
   public String toString() {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date testDate = date.getTime();
+    String dateString = dateFormat.format(testDate);
     return "StockBuild{" +
         "symbol='" + symbol + '\'' +
+        "date=" + dateString +
         ", open=" + open +
         ", close=" + close +
         ", low=" + low +

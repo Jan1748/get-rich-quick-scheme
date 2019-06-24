@@ -1,14 +1,28 @@
 package org.getRichFast;
 
+import java.util.ArrayList;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class CsvParserTest {
 
-  @ParameterizedTest
-  @CsvFileSource(resources = "/CsvParserTestSource.csv")
-  public void CsvParserTest(){
+  @Test
+  public void CsvParserTest() {
     CsvParser csvParser = new CsvParser();
-    
+    ArrayList<String> lines = new ArrayList<>();
+    lines.add("1,2,3,4,5,67");
+    lines.add("5,8,7,548");
+
+    ArrayList<String[]> parsedLinesActual = csvParser.getDataArrayList(lines);
+
+    ArrayList<String[]> parsedLinesExcepted = new ArrayList<>();
+    parsedLinesExcepted.add(new String[]{"1", "2", "3", "4", "5", "67"});
+    parsedLinesExcepted.add(new String[]{"5", "8", "7", "548"});
+
+    Assertions.assertArrayEquals(parsedLinesExcepted.get(0), parsedLinesActual.get(0));
+    Assertions.assertArrayEquals(parsedLinesExcepted.get(1), parsedLinesActual.get(1));
   }
 }
