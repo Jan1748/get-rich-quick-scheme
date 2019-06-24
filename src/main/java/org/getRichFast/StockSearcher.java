@@ -1,40 +1,28 @@
 package org.getRichFast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
-public class StockSercher {
+public class StockSearcher {
 
   private StockBuild[] stocks;
 
-  public StockSercher(StockBuild[] stocks) {
+  public StockSearcher(StockBuild[] stocks) {
     this.stocks = stocks;
   }
 
-  public ArrayList<StockBuild> serchInStocks() {
-    System.out.println("What would you serch? Date or Open or High or Low or Close.");
-    //TODO: Scanner abfrage
-    String serch = "Date";
-    switch (serch) {
-      case "Date":
-        return serchForDate("intervall");
-
-
-    }
-    return null;
-  }
-
-  private ArrayList<StockBuild> serchForDate(String choice) {
+  public ArrayList<StockBuild> searchForDate() {
+    Scanner scanner = new Scanner(System.in);
     ArrayList<StockBuild> stockFounds = new ArrayList<>();
     InputFunktions inputFunktions = new InputFunktions();
-    Calendar firstInput = inputFunktions.getInputCalendar();
     SearchFunktions searchFunktions = new SearchFunktions();
     int counter = 0;
+    System.out.println("What type of date do you want to search for? 1: Exact date 2: Interval of dates");
+    String choice = scanner.nextLine();
+    Calendar firstInput = inputFunktions.getInputCalendar();
     switch (choice) {
-      case "exact":
+      case "1":
         for (int i = 0; i < stocks.length; i++) {
           StockBuild stock = stocks[i];
           if (searchFunktions.exactCalendarDate(stock.getDate(), firstInput)) {
@@ -46,7 +34,7 @@ public class StockSercher {
         }
         System.out.println(counter + " results were found");
         return stockFounds;
-      case "intervall":
+      case "2":
         Calendar end = inputFunktions.getInputCalendar();
         for (int i = 0; i < stocks.length; i++) {
           StockBuild stock = stocks[i];
