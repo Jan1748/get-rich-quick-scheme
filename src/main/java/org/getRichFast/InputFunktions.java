@@ -28,7 +28,9 @@ public class InputFunktions {
   public BigDecimal getInputValue() {
     return new BigDecimal(scanner());
   }
-  public
+  public String inputString(){
+    return scanner();
+  }
 
   private String scanner() {
     Scanner sc = new Scanner(System.in);

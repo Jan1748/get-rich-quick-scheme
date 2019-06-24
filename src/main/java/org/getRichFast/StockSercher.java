@@ -20,7 +20,7 @@ public class StockSercher {
     String serch = "Date";
     switch (serch) {
       case "Date":
-        return serchForDate();
+        return serchForDate("intervall");
 
 
     }
@@ -28,16 +28,16 @@ public class StockSercher {
   }
 
   private ArrayList<StockBuild> serchForDate(String choice) {
-    choice = "exact";
     ArrayList<StockBuild> stockFounds = new ArrayList<>();
     InputFunktions inputFunktions = new InputFunktions();
+    Calendar firstInput = inputFunktions.getInputCalendar();
     SearchFunktions searchFunktions = new SearchFunktions();
     int counter = 0;
     switch (choice) {
       case "exact":
         for (int i = 0; i < stocks.length; i++) {
           StockBuild stock = stocks[i];
-          if (searchFunktions.exactCalendarDate(stock.getDate(), inputFunktions.getInputCalendar())) {
+          if (searchFunktions.exactCalendarDate(stock.getDate(), firstInput)) {
             counter++;
             stockFounds.add(stock);
             System.out
@@ -47,9 +47,10 @@ public class StockSercher {
         System.out.println(counter + " results were found");
         return stockFounds;
       case "intervall":
+        Calendar end = inputFunktions.getInputCalendar();
         for (int i = 0; i < stocks.length; i++) {
           StockBuild stock = stocks[i];
-          if (searchFunktions.calendarInterval(stock.getDate(), inputFunktions.getInputCalendar(), inputFunktions.getInputCalendar())) {
+          if (searchFunktions.calendarInterval(stock.getDate(), firstInput, end)) {
             counter++;
             stockFounds.add(stock);
             System.out
