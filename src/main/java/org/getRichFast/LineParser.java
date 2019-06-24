@@ -8,7 +8,6 @@ import java.util.Date;
 
 public class LineParser {
 
-  //FIXME: think about using Calendar instead of Date
   public Calendar parseToCalendar(String dateString) throws ParseException {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = dateFormat.parse(dateString);
