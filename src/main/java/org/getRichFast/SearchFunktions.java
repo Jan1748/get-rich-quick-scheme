@@ -15,5 +15,17 @@ public class SearchFunktions {
     }
     return false;
   }
+  public Boolean beforeCalendar(Calendar input, Calendar search){
+    if(input.before(search)){
+      return true;
+    }
+    return false;
+  }
+  public Boolean afterCalendar(Calendar input, Calendar search){
+    if(input.after(search)){
+      return true;
+    }
+    return false;
+  }
 
 }

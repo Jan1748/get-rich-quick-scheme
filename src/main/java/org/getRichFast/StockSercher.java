@@ -59,6 +59,30 @@ public class StockSercher {
         }
         System.out.println(counter + " results were found");
         return stockFounds;
+      case "before":
+        for (int i = 0; i < stocks.length; i++) {
+          StockBuild stock = stocks[i];
+          if (searchFunktions.beforeCalendar(stock.getDate(), firstInput)) {
+            counter++;
+            stockFounds.add(stock);
+            System.out
+                .println("#" + counter + " Stock nr " + i + " was added. " + stock.toString());
+          }
+        }
+        System.out.println(counter + " results were found");
+        return stockFounds;
+      case "after":
+        for (int i = 0; i < stocks.length; i++) {
+          StockBuild stock = stocks[i];
+          if (searchFunktions.afterCalendar(stock.getDate(), firstInput)) {
+            counter++;
+            stockFounds.add(stock);
+            System.out
+                .println("#" + counter + " Stock nr " + i + " was added. " + stock.toString());
+          }
+        }
+        System.out.println(counter + " results were found");
+        return stockFounds;
     }
     return null;
   }
