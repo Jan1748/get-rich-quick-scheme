@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-public class InputFunktions {
+public class InputFunctions {
 
   public Calendar getInputCalendar() {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

@@ -59,7 +59,7 @@ public class Menus {
           if (scanner.nextLine().equals("y")) {
             stocks = data.getAndParseData(quandlApiKey, quandlCode);
           } else {
-            System.out.println("This is not a option");
+            System.out.println("abort");
           }
           break;
 

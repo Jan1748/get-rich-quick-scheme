@@ -59,7 +59,7 @@ public class StockBuild {
     String dateString = dateFormat.format(testDate);
     return "StockBuild{" +
         "symbol='" + symbol + '\'' +
-        "date=" + dateString +
+        " date=" + dateString +
         ", open=" + open +
         ", close=" + close +
         ", low=" + low +

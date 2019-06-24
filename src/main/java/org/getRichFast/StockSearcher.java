@@ -15,12 +15,12 @@ public class StockSearcher {
   public ArrayList<StockBuild> searchForDate() {
     Scanner scanner = new Scanner(System.in);
     ArrayList<StockBuild> stockFounds = new ArrayList<>();
-    InputFunktions inputFunktions = new InputFunktions();
+    InputFunctions inputFunctions = new InputFunctions();
     SearchFunktions searchFunktions = new SearchFunktions();
     int counter = 0;
-    System.out.println("What type of date do you want to search for? 1: Exact date 2: Interval of dates");
+    System.out.println("What type of date do you want to search for? 1: Exact date 2: Interval of dates 3: Everything before date 4: Everything after date");
     String choice = scanner.nextLine();
-    Calendar firstInput = inputFunktions.getInputCalendar();
+    Calendar firstInput = inputFunctions.getInputCalendar();
     switch (choice) {
       case "1":
         for (int i = 0; i < stocks.length; i++) {
@@ -35,7 +35,7 @@ public class StockSearcher {
         System.out.println(counter + " results were found");
         return stockFounds;
       case "2":
-        Calendar end = inputFunktions.getInputCalendar();
+        Calendar end = inputFunctions.getInputCalendar();
         for (int i = 0; i < stocks.length; i++) {
           StockBuild stock = stocks[i];
           if (searchFunktions.calendarInterval(stock.getDate(), firstInput, end)) {
@@ -47,7 +47,7 @@ public class StockSearcher {
         }
         System.out.println(counter + " results were found");
         return stockFounds;
-      case "before":
+      case "3":
         for (int i = 0; i < stocks.length; i++) {
           StockBuild stock = stocks[i];
           if (searchFunktions.beforeCalendar(stock.getDate(), firstInput)) {
@@ -59,7 +59,7 @@ public class StockSearcher {
         }
         System.out.println(counter + " results were found");
         return stockFounds;
-      case "after":
+      case "4":
         for (int i = 0; i < stocks.length; i++) {
           StockBuild stock = stocks[i];
           if (searchFunktions.afterCalendar(stock.getDate(), firstInput)) {
