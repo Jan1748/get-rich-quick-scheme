@@ -27,6 +27,7 @@ public class StockBuild {
     this.high = high;
   }
 
+
   public String getSymbol() {
     return symbol;
   }
