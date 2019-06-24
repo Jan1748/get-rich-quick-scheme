@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class StockSercher {
 
   private StockBuild[] stocks;
-  private ArrayList<StockBuild> foundStocks;
 
   public StockSercher(StockBuild[] stocks) {
     this.stocks = stocks;
@@ -28,16 +27,16 @@ public class StockSercher {
   }
 
   private void serchForDate() {
+    ArrayList<StockBuild> foundStocks = new ArrayList<>();
     InputFunktions inputFunktions = new InputFunktions();
     Calendar start = inputFunktions.getInputCalendar();
     Calendar end = inputFunktions.getInputCalendar();
     SearchFunktions searchFunktions = new SearchFunktions();
     for (int i = 0; i < stocks.length-1; i++) {
       StockBuild stock = stocks[i];
-      System.out.println("Stock gaming " + stock);
       if(searchFunktions.calendarInterval(stock.getDate(), start, end)){
         foundStocks.add(stock);
-        System.out.println("Stock nr " + i + " wurde geaddet");
+        System.out.println("Stock nr " + i + " wurde geaddet" + stock.toString());
       }
     }
   }
