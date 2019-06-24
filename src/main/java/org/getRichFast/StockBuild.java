@@ -15,8 +15,8 @@ public class StockBuild {
   private BigDecimal low;
   private BigDecimal high;
 
-  public StockBuild(String symbol, Calendar date, BigDecimal open, BigDecimal close, BigDecimal low,
-      BigDecimal high) {
+  public StockBuild(String symbol, Calendar date, BigDecimal open, BigDecimal high, BigDecimal low,
+      BigDecimal close) {
     this.symbol = symbol;
     this.date = date;
     this.open = open;
