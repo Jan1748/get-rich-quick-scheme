@@ -1,16 +1,26 @@
 package org.getRichFast;
 
+//https://search.maven.org/search?q=g:org.junit.jupiter%20AND%20v:5.4.2
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
 
 public class Menu {
 
-  public static void main(String[] args) throws IOException, ParseException {
-    menu(args);
+  private StockBuild[] stocks;
+
+  public void startMenu(String quandlApiKey, String quandlCode) {
+    try {
+      menu(quandlApiKey, quandlCode);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
   }
 
-  private static void menu(String[] args) throws IOException, ParseException {
+  private void menu(String quandlApiKey, String quandlCode) throws IOException, ParseException {
     String menuChoice;
     Scanner scanner = new Scanner(System.in);
     DataShifter data = new DataShifter();
@@ -20,17 +30,21 @@ public class Menu {
     System.out.println(menuChoice);
     if (menuChoice.equals("1")) {
       System.out.println("Enter your api-code:");
-      String apiCode = scanner.nextLine();
+      //quandlApiKey = scanner.nextLine();
       System.out.println("Enter the Quandl-code:");
-      String quandlCode = scanner.nextLine();
+      //quandlCode = scanner.nextLine();
       System.out.println(
-          "Start downloading Quandl data: " + apiCode + "with api-code: " + apiCode + "? (y/n)");
+          "Start downloading Quandl data: " + quandlApiKey//apiCode
+              + "with api-code: " + quandlCode// apiCode
+              + "? (y/n)");
       if (scanner.nextLine().equals("y")) {
-        data.getAndParseData(args);
+        stocks = data.getAndParseData(quandlApiKey, quandlCode);
       }
     } else {
       System.out.println("This is not a option");
     }
+    StockSercher stockSercher = new StockSercher(stocks);
+    stockSercher.serchInStocks();
   }
 
 }
