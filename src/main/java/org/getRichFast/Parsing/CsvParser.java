@@ -1,4 +1,4 @@
-package org.getRichFast;
+package org.getRichFast.Parsing;
 
 import java.util.ArrayList;
 

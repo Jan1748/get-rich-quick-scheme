@@ -1,9 +1,11 @@
-package org.getRichFast;
+package org.getRichFast.Entity;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import org.getRichFast.Entity.StockBuild;
+import org.getRichFast.Parsing.LineParser;
 
 public class StockBuildFiller {
 

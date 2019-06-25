@@ -1,8 +1,10 @@
-package org.getRichFast;
+package org.getRichFast.Searching;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import org.getRichFast.Entity.StockBuild;
+import org.getRichFast.UI.InputFunctions;
 
 public class StockSearcher {
 

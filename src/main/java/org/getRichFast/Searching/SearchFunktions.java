@@ -1,4 +1,4 @@
-package org.getRichFast;
+package org.getRichFast.Searching;
 
 import java.util.Calendar;
 

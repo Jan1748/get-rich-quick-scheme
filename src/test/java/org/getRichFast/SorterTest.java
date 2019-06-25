@@ -1,6 +1,7 @@
 package org.getRichFast;
 
 import java.math.BigDecimal;
+import org.getRichFast.Searching.Sorter;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertTrue;
 

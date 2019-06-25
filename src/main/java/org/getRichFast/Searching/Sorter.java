@@ -1,7 +1,8 @@
-package org.getRichFast;
+package org.getRichFast.Searching;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import org.getRichFast.Entity.StockBuild;
 
 public class Sorter {
 

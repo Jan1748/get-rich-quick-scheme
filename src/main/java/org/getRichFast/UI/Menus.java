@@ -1,4 +1,4 @@
-package org.getRichFast;
+package org.getRichFast.UI;
 
 //https://search.maven.org/search?q=g:org.junit.jupiter%20AND%20v:5.4.2
 
@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import org.getRichFast.Entity.StockBuild;
+import org.getRichFast.Searching.StockSearcher;
 
 public class Menus {
 
