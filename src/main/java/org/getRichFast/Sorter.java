@@ -41,7 +41,7 @@ public class Sorter {
     }
   }
 
-  private BigDecimal compare(String choice, BigDecimal input, BigDecimal currentExtremum) {
+  public BigDecimal compare(String choice, BigDecimal input, BigDecimal currentExtremum) {
     switch (choice) {
       case "low":
         if (input.compareTo(currentExtremum) < 0) {
