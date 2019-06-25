@@ -33,8 +33,8 @@ public class SearchFunktions {
     return false;
   }
 
-  public Boolean symbolCheck(String serchedSymbol, String inputSymbol) {
-    if(serchedSymbol.equals(inputSymbol)){
+  public Boolean symbolCheck(String searchedSymbol, String inputSymbol) {
+    if(searchedSymbol.equals(inputSymbol)){
       return true;
     }
     return false;
