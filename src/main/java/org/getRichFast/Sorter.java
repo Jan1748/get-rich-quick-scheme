@@ -30,15 +30,15 @@ public class Sorter {
           break;
         case "Low":
           currentLowestLow = compare("low", stock.getLow(), currentLowestLow);
-          currentHighestOpen = compare("high", stock.getLow(), currentHighestLow);
+          currentHighestLow = compare("high", stock.getLow(), currentHighestLow);
           break;
         case "High":
           currentLowestHigh = compare("low", stock.getHigh(), currentLowestHigh);
-          currentHighestOpen = compare("high", stock.getHigh(), currentHighestHigh);
+          currentHighestHigh = compare("high", stock.getHigh(), currentHighestHigh);
           break;
         case "Close":
           currentLowestClose = compare("low", stock.getClose(), currentLowestClose);
-          currentHighestOpen = compare("high", stock.getClose(), currentHighestClose);
+          currentHighestClose = compare("high", stock.getClose(), currentHighestClose);
           break;
       }
     }
