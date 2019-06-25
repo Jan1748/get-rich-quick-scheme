@@ -36,7 +36,7 @@ public class StockSearcher {
           }
         }
         System.out.println(counter + " results were found");
-        return searchForValue(stockFounds);
+        return stockFounds;
 
       case "2":
         Calendar end = inputFunctions.getInputCalendar();
@@ -78,7 +78,7 @@ public class StockSearcher {
     return null;
   }
 
-  public A searchForValue(ArrayList<StockBuild> stockFounds) {
+  public StockBuild searchForValue(ArrayList<StockBuild> stockFounds) {
     Sorter sorter = new Sorter();
 
     System.out.println("What do you want to search for? 1: Highest value 2: Lowest value 3: Symbol");
