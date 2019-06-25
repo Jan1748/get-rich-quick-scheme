@@ -15,7 +15,6 @@ public class Sorter {
   private StockBuild currentHighestLow;
   private StockBuild currentHighestHigh;
   private StockBuild currentHighestClose;
-  private StockBuild oldStock;
 
   public void serarchHighestAndLowest(ArrayList<StockBuild> stockFounds) {
     currentLowestOpen = stockFounds.get(0);
@@ -26,10 +25,19 @@ public class Sorter {
     currentHighestLow = stockFounds.get(0);
     currentHighestHigh = stockFounds.get(0);
     currentHighestClose = stockFounds.get(0);
-    oldStock = stockFounds.get(0);
 
     for (int i = 0; i < stockFounds.size(); i++) {
       StockBuild stock = stockFounds.get(i);
+      //FIXME: make it clean
+      if(currentLowestOpen.getOpen()==null){currentLowestOpen = stockFounds.get(i);}
+      if(currentLowestLow.getLow()==null){currentLowestLow = stockFounds.get(i);}
+      if(currentLowestHigh.getHigh()==null){currentLowestHigh = stockFounds.get(i);}
+      if(currentLowestClose.getClose()==null){currentLowestClose = stockFounds.get(i);}
+      if(currentHighestOpen.getOpen()==null){currentHighestOpen = stockFounds.get(i);}
+      if(currentHighestLow.getLow()==null){currentHighestLow = stockFounds.get(i);}
+      if(currentHighestHigh.getHigh()==null){currentHighestHigh = stockFounds.get(i);}
+      if(currentHighestClose.getClose()==null){currentHighestClose = stockFounds.get(i);}
+
       System.out.println("Row nr: " + i);
         if (compare("low", stock.getOpen(), currentLowestOpen.getOpen())) {
           currentLowestOpen = stock;
@@ -55,32 +63,26 @@ public class Sorter {
         if (compare("high", stock.getClose(), currentHighestClose.getClose())) {
           currentHighestClose = stock;
         }
-        oldStock = stock;
       }
   }
 
   public Boolean compare(String choice, BigDecimal input, BigDecimal currentExtremum) {
     int counter = 0;
-    //System.out.println("Input: " + input);
-    try{
     switch (choice) {
       case "low":
-        if (input != null && input.compareTo(currentExtremum) < 0) {
+        if (input != null && currentExtremum != null && input.compareTo(currentExtremum) < 0) {
           return true;
         } else {
           return false;
         }
       case "high":
-        if (input != null && currentExtremum.compareTo(input) < 0) {
+        if (input != null && currentExtremum != null &&currentExtremum.compareTo(input) < 0) {
           return true;
         } else {
           return false;
         }
     }
-    }catch (Exception e){
-      counter++;
-      System.out.println("Error " + input);
-    }
+
     return false;
   }
 
