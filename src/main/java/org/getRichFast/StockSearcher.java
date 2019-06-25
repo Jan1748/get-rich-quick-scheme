@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class StockSearcher {
 
+  //FIXME: maybe separate UI- code from Model- from Data-Code
+
   private ArrayList<StockBuild> stocks;
   private Scanner scanner = new Scanner(System.in);
 
@@ -25,6 +27,7 @@ public class StockSearcher {
     String choice = scanner.nextLine();
     Calendar firstInput = inputFunctions.getInputCalendar();
 
+    //FIXME extract methods/classes for case 1-4 to reduce class length
     switch (choice) {
       case "1":
         for (int i = 0; i < stocks.size(); i++) {

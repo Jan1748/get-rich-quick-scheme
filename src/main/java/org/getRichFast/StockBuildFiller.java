@@ -14,6 +14,7 @@ public class StockBuildFiller {
     System.out.println("Start filling StockBuild");
 
     ArrayList<StockBuild> stock = new ArrayList<>();
+    //contains the temporary open,close, high, low to provide to constructor later
     BigDecimal[] stockBuildBigDecimal = new BigDecimal[data.get(0).length];
     Calendar date = null;
 
@@ -25,6 +26,7 @@ public class StockBuildFiller {
           stockBuildBigDecimal[y - 1] = lineParser.parseToBigDecimal(data.get(x)[y]);
         }
       }
+      //FIXME setter per bigdecimal open,close,low,high instead of temporary array (index)
       StockBuild stockBuild = new StockBuild(name, date, stockBuildBigDecimal[0],
           stockBuildBigDecimal[1], stockBuildBigDecimal[2], stockBuildBigDecimal[3]);
       stock.add(stockBuild);

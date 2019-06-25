@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class InputFunctions {
 
+  //FIXME: make member functions static
   public Calendar getInputCalendar() {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = null;

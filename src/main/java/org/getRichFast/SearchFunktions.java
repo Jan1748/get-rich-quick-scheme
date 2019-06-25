@@ -4,11 +4,15 @@ import java.util.Calendar;
 
 public class SearchFunktions {
 
+  //FIXME: refactory to direct result return
   public Boolean calendarInterval(Calendar input, Calendar start, Calendar end) {
+    return input.after(start) && input.before(end);
+    /*
     if (input.after(start) && input.before(end)) {
       return true;
     }
     return false;
+    */
   }
 
   public Boolean exactCalendarDate(Calendar input, Calendar search) {

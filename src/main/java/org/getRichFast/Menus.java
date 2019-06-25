@@ -36,7 +36,7 @@ public class Menus {
         break;
       case "2":
         //TODO: add search function for value
-        if(searchedStocks != null){
+        if (searchedStocks != null) {
 
         }
         break;
@@ -49,8 +49,7 @@ public class Menus {
       String menuChoice;
       DataShifter data = new DataShifter();
       System.out.println("Quandl Downloader and Parser");
-      System.out.println(
-          "1: Start download and parsing 2: Search in the data E: exit (Please enter your choice)");
+      System.out.println("1: Start download and parsing 2: Search in the data E: exit (Please enter your choice)");
       menuChoice = scanner.nextLine();
       switch (menuChoice) {
         case "1":
@@ -70,10 +69,9 @@ public class Menus {
           break;
 
         case "2":
-          if(stocks != null){
+          if (stocks != null) {
             searchMenu();
-          }
-          else {
+          } else {
             System.out.println("You have to download data before searching");
           }
           break;
