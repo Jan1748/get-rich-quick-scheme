@@ -28,7 +28,7 @@ public class Menus {
     searchedStocks = null;
     StockSearcher stockSearcher = new StockSearcher(stocks);
 
-    System.out.println("What do you want to search for? 1: Date 2: Value");
+    System.out.println("What do you want to search for? 1: Date 2: ");
     menuChoice = scanner.nextLine();
     switch (menuChoice) {
       case "1":

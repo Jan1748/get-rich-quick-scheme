@@ -14,6 +14,7 @@ public class Sorter {
   private StockBuild currentHighestLow;
   private StockBuild currentHighestHigh;
   private StockBuild currentHighestClose;
+  private StockBuild oldStock;
 
   public void serarchHighestAndLowest(ArrayList<StockBuild> stockFounds) {
     currentLowestOpen = stockFounds.get(0);
@@ -24,9 +25,11 @@ public class Sorter {
     currentHighestLow = stockFounds.get(0);
     currentHighestHigh = stockFounds.get(0);
     currentHighestClose = stockFounds.get(0);
+    oldStock = stockFounds.get(0);
 
     for (int i = 0; i < stockFounds.size(); i++) {
       StockBuild stock = stockFounds.get(i);
+      System.out.println("Row nr: " + i);
         if (compare("low", stock.getOpen(), currentLowestOpen.getOpen())) {
           currentLowestOpen = stock;
         }
@@ -51,10 +54,14 @@ public class Sorter {
         if (compare("high", stock.getClose(), currentHighestClose.getClose())) {
           currentHighestClose = stock;
         }
+        oldStock = stock;
       }
   }
 
   public Boolean compare(String choice, BigDecimal input, BigDecimal currentExtremum) {
+    int counter = 0;
+    //System.out.println("Input: " + input);
+    try{
     switch (choice) {
       case "low":
         if (input != null && input.compareTo(currentExtremum) < 0) {
@@ -63,13 +70,17 @@ public class Sorter {
           return false;
         }
       case "high":
-        if (input != null && input.compareTo(currentExtremum) > 0) {
+        if (input != null && currentExtremum.compareTo(input) < 0) {
           return true;
         } else {
           return false;
         }
     }
-    return null;
+    }catch (Exception e){
+      counter++;
+      System.out.println("Error " + input);
+    }
+    return false;
   }
 
   public void setStockFounds(ArrayList<StockBuild> stockFounds) {
