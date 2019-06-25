@@ -9,11 +9,11 @@ public class StockBuildFiller {
 
   private LineParser lineParser = new LineParser();
 
-  public StockBuild[] fillStockBuild(ArrayList<String[]> data, String name) throws ParseException {
+  public ArrayList<StockBuild> fillStockBuild(ArrayList<String[]> data, String name) throws ParseException {
 
     System.out.println("Start filling StockBuild");
 
-    StockBuild[] stock = new StockBuild[data.size() - 1];
+    ArrayList<StockBuild> stock = new ArrayList<>();
     BigDecimal[] stockBuildBigDecimal = new BigDecimal[data.get(0).length];
     Calendar date = null;
 
@@ -27,7 +27,7 @@ public class StockBuildFiller {
       }
       StockBuild stockBuild = new StockBuild(name, date, stockBuildBigDecimal[0],
           stockBuildBigDecimal[1], stockBuildBigDecimal[2], stockBuildBigDecimal[3]);
-      stock[x - 1] = stockBuild;
+      stock.add(stockBuild);
       System.out.println("\tstockBuild " + x + " filled");
     }
     System.out.println("\tStockBuild filled successfully");

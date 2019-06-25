@@ -4,13 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Sorter {
-  private ArrayList<StockBuild> stockFounds;
-  private BigDecimal lowest;
 
-  public Sorter(ArrayList<StockBuild> stockFounds){
-    this.stockFounds = stockFounds;
-  }
-  public void serarchHighestAndLowest(String choice){
+  private ArrayList<StockBuild> stockFounds;
+
+  public void serarchHighestAndLowest(ArrayList<StockBuild> stockFounds, String choice) {
     BigDecimal currentLowestOpen = stockFounds.get(0).getOpen();
     BigDecimal currentLowestLow = stockFounds.get(0).getLow();
     BigDecimal currentLowestHigh = stockFounds.get(0).getHigh();
@@ -21,9 +18,9 @@ public class Sorter {
     BigDecimal currentHighestHigh = stockFounds.get(0).getHigh();
     BigDecimal currentHighestClose = stockFounds.get(0).getClose();
 
-    for(int i = 0; i < stockFounds.size(); i++){
+    for (int i = 0; i < stockFounds.size(); i++) {
       StockBuild stock = stockFounds.get(i);
-      switch (choice){
+      switch (choice) {
         case "Open":
           currentLowestOpen = compare("low", stock.getOpen(), currentLowestOpen);
           currentHighestOpen = compare("high", stock.getOpen(), currentHighestOpen);
@@ -43,21 +40,26 @@ public class Sorter {
       }
     }
   }
-  private BigDecimal compare(String choice, BigDecimal input, BigDecimal currentExtrem){
+
+  private BigDecimal compare(String choice, BigDecimal input, BigDecimal currentExtremum) {
     switch (choice) {
       case "low":
-        if (input.compareTo(currentExtrem) < 0) {
-          currentExtrem = input;
+        if (input.compareTo(currentExtremum) < 0) {
+          currentExtremum = input;
         } else {
-          return currentExtrem;
+          return currentExtremum;
         }
       case "high":
-        if (input.compareTo(currentExtrem) > 0){
-          currentExtrem = input;
+        if (input.compareTo(currentExtremum) > 0) {
+          currentExtremum = input;
+        } else {
+          return currentExtremum;
         }
-        else return currentExtrem;
     }
-  return currentExtrem;
+    return currentExtremum;
   }
 
+  public void setStockFounds(ArrayList<StockBuild> stockFounds) {
+    this.stockFounds = stockFounds;
+  }
 }

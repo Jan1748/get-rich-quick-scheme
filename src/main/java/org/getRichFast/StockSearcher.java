@@ -6,14 +6,16 @@ import java.util.Scanner;
 
 public class StockSearcher {
 
-  private StockBuild[] stocks;
+  private ArrayList<StockBuild> stocks;
+  private Scanner scanner = new Scanner(System.in);
 
-  public StockSearcher(StockBuild[] stocks) {
+  public StockSearcher(ArrayList<StockBuild>stocks) {
     this.stocks = stocks;
   }
 
+  //TODO: Search for symbol
+
   public ArrayList<StockBuild> searchForDate() {
-    Scanner scanner = new Scanner(System.in);
     ArrayList<StockBuild> stockFounds = new ArrayList<>();
     InputFunctions inputFunctions = new InputFunctions();
     SearchFunktions searchFunktions = new SearchFunktions();
@@ -23,8 +25,8 @@ public class StockSearcher {
     Calendar firstInput = inputFunctions.getInputCalendar();
     switch (choice) {
       case "1":
-        for (int i = 0; i < stocks.length; i++) {
-          StockBuild stock = stocks[i];
+        for (int i = 0; i < stocks.size(); i++) {
+          StockBuild stock = stocks.get(i);
           if (searchFunktions.exactCalendarDate(stock.getDate(), firstInput)) {
             counter++;
             stockFounds.add(stock);
@@ -36,8 +38,8 @@ public class StockSearcher {
         return stockFounds;
       case "2":
         Calendar end = inputFunctions.getInputCalendar();
-        for (int i = 0; i < stocks.length; i++) {
-          StockBuild stock = stocks[i];
+        for (int i = 0; i < stocks.size(); i++) {
+          StockBuild stock = stocks.get(i);
           if (searchFunktions.calendarInterval(stock.getDate(), firstInput, end)) {
             counter++;
             stockFounds.add(stock);
@@ -48,8 +50,8 @@ public class StockSearcher {
         System.out.println(counter + " results were found");
         return stockFounds;
       case "3":
-        for (int i = 0; i < stocks.length; i++) {
-          StockBuild stock = stocks[i];
+        for (int i = 0; i < stocks.size(); i++) {
+          StockBuild stock = stocks.get(i);
           if (searchFunktions.beforeCalendar(stock.getDate(), firstInput)) {
             counter++;
             stockFounds.add(stock);
@@ -60,8 +62,8 @@ public class StockSearcher {
         System.out.println(counter + " results were found");
         return stockFounds;
       case "4":
-        for (int i = 0; i < stocks.length; i++) {
-          StockBuild stock = stocks[i];
+        for (int i = 0; i < stocks.size(); i++) {
+          StockBuild stock = stocks.get(i);
           if (searchFunktions.afterCalendar(stock.getDate(), firstInput)) {
             counter++;
             stockFounds.add(stock);
@@ -71,6 +73,22 @@ public class StockSearcher {
         }
         System.out.println(counter + " results were found");
         return stockFounds;
+    }
+    return null;
+  }
+
+  public ArrayList<StockBuild> searchForValue(){
+    Sorter sorter = new Sorter();
+    System.out.println("What do you want to search for? 1: Highest value 2: Lowest value 3: Symbol");
+    String choice = scanner.nextLine();
+    switch (choice){
+      case  "1":
+        System.out.println("For which data do you want the highest value? 1: Open 2: High 3: Low 4: Close");
+        choice = scanner.nextLine();
+        switch (choice){
+          case "1":
+
+        }
     }
     return null;
   }

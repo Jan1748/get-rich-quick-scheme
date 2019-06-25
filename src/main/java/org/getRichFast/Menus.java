@@ -4,11 +4,12 @@ package org.getRichFast;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menus {
 
-  private StockBuild[] stocks;
+  private ArrayList<StockBuild> stocks;
   private Scanner scanner = new Scanner(System.in);
   private String menuChoice;
 
