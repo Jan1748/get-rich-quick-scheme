@@ -18,7 +18,7 @@ public class LineParser {
 
   public BigDecimal parseToBigDecimal(String number) {
     if (number.equals("")) {
-      return new BigDecimal(0);
+      return null;
     } else {
       return new BigDecimal(number);
     }

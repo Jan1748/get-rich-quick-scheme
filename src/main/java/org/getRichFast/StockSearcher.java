@@ -36,6 +36,7 @@ public class StockSearcher {
           }
         }
         System.out.println(counter + " results were found");
+        checkIfNull(searchForValue(stockFounds));
         return stockFounds;
 
       case "2":
@@ -49,6 +50,7 @@ public class StockSearcher {
           }
         }
         System.out.println(counter + " results were found");
+        checkIfNull(searchForValue(stockFounds));
         return stockFounds;
 
       case "3":
@@ -61,6 +63,8 @@ public class StockSearcher {
           }
         }
         System.out.println(counter + " results were found");
+        checkIfNull(searchForValue(stockFounds));
+
         return stockFounds;
 
       case "4":
@@ -73,27 +77,61 @@ public class StockSearcher {
           }
         }
         System.out.println(counter + " results were found");
+        checkIfNull(searchForValue(stockFounds));
         return stockFounds;
     }
     return null;
   }
 
+  private void checkIfNull(StockBuild stockBuild) {
+    if (stockBuild.getOpen() == null) {
+      System.out.println("Error no Value available");
+    } else {
+      System.out.println("This is the lowest open: " + stockBuild.getOpen());
+    }
+  }
+
   public StockBuild searchForValue(ArrayList<StockBuild> stockFounds) {
     Sorter sorter = new Sorter();
+    sorter.serarchHighestAndLowest(stockFounds);
+    SearchFunktions searchFunktions = new SearchFunktions();
 
-    System.out.println("What do you want to search for? 1: Highest value 2: Lowest value 3: Symbol");
+    System.out.println("What do you want to search for? 1: Lowest value 2: Highest value 3: Symbol");
     String highLowChoice = scanner.nextLine();
 
     switch (highLowChoice) {
       case "1":
-        System.out.println("For which data do you want the highest value? 1: Open 2: High 3: Low 4: Close");
+        System.out.println("For which data do you want the lowest value? 1: Open 2: High 3: Low 4: Close");
         String choice = scanner.nextLine();
-        switch (choice){
+        switch (choice) {
           case "1":
             return sorter.getCurrentLowestOpen();
+          case "2":
+            return sorter.getCurrentLowestHigh();
+          case "3":
+            return sorter.getCurrentLowestLow();
+          case "4":
+            return sorter.getCurrentLowestClose();
+
         }
-
-
+        break;
+      case "2":
+        System.out.println("For which data do you want the highest value? 1: Open 2: High 3: Low 4: Close");
+        choice = scanner.nextLine();
+        switch (choice) {
+          case "1":
+            return sorter.getCurrentHighestOpen();
+          case "2":
+            return sorter.getCurrentHighestHigh();
+          case "3":
+            return sorter.getCurrentHighestLow();
+          case "4":
+            return sorter.getCurrentHighestClose();
+        }
+      case "3":
+        System.out.println("Wich Symbol do you want to search for?");
+        choice = scanner.nextLine();
+        //searchFunktions.symbolCheck(choice, )
     }
     return null;
   }

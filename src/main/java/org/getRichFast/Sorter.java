@@ -15,7 +15,7 @@ public class Sorter {
   private StockBuild currentHighestHigh;
   private StockBuild currentHighestClose;
 
-  public void serarchHighestAndLowest(ArrayList<StockBuild> stockFounds, String choice) {
+  public void serarchHighestAndLowest(ArrayList<StockBuild> stockFounds) {
     currentLowestOpen = stockFounds.get(0);
     currentLowestLow = stockFounds.get(0);
     currentLowestHigh = stockFounds.get(0);
@@ -27,43 +27,43 @@ public class Sorter {
 
     for (int i = 0; i < stockFounds.size(); i++) {
       StockBuild stock = stockFounds.get(i);
-      if (compare("low", stock.getOpen(), currentLowestOpen.getOpen())) {
-        currentLowestOpen = stock;
+        if (compare("low", stock.getOpen(), currentLowestOpen.getOpen())) {
+          currentLowestOpen = stock;
+        }
+        if (compare("high", stock.getOpen(), currentHighestOpen.getOpen())) {
+          currentHighestOpen = stock;
+        }
+        if (compare("low", stock.getHigh(), currentLowestHigh.getHigh())) {
+          currentLowestHigh = stock;
+        }
+        if (compare("high", stock.getHigh(), currentHighestHigh.getHigh())) {
+          currentHighestHigh = stock;
+        }
+        if (compare("low", stock.getLow(), currentLowestLow.getLow())) {
+          currentLowestLow = stock;
+        }
+        if (compare("high", stock.getLow(), currentHighestLow.getLow())) {
+          currentHighestLow = stock;
+        }
+        if (compare("low", stock.getClose(), currentLowestClose.getClose())) {
+          currentLowestClose = stock;
+        }
+        if (compare("high", stock.getClose(), currentHighestClose.getClose())) {
+          currentHighestClose = stock;
+        }
       }
-      if (compare("high", stock.getOpen(), currentHighestOpen.getOpen())) {
-        currentHighestOpen = stock;
-      }
-      if (compare("low", stock.getHigh(), currentLowestHigh.getHigh())) {
-        currentLowestHigh = stock;
-      }
-      if (compare("high", stock.getHigh(), currentHighestHigh.getHigh())) {
-        currentHighestHigh = stock;
-      }
-      if (compare("low", stock.getLow(), currentLowestLow.getLow())) {
-        currentLowestLow = stock;
-      }
-      if (compare("high", stock.getLow(), currentHighestLow.getLow())) {
-        currentHighestLow = stock;
-      }
-      if (compare("low", stock.getClose(), currentLowestClose.getClose())) {
-        currentLowestClose = stock;
-      }
-      if (compare("high", stock.getClose(), currentHighestClose.getClose())) {
-        currentHighestClose = stock;
-      }
-    }
   }
 
   public Boolean compare(String choice, BigDecimal input, BigDecimal currentExtremum) {
     switch (choice) {
       case "low":
-        if (input.compareTo(currentExtremum) < 0) {
+        if (input != null && input.compareTo(currentExtremum) < 0) {
           return true;
         } else {
           return false;
         }
       case "high":
-        if (input.compareTo(currentExtremum) > 0) {
+        if (input != null && input.compareTo(currentExtremum) > 0) {
           return true;
         } else {
           return false;

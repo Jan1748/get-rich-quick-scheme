@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Menus {
 
   private ArrayList<StockBuild> stocks;
+  private ArrayList<StockBuild> searchedStocks;
   private Scanner scanner = new Scanner(System.in);
   private String menuChoice;
 
@@ -24,16 +25,20 @@ public class Menus {
   }
 
   private void searchMenu() {
+    searchedStocks = null;
     StockSearcher stockSearcher = new StockSearcher(stocks);
 
     System.out.println("What do you want to search for? 1: Date 2: Value");
     menuChoice = scanner.nextLine();
     switch (menuChoice) {
       case "1":
-        stockSearcher.searchForDate();
+        searchedStocks = stockSearcher.searchForDate();
         break;
       case "2":
         //TODO: add search function for value
+        if(searchedStocks != null){
+
+        }
         break;
     }
   }
