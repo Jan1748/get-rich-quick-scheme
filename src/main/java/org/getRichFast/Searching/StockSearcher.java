@@ -1,5 +1,7 @@
 package org.getRichFast.Searching;
 
+import static org.getRichFast.UI.InputFunctions.getInputCalendar;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -21,69 +23,23 @@ public class StockSearcher {
 
   public ArrayList<StockBuild> searchForDate() {
     ArrayList<StockBuild> stockFounds = new ArrayList<>();
-    InputFunctions inputFunctions = new InputFunctions();
     SearchFunktions searchFunktions = new SearchFunktions();
     int counter = 0;
 
     System.out.println("What type of date do you want to search for? 1: Exact date 2: Interval of dates 3: Everything before date 4: Everything after date");
     String choice = scanner.nextLine();
-    Calendar firstInput = inputFunctions.getInputCalendar();
+    Calendar firstInput = InputFunctions.getInputCalendar();
 
     //FIXME extract methods/classes for case 1-4 to reduce class length
     switch (choice) {
       case "1":
-        for (int i = 0; i < stocks.size(); i++) {
-          StockBuild stock = stocks.get(i);
-          if (searchFunktions.exactCalendarDate(stock.getDate(), firstInput)) {
-            counter++;
-            stockFounds.add(stock);
-            System.out.println("#" + counter + " Stock nr " + i + " was added. " + stock.toString());
-          }
-        }
-        System.out.println(counter + " results were found");
-        checkIfNull(searchForValue(stockFounds));
-        return stockFounds;
-
+        return SearchMethods.dateSearch(stocks, "exact");
       case "2":
-        Calendar end = inputFunctions.getInputCalendar();
-        for (int i = 0; i < stocks.size(); i++) {
-          StockBuild stock = stocks.get(i);
-          if (searchFunktions.calendarInterval(stock.getDate(), firstInput, end)) {
-            counter++;
-            stockFounds.add(stock);
-            System.out.println("#" + counter + " Stock nr " + i + " was added. " + stock.toString());
-          }
-        }
-        System.out.println(counter + " results were found");
-        checkIfNull(searchForValue(stockFounds));
-        return stockFounds;
-
+        return SearchMethods.dateSearch(stocks, "interval");
       case "3":
-        for (int i = 0; i < stocks.size(); i++) {
-          StockBuild stock = stocks.get(i);
-          if (searchFunktions.beforeCalendar(stock.getDate(), firstInput)) {
-            counter++;
-            stockFounds.add(stock);
-            System.out.println("#" + counter + " Stock nr " + i + " was added. " + stock.toString());
-          }
-        }
-        System.out.println(counter + " results were found");
-        checkIfNull(searchForValue(stockFounds));
-
-        return stockFounds;
-
+        return SearchMethods.dateSearch(stocks, "before");
       case "4":
-        for (int i = 0; i < stocks.size(); i++) {
-          StockBuild stock = stocks.get(i);
-          if (searchFunktions.afterCalendar(stock.getDate(), firstInput)) {
-            counter++;
-            stockFounds.add(stock);
-            System.out.println("#" + counter + " Stock nr " + i + " was added. " + stock.toString());
-          }
-        }
-        System.out.println(counter + " results were found");
-        checkIfNull(searchForValue(stockFounds));
-        return stockFounds;
+        return SearchMethods.dateSearch(stocks, "after");
     }
     return null;
   }

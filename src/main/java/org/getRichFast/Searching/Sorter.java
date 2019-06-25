@@ -38,8 +38,7 @@ public class Sorter {
       if(currentHighestHigh.getHigh()==null){currentHighestHigh = stockFounds.get(i);}
       if(currentHighestClose.getClose()==null){currentHighestClose = stockFounds.get(i);}
 
-      System.out.println("Row nr: " + i);
-        if (compare("low", stock.getOpen(), currentLowestOpen.getOpen())) {
+      if (compare("low", stock.getOpen(), currentLowestOpen.getOpen())) {
           currentLowestOpen = stock;
         }
         if (compare("high", stock.getOpen(), currentHighestOpen.getOpen())) {

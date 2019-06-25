@@ -9,8 +9,7 @@ import java.util.Scanner;
 
 public class InputFunctions {
 
-  //FIXME: make member functions static
-  public Calendar getInputCalendar() {
+  public static Calendar getInputCalendar() {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = null;
     while (date == null) {
@@ -26,14 +25,14 @@ public class InputFunctions {
     return cal;
   }
 
-  public BigDecimal getInputValue() {
+  public static BigDecimal getInputValue() {
     return new BigDecimal(scanner());
   }
-  public String inputString(){
+  public static String inputString(){
     return scanner();
   }
 
-  private String scanner() {
+  private static String scanner() {
     Scanner sc = new Scanner(System.in);
     return sc.next();
   }
