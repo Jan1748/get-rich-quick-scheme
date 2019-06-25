@@ -29,40 +29,56 @@ public class Sorter {
     for (int i = 0; i < stockFounds.size(); i++) {
       StockBuild stock = stockFounds.get(i);
       //FIXME: make it clean
-      if(currentLowestOpen.getOpen()==null){currentLowestOpen = stockFounds.get(i);}
-      if(currentLowestLow.getLow()==null){currentLowestLow = stockFounds.get(i);}
-      if(currentLowestHigh.getHigh()==null){currentLowestHigh = stockFounds.get(i);}
-      if(currentLowestClose.getClose()==null){currentLowestClose = stockFounds.get(i);}
-      if(currentHighestOpen.getOpen()==null){currentHighestOpen = stockFounds.get(i);}
-      if(currentHighestLow.getLow()==null){currentHighestLow = stockFounds.get(i);}
-      if(currentHighestHigh.getHigh()==null){currentHighestHigh = stockFounds.get(i);}
-      if(currentHighestClose.getClose()==null){currentHighestClose = stockFounds.get(i);}
+      if (currentLowestOpen.getOpen() == null) {
+        currentLowestOpen = stockFounds.get(i);
+      }
+      if (currentLowestLow.getLow() == null) {
+        currentLowestLow = stockFounds.get(i);
+      }
+      if (currentLowestHigh.getHigh() == null) {
+        currentLowestHigh = stockFounds.get(i);
+      }
+      if (currentLowestClose.getClose() == null) {
+        currentLowestClose = stockFounds.get(i);
+      }
+      if (currentHighestOpen.getOpen() == null) {
+        currentHighestOpen = stockFounds.get(i);
+      }
+      if (currentHighestLow.getLow() == null) {
+        currentHighestLow = stockFounds.get(i);
+      }
+      if (currentHighestHigh.getHigh() == null) {
+        currentHighestHigh = stockFounds.get(i);
+      }
+      if (currentHighestClose.getClose() == null) {
+        currentHighestClose = stockFounds.get(i);
+      }
 
       if (compare("low", stock.getOpen(), currentLowestOpen.getOpen())) {
-          currentLowestOpen = stock;
-        }
-        if (compare("high", stock.getOpen(), currentHighestOpen.getOpen())) {
-          currentHighestOpen = stock;
-        }
-        if (compare("low", stock.getHigh(), currentLowestHigh.getHigh())) {
-          currentLowestHigh = stock;
-        }
-        if (compare("high", stock.getHigh(), currentHighestHigh.getHigh())) {
-          currentHighestHigh = stock;
-        }
-        if (compare("low", stock.getLow(), currentLowestLow.getLow())) {
-          currentLowestLow = stock;
-        }
-        if (compare("high", stock.getLow(), currentHighestLow.getLow())) {
-          currentHighestLow = stock;
-        }
-        if (compare("low", stock.getClose(), currentLowestClose.getClose())) {
-          currentLowestClose = stock;
-        }
-        if (compare("high", stock.getClose(), currentHighestClose.getClose())) {
-          currentHighestClose = stock;
-        }
+        currentLowestOpen = stock;
       }
+      if (compare("high", stock.getOpen(), currentHighestOpen.getOpen())) {
+        currentHighestOpen = stock;
+      }
+      if (compare("low", stock.getHigh(), currentLowestHigh.getHigh())) {
+        currentLowestHigh = stock;
+      }
+      if (compare("high", stock.getHigh(), currentHighestHigh.getHigh())) {
+        currentHighestHigh = stock;
+      }
+      if (compare("low", stock.getLow(), currentLowestLow.getLow())) {
+        currentLowestLow = stock;
+      }
+      if (compare("high", stock.getLow(), currentHighestLow.getLow())) {
+        currentHighestLow = stock;
+      }
+      if (compare("low", stock.getClose(), currentLowestClose.getClose())) {
+        currentLowestClose = stock;
+      }
+      if (compare("high", stock.getClose(), currentHighestClose.getClose())) {
+        currentHighestClose = stock;
+      }
+    }
   }
 
   public Boolean compare(String choice, BigDecimal input, BigDecimal currentExtremum) {
@@ -75,7 +91,7 @@ public class Sorter {
           return false;
         }
       case "high":
-        if (input != null && currentExtremum != null &&currentExtremum.compareTo(input) < 0) {
+        if (input != null && currentExtremum != null && currentExtremum.compareTo(input) < 0) {
           return true;
         } else {
           return false;

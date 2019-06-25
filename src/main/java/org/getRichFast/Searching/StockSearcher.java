@@ -19,18 +19,10 @@ public class StockSearcher {
     this.stocks = stocks;
   }
 
-  //TODO: Search for symbol
-
   public ArrayList<StockBuild> searchForDate() {
-    ArrayList<StockBuild> stockFounds = new ArrayList<>();
-    SearchFunktions searchFunktions = new SearchFunktions();
-    int counter = 0;
-
     System.out.println("What type of date do you want to search for? 1: Exact date 2: Interval of dates 3: Everything before date 4: Everything after date");
     String choice = scanner.nextLine();
-    Calendar firstInput = InputFunctions.getInputCalendar();
 
-    //FIXME extract methods/classes for case 1-4 to reduce class length
     switch (choice) {
       case "1":
         return SearchMethods.dateSearch(stocks, "exact");
@@ -50,6 +42,13 @@ public class StockSearcher {
     } else {
       System.out.println("This is the lowest open: " + stockBuild.getOpen());
     }
+  }
+
+
+  public ArrayList<StockBuild> searchForSymbol(String symbol) {
+    System.out.println("Type in the searched Symbol: ");
+    String choice = scanner.nextLine();
+    return SearchMethods.searchSymbol(stocks, symbol);
   }
 
   public StockBuild searchForValue(ArrayList<StockBuild> stockFounds) {

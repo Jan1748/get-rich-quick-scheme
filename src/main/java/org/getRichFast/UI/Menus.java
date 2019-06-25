@@ -30,16 +30,17 @@ public class Menus {
     searchedStocks = null;
     StockSearcher stockSearcher = new StockSearcher(stocks);
 
-    System.out.println("What do you want to search for? 1: Date 2: ");
+    System.out.println("What do you want to search for? 1: Date 2: Symbol");
     menuChoice = scanner.nextLine();
     switch (menuChoice) {
       case "1":
         searchedStocks = stockSearcher.searchForDate();
         break;
       case "2":
-        //TODO: add search function for value
         if (searchedStocks != null) {
-
+          stockSearcher.searchForSymbol("FSE/EON_X");
+        } else {
+          stockSearcher.searchForSymbol("FSE/EON_X");
         }
         break;
     }

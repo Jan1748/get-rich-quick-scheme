@@ -28,7 +28,8 @@ public class InputFunctions {
   public static BigDecimal getInputValue() {
     return new BigDecimal(scanner());
   }
-  public static String inputString(){
+
+  public static String inputString() {
     return scanner();
   }
 
