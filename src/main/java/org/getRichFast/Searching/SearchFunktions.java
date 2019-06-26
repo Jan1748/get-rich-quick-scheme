@@ -2,6 +2,7 @@ package org.getRichFast.Searching;
 
 import java.util.Calendar;
 
+//FIXME: ich kaufe ein C
 public class SearchFunktions {
 
   public static Boolean calendarInterval(Calendar input, Calendar start, Calendar end) {
