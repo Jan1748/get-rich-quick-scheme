@@ -86,7 +86,6 @@ public class Sorter {
   }
 
   public Boolean compare(String choice, BigDecimal input, BigDecimal currentExtremum) {
-    int counter = 0;
     switch (choice) {
       case "low":
         if (input != null && currentExtremum != null && input.compareTo(currentExtremum) < 0) {
@@ -101,7 +100,6 @@ public class Sorter {
           return false;
         }
     }
-
     return false;
   }
 

@@ -14,8 +14,7 @@ public class InputFunctions {
     Date date = null;
     while (date == null) {
       try {
-        System.out.println("Now enter the date with this pattern." + "yyyy-MM-dd");
-        date = dateFormat.parse(scanner());
+        date = dateFormat.parse(scan("Now enter the date with this pattern." + "yyyy-MM-dd"));
       } catch (ParseException e) {
         System.out.println("Please enter a valid date");
       }
@@ -26,15 +25,13 @@ public class InputFunctions {
   }
 
   public static BigDecimal getInputValue() {
-    return new BigDecimal(scanner());
+    return new BigDecimal(scan(""));
   }
 
-  public static String inputString() {
-    return scanner();
-  }
-
-  private static String scanner() {
+  public static String scan(String message){
     Scanner sc = new Scanner(System.in);
+    System.out.println(message);
     return sc.next();
   }
+
 }

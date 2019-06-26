@@ -13,58 +13,58 @@ public class Menus {
 
   private ArrayList<StockBuild> stocks;
   private ArrayList<StockBuild> searchedStocks;
-  private Scanner scanner = new Scanner(System.in);
   private String menuChoice;
 
-  public void startMenu(String quandlApiKey, String quandlCode) {
+  public void startMenu() {
     try {
-      menu(quandlApiKey, quandlCode);
+      menu();
     } catch (IOException e) {
       e.printStackTrace();
     } catch (ParseException e) {
       e.printStackTrace();
     }
   }
+  private String scan(String message){
+    Scanner sc = new Scanner(System.in);
+    System.out.println(message);
+    return sc.next();
+  }
 
   private void searchMenu() {
     searchedStocks = null;
     StockSearcher stockSearcher = new StockSearcher(stocks);
-
-    System.out.println("What do you want to search for? 1: Date 2: Symbol");
-    menuChoice = scanner.nextLine();
+    menuChoice = scan("What do you want to search for? 1: Date 2: Symbol");
     switch (menuChoice) {
       case "1":
         searchedStocks = stockSearcher.searchForDate();
         break;
       case "2":
         if (searchedStocks != null) {
-          stockSearcher.searchForSymbol("FSE/EON_X");
+          stockSearcher.searchForSymbol();
         } else {
-          stockSearcher.searchForSymbol("FSE/EON_X");
+          stockSearcher.searchForSymbol();
         }
         break;
     }
   }
 
-  private void menu(String quandlApiKey, String quandlCode) throws IOException, ParseException {
+  private void menu() throws IOException, ParseException {
     Boolean abort = false;
     while (!abort) {
       String menuChoice;
+      String quandlApiKey;
+      String quandlCode;
       DataShifter data = new DataShifter();
       System.out.println("Quandl Downloader and Parser");
-      System.out.println("1: Start download and parsing 2: Search in the data E: exit (Please enter your choice)");
-      menuChoice = scanner.nextLine();
+      menuChoice = scan("1: Start download and parsing 2: Search in the data E: exit (Please enter your choice)");
       switch (menuChoice) {
         case "1":
-          System.out.println("Enter your api-code:");
-          //quandlApiKey = scanner.nextLine();
-          System.out.println("Enter the Quandl-code:");
-          //quandlCode = scanner.nextLine();
-          System.out.println(
-              "Start downloading Quandl data: " + quandlApiKey//apiCode
-                  + "with api-code: " + quandlCode// apiCode
-                  + "? (y/n)");
-          if (scanner.nextLine().equals("y")) {
+          quandlApiKey = scan("Enter your api-code:");
+          quandlCode = scan("Enter the Quandl-code:");
+          //quandlApiKey = "VAuKhbFRLKYeucyzd868";
+          //quandlCode = "FSE/EON_X";
+
+          if (scan("Start downloading Quandl data: " + quandlCode + "with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
             stocks = data.getAndParseData(quandlApiKey, quandlCode);
           } else {
             System.out.println("abort");

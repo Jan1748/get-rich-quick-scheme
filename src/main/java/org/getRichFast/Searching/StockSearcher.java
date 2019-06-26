@@ -1,8 +1,10 @@
 package org.getRichFast.Searching;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 import org.getRichFast.Entity.StockBuild;
+import org.getRichFast.UI.InputFunctions;
 
 public class StockSearcher {
 
@@ -42,58 +44,69 @@ public class StockSearcher {
     return null;
   }
 
-  private void checkIfNull(StockBuild stockBuild) {
-    if (stockBuild.getOpen() == null) {
+  private void checkIfNull(BigDecimal value, String highOrLow, String dataType) {
+    if (value == null) {
       System.out.println("Error no Value available");
     } else {
-      System.out.println("This is the lowest open: " + stockBuild.getOpen());
+      System.out.println("This is the " + highOrLow + " " + dataType + ": " + value);
     }
   }
 
 
-  public ArrayList<StockBuild> searchForSymbol(String symbol) {
-    System.out.println("Type in the searched Symbol: ");
-    String choice = scanner.nextLine();
-    return SearchMethods.searchSymbol(stocks, symbol);
+  public ArrayList<StockBuild> searchForSymbol() {
+    String choice = InputFunctions.scan("Type in the searched Symbol: ");
+    return SearchMethods.searchSymbol(stocks, choice);
   }
 
 
   public StockBuild searchForValue(ArrayList<StockBuild> stocksFound) {
     Sorter sorter = new Sorter();
+    StockBuild stock;
     sorter.searchHighestAndLowest(stocksFound);
-    SearchFunktions searchFunktions = new SearchFunktions();
-
-    System.out.println("What do you want to search for? 1: Lowest value 2: Highest value");
-    String highLowChoice = scanner.nextLine();
+    String highLowChoice = InputFunctions.scan("What do you want to search for? 1: Lowest value 2: Highest value");
+    String[] valueNames = new String[]{"Open", "High", "Low", "Close", "Lowest", "Highest"};
 
     switch (highLowChoice) {
       case "1":
-        System.out.println("For which data do you want the lowest value? 1: Open 2: High 3: Low 4: Close");
-        String choice = scanner.nextLine();
+        String choice = InputFunctions.scan("For which data do you want the lowest value? 1: " + valueNames[0] + "2: " + valueNames[1] + "3: " + valueNames[2] + "4: " + valueNames[3]);
         switch (choice) {
           case "1":
-            return sorter.getCurrentLowestOpen();
+            stock = sorter.getCurrentLowestOpen();
+            checkIfNull(stock.getOpen(), valueNames[4], valueNames[0]);
+            return stock;
           case "2":
-            return sorter.getCurrentLowestHigh();
+            stock = sorter.getCurrentLowestHigh();
+            checkIfNull(stock.getHigh(), valueNames[4], valueNames[1]);
+            return stock;
           case "3":
-            return sorter.getCurrentLowestLow();
+            stock = sorter.getCurrentLowestLow();
+            checkIfNull(stock.getLow(), valueNames[4], valueNames[2]);
+            return stock;
           case "4":
-            return sorter.getCurrentLowestClose();
-
+            stock = sorter.getCurrentLowestClose();
+            checkIfNull(stock.getClose(), valueNames[4], valueNames[3]);
+            return stock;
         }
         break;
       case "2":
-        System.out.println("For which data do you want the highest value? 1: Open 2: High 3: Low 4: Close");
-        choice = scanner.nextLine();
+        choice = InputFunctions.scan("For which data do you want the highest value? 1: Open 2: High 3: Low 4: Close");
         switch (choice) {
           case "1":
-            return sorter.getCurrentHighestOpen();
+            stock = sorter.getCurrentHighestOpen();
+            checkIfNull(stock.getOpen(), valueNames[5], valueNames[0]);
+            return stock;
           case "2":
-            return sorter.getCurrentHighestHigh();
+            stock = sorter.getCurrentHighestHigh();
+            checkIfNull(stock.getHigh(), valueNames[5], valueNames[1]);
+            return stock;
           case "3":
-            return sorter.getCurrentHighestLow();
+            stock = sorter.getCurrentHighestLow();
+            checkIfNull(stock.getLow(), valueNames[5], valueNames[2]);
+            return stock;
           case "4":
-            return sorter.getCurrentHighestClose();
+            stock = sorter.getCurrentHighestClose();
+            checkIfNull(stock.getClose(), valueNames[5], valueNames[3]);
+            return stock;
         }
     }
     return null;
