@@ -1,12 +1,8 @@
 package org.getRichFast.Searching;
 
-import static org.getRichFast.UI.InputFunctions.getInputCalendar;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Scanner;
 import org.getRichFast.Entity.StockBuild;
-import org.getRichFast.UI.InputFunctions;
 
 public class StockSearcher {
 
@@ -20,18 +16,28 @@ public class StockSearcher {
   }
 
   public ArrayList<StockBuild> searchForDate() {
+    ArrayList<StockBuild> stocksFound;
+
     System.out.println("What type of date do you want to search for? 1: Exact date 2: Interval of dates 3: Everything before date 4: Everything after date");
     String choice = scanner.nextLine();
 
     switch (choice) {
       case "1":
-        return SearchMethods.dateSearch(stocks, "exact");
+        stocksFound = SearchMethods.dateSearch(stocks, "exact");
+        System.out.println(searchForValue(stocksFound));
+        return stocksFound;
       case "2":
-        return SearchMethods.dateSearch(stocks, "interval");
+        stocksFound = SearchMethods.dateSearch(stocks, "interval");
+        System.out.println(searchForValue(stocksFound));
+        return stocksFound;
       case "3":
-        return SearchMethods.dateSearch(stocks, "before");
+        stocksFound = SearchMethods.dateSearch(stocks, "before");
+        System.out.println(searchForValue(stocksFound));
+        return stocksFound;
       case "4":
-        return SearchMethods.dateSearch(stocks, "after");
+        stocksFound = SearchMethods.dateSearch(stocks, "after");
+        System.out.println(searchForValue(stocksFound));
+        return stocksFound;
     }
     return null;
   }
@@ -51,12 +57,13 @@ public class StockSearcher {
     return SearchMethods.searchSymbol(stocks, symbol);
   }
 
-  public StockBuild searchForValue(ArrayList<StockBuild> stockFounds) {
+
+  public StockBuild searchForValue(ArrayList<StockBuild> stocksFound) {
     Sorter sorter = new Sorter();
-    sorter.serarchHighestAndLowest(stockFounds);
+    sorter.searchHighestAndLowest(stocksFound);
     SearchFunktions searchFunktions = new SearchFunktions();
 
-    System.out.println("What do you want to search for? 1: Lowest value 2: Highest value 3: Symbol");
+    System.out.println("What do you want to search for? 1: Lowest value 2: Highest value");
     String highLowChoice = scanner.nextLine();
 
     switch (highLowChoice) {
@@ -88,10 +95,6 @@ public class StockSearcher {
           case "4":
             return sorter.getCurrentHighestClose();
         }
-      case "3":
-        System.out.println("Wich Symbol do you want to search for?");
-        choice = scanner.nextLine();
-        //searchFunktions.symbolCheck(choice, )
     }
     return null;
   }

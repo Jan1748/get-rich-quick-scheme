@@ -8,12 +8,18 @@ import java.util.Date;
 
 public class LineParser {
 
-  public Calendar parseToCalendar(String dateString) throws ParseException {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = dateFormat.parse(dateString);
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(date);
-    return cal;
+  public Calendar parseToCalendar(String dateString) {
+    try {
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      Date date = dateFormat.parse(dateString);
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(date);
+      return cal;
+    }
+    catch (ParseException e){
+      System.out.println("Please enter a parsable date");
+      return null;
+    }
   }
 
   public BigDecimal parseToBigDecimal(String number) {

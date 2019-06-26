@@ -17,7 +17,7 @@ public class InputFunctions {
         System.out.println("Now enter the date with this pattern." + "yyyy-MM-dd");
         date = dateFormat.parse(scanner());
       } catch (ParseException e) {
-        e.printStackTrace();
+        System.out.println("Please enter a valid date");
       }
     }
     Calendar cal = Calendar.getInstance();
