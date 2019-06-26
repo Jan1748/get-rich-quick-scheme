@@ -63,7 +63,7 @@ public class StockSearcher {
     Sorter sorter = new Sorter();
     StockBuild stock;
     sorter.searchHighestAndLowest(stocksFound);
-    String highLowChoice = InputFunctions.scan("What do you want to search for? 1: Lowest value 2: Highest value");
+    String highLowChoice = InputFunctions.scan("What do you want to search for? 1: Lowest value 2: Highest value 3: All Highest and Lowest");
     String[] valueNames = new String[]{"Open", "High", "Low", "Close", "Lowest", "Highest"};
 
     switch (highLowChoice) {
@@ -108,6 +108,25 @@ public class StockSearcher {
             checkIfNull(stock.getClose(), valueNames[5], valueNames[3]);
             return stock;
         }
+      case "3":
+        stock = sorter.getCurrentLowestOpen();
+        checkIfNull(stock.getOpen(), valueNames[4], valueNames[0]);
+        stock = sorter.getCurrentLowestHigh();
+        checkIfNull(stock.getHigh(), valueNames[4], valueNames[1]);
+        stock = sorter.getCurrentLowestLow();
+        checkIfNull(stock.getLow(), valueNames[4], valueNames[2]);
+        stock = sorter.getCurrentLowestClose();
+        checkIfNull(stock.getClose(), valueNames[4], valueNames[3]);
+
+        stock = sorter.getCurrentHighestOpen();
+        checkIfNull(stock.getOpen(), valueNames[5], valueNames[0]);
+        stock = sorter.getCurrentHighestHigh();
+        checkIfNull(stock.getHigh(), valueNames[5], valueNames[1]);
+        stock = sorter.getCurrentHighestLow();
+        checkIfNull(stock.getLow(), valueNames[5], valueNames[2]);
+        stock = sorter.getCurrentHighestClose();
+        checkIfNull(stock.getClose(), valueNames[5], valueNames[3]);
+        break;
     }
     return null;
   }
