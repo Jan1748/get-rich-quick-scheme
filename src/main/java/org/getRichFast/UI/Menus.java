@@ -3,8 +3,11 @@ package org.getRichFast.UI;
 //https://search.maven.org/search?q=g:org.junit.jupiter%20AND%20v:5.4.2
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 import org.getRichFast.Entity.StockBuild;
 import org.getRichFast.Searching.StockSearcher;
@@ -24,7 +27,8 @@ public class Menus {
       e.printStackTrace();
     }
   }
-  private String scan(String message){
+
+  private String scan(String message) {
     Scanner sc = new Scanner(System.in);
     System.out.println(message);
     return sc.next();
@@ -59,10 +63,10 @@ public class Menus {
       menuChoice = scan("1: Start download and parsing 2: Search in the data E: exit (Please enter your choice)");
       switch (menuChoice) {
         case "1":
-          quandlApiKey = scan("Enter your api-code:");
-          quandlCode = scan("Enter the Quandl-code:");
-          //quandlApiKey = "VAuKhbFRLKYeucyzd868";
-          //quandlCode = "FSE/EON_X";
+          //quandlApiKey = scan("Enter your api-code:");
+          //quandlCode = scan("Enter the Quandl-code:");
+          quandlApiKey = "VAuKhbFRLKYeucyzd868";
+          quandlCode = "FSE/EON_X";
 
           if (scan("Start downloading Quandl data: " + quandlCode + "with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
             stocks = data.getAndParseData(quandlApiKey, quandlCode);
@@ -85,6 +89,4 @@ public class Menus {
       }
     }
   }
-
 }
-
