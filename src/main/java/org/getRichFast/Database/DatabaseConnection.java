@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.Calendar;
 import org.getRichFast.Entity.StockBuild;
 import org.postgresql.util.PSQLException;
 
@@ -41,6 +42,42 @@ public class DatabaseConnection {
     } catch (SQLException e) {
       System.out.println("Connection failure.");
       e.printStackTrace();
+    }
+  }
+  public void getAllDataFromDatabase(){
+    Connection connection = connect();
+    if(connection != null){
+      Statement statement = null;
+      try {
+        statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.stockbuild");
+        Calendar cal = Calendar.getInstance();
+        while (resultSet.next()) {
+          java.util.Date date = new java.util.Date(resultSet.getDate("date").getTime());
+          cal.setTime(date);
+          StockBuild stockBuild = new StockBuild(resultSet.getString("symbol"), cal);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  public void outputAllDataFromDatabase(){
+    Connection connection = connect();
+    if(connection != null){
+      Statement statement = null;
+      try {
+        statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.stockbuild");
+        System.out.printf("%-12.12s %-12.12s %-8.8s %-8.8s %-8.8s %-8.8s%n", "Symbol", "Date", "Open", "High", "Low", "Close");
+        while (resultSet.next()) {
+          System.out
+              .printf("%-12.12s %-12.12s %-8.8s %-8.8s %-8.8s %-8.8s%n", resultSet.getString("date"), resultSet.getString("symbol"), resultSet.getString("open"), resultSet.getString("high"),
+                  resultSet.getString("low"), resultSet.getString("close"));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
   }
 
@@ -84,5 +121,16 @@ public class DatabaseConnection {
       e.printStackTrace();
     }
     return null;
+  }
+  public void setUser(String user) {
+    this.user = user;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public void setDatabaseName(String databaseName) {
+    this.databaseName = databaseName;
   }
 }
