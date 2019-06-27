@@ -90,6 +90,7 @@ public class Menus {
           database.outputAllDataFromDatabase();
           break;
         case "E":
+        case"e":
           System.exit(0);
           break;
       }
