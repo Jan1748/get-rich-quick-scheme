@@ -38,7 +38,7 @@ public class Menus {
   private void searchMenu() {
     searchedStocks = null;
     StockSearcher stockSearcher = new StockSearcher(stocks);
-    menuChoice = scan("What do you want to search for? 1: Date 2: Symbol");
+    menuChoice = scan("What do you want to search for? 1: \nDate 2: Symbol \n");
     switch (menuChoice) {
       case "1":
         searchedStocks = stockSearcher.searchForDate();
@@ -61,7 +61,7 @@ public class Menus {
       String quandlCode;
       DataShifter data = new DataShifter();
       System.out.println("Quandl Downloader and Parser");
-      menuChoice = scan("1: Start download and parsing 2: Search in the data E: exit (Please enter your choice)");
+      menuChoice = scan("1: Start download and parsing \n2: Search in the data \n3: Output all Data from Database to your Console \nE: exit (Please enter your choice)");
       switch (menuChoice) {
         case "1":
           //quandlApiKey = scan("Enter your api-code:");
@@ -73,10 +73,6 @@ public class Menus {
             stocks = data.getAndParseData(quandlApiKey, quandlCode);
             DatabaseConnection database = new DatabaseConnection();
             database.insertDataToDatabase(stocks);
-
-            //FIXME: Menu for outputing all data
-            database.outputAllDataFromDatabase();
-
           } else {
             System.out.println("abort");
           }
@@ -89,7 +85,10 @@ public class Menus {
             System.out.println("You have to download data before searching");
           }
           break;
-
+        case "3":
+          DatabaseConnection database = new DatabaseConnection();
+          database.outputAllDataFromDatabase();
+          break;
         case "E":
           System.exit(0);
           break;
