@@ -77,4 +77,10 @@ public class StockBuild {
         ", high=" + high +
         '}';
   }
+  public String toCsvString() {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date testDate = date.getTime();
+    String dateString = dateFormat.format(testDate);
+    return dateString + "," + symbol + "," + open + "," + high + "," + low + "," + close + "\n";
+  }
 }

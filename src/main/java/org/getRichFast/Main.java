@@ -9,8 +9,8 @@ public class Main {
     DatabaseConnection database = new DatabaseConnection();
     database.connect();
     Menus menus = new Menus();
-    //menus.startMenu();
+    menus.startMenu();
     DatabaseConnection databaseConnection = new DatabaseConnection();
-    databaseConnection.connect();
+    //databaseConnection.connect();
   }
 }

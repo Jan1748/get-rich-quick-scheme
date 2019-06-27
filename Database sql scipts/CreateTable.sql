@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS "stockbuild";
-CREATE TABLE "stockbuild" (
+DROP TABLE IF EXISTS "stockbuild1";
+CREATE TABLE "stockbuild1stockbuild1" (
 	"Symbol" VARCHAR NULL DEFAULT NULL,
 	"Date" DATE NULL DEFAULT NULL,
 	"Open" DOUBLE PRECISION NULL DEFAULT NULL,
@@ -7,5 +7,7 @@ CREATE TABLE "stockbuild" (
 	"Low" DOUBLE PRECISION NULL DEFAULT NULL,
 	"Close" DOUBLE PRECISION NULL DEFAULT NULL,
 	"StockBuildID" SERIAL NOT NULL,
-	PRIMARY KEY ("StockBuildID")
+	PRIMARY KEY ("StockBuildID"),
+	UNIQUE ("Symbol", "Date")
 )
+
