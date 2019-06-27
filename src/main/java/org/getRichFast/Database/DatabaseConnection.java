@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class DatabaseConnection {
 
   public void connect() {
-    try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Test", "postgres", "1234")) {
+    try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Postgresql", "postgres", "Rockstar2015!")) {
 
       System.out.println("Java JDBC PostgreSQL Example");
       // When this class first attempts to establish a connection, it automatically loads any JDBC 4.0 drivers found within
