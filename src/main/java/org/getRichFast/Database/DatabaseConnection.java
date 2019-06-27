@@ -16,7 +16,7 @@ import org.getRichFast.Entity.StockBuild;
 public class DatabaseConnection {
 
   private void connect() {
-    try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Postgresql", "postgres", "Rockstar2015!")) {
+    try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Test", "postgres", "1234")) {
 
       System.out.println("Java JDBC PostgreSQL Example");
 
@@ -41,7 +41,7 @@ public class DatabaseConnection {
   }
 
   public void insertDataToDatabase(ArrayList<StockBuild> stocks) {
-    try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Postgresql", "postgres", "Rockstar2015!")) {
+    try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Test", "postgres", "1234")) {
       System.out.println("Connected to PostgreSQL database!");
       Statement statement = connection.createStatement();
       for(int i = 0; i < stocks.size(); i++) {
