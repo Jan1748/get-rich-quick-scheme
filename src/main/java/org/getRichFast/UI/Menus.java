@@ -73,8 +73,10 @@ public class Menus {
             stocks = data.getAndParseData(quandlApiKey, quandlCode);
             DatabaseConnection database = new DatabaseConnection();
             database.insertDataToDatabase(stocks);
+
+            //FIXME: Menu for outputing all data
             database.outputAllDataFromDatabase();
-            stocks = database.getAllDataFromDatabase();
+
           } else {
             System.out.println("abort");
           }
