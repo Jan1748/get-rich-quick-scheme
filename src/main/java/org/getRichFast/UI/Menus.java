@@ -2,7 +2,6 @@ package org.getRichFast.UI;
 
 //https://search.maven.org/search?q=g:org.junit.jupiter%20AND%20v:5.4.2
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import org.getRichFast.Database.DatabaseConnection;
 import org.getRichFast.Entity.StockBuild;
 import org.getRichFast.Searching.StockSearcher;
 
@@ -71,13 +71,8 @@ public class Menus {
 
           if (scan("Start downloading Quandl data: " + quandlCode + "with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
             stocks = data.getAndParseData(quandlApiKey, quandlCode);
-
-            FileWriter fileWriter = new FileWriter("test.csv");
-            for(int x = 0; x < stocks.size(); x++){
-              fileWriter.append(stocks.get(x).toCsvString());
-            }
-            fileWriter.flush();
-            fileWriter.close();
+            DatabaseConnection database = new DatabaseConnection();
+            database.insertDataToDatabase(stocks);
           } else {
             System.out.println("abort");
           }

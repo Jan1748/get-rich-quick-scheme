@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS "stockbuild1";
-CREATE TABLE "stockbuild1stockbuild1" (
+DROP TABLE IF EXISTS "stockbuild";
+CREATE TABLE "stockbuild" (
 	"Symbol" VARCHAR NULL DEFAULT NULL,
 	"Date" DATE NULL DEFAULT NULL,
 	"Open" DOUBLE PRECISION NULL DEFAULT NULL,
