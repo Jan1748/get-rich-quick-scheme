@@ -74,6 +74,7 @@ public class Menus {
             DatabaseConnection database = new DatabaseConnection();
             database.insertDataToDatabase(stocks);
             database.outputAllDataFromDatabase();
+            stocks = database.getAllDataFromDatabase();
           } else {
             System.out.println("abort");
           }

@@ -20,51 +20,9 @@ public class DatabaseConnection {
   private String password = "Rockstar2015!";
   private String databaseName = "Postgresql";
 
-  private void conneect() {
-    try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Postgresql", "postgres", "Rockstar2015!")) {
-
-      System.out.println("Java JDBC PostgreSQL Example");
-
-      System.out.println("Connected to PostgreSQL database!");
-      Statement statement = connection.createStatement();
-
-      String sql = "INSERT INTO stockbuild " + "VALUES ('2019-06-27', 'FSE/EON_X', 89.5, 90.4, 89.5, 91.0)";
-      statement.executeUpdate(sql);
-
-      System.out.printf("%-10.10s  %-10.10s %-10.10s %-10.10s %-10.10s %-10.10s%n", "datum", "symbol", "open", "high", "low", "close");
-      ResultSet resultSet = statement.executeQuery("SELECT * FROM public.stockbuild");
-      while (resultSet.next()) {
-        System.out
-            .printf("%-10.10s  %-10.10s %-10.10s %-10.10s %-10.10s %-10.10s%n", resultSet.getString("datum"), resultSet.getString("symbol"), resultSet.getString("open"), resultSet.getString("high"),
-                resultSet.getString("low"), resultSet.getString("close"));
-      }
-
-    } catch (SQLException e) {
-      System.out.println("Connection failure.");
-      e.printStackTrace();
-    }
-  }
-  public void getAllDataFromDatabase(){
+  public void outputAllDataFromDatabase() {
     Connection connection = connect();
-    if(connection != null){
-      Statement statement = null;
-      try {
-        statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.stockbuild");
-        Calendar cal = Calendar.getInstance();
-        while (resultSet.next()) {
-          java.util.Date date = new java.util.Date(resultSet.getDate("date").getTime());
-          cal.setTime(date);
-          StockBuild stockBuild = new StockBuild(resultSet.getString("symbol"), cal);
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-  public void outputAllDataFromDatabase(){
-    Connection connection = connect();
-    if(connection != null){
+    if (connection != null) {
       Statement statement = null;
       try {
         statement = connection.createStatement();
@@ -122,6 +80,7 @@ public class DatabaseConnection {
     }
     return null;
   }
+
   public void setUser(String user) {
     this.user = user;
   }
