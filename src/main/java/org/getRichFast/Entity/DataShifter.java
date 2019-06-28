@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import org.getRichFast.Downloading.QuandlDownloader;
-import org.getRichFast.Entity.StockBuild;
-import org.getRichFast.Entity.StockBuildFiller;
 import org.getRichFast.Parsing.CsvParser;
 
 public class DataShifter {

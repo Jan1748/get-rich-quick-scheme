@@ -6,7 +6,13 @@ public class CsvParser {
 
   private String[] splitingStringLine(String line) {
     String[] splited = line.split(",");
-    return splited;
+    String[] returnSting = new String[]{"", "", "", "", "", "", "", ""};
+    for (int i = 0; i < 6; i++) {
+      if (splited.length > i) {
+        returnSting[i] = splited[i];
+      }
+    }
+    return returnSting;
   }
 
   public ArrayList<String[]> getDataArrayList(ArrayList<String> lines) {
@@ -15,7 +21,7 @@ public class CsvParser {
     for (int i = 0; i < lines.size(); i++) {
       data.add(splitingStringLine(lines.get(i)));
     }
-    System.out.println("\tCsv parsing successfully completed");
+    System.out.println("Csv parsing successfully completed");
     return data;
   }
 }
