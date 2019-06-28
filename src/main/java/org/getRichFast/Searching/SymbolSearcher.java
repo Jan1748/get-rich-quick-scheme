@@ -1,36 +1,32 @@
 package org.getRichFast.Searching;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 import org.getRichFast.Database.DatabaseConnection;
+import org.getRichFast.UI.InputFunctions;
 
 public class SymbolSearcher {
 
-  DatabaseConnection databaseConnection = new DatabaseConnection();
-  Scanner scanner = new Scanner(System.in);
-
   public ResultSet searchForSymbol() {
-    String symbol;
-    String sqlCode;
-    ResultSet result;
-    Statement statement;
+    return getSymbolPostgresql(InputFunctions.scan("What symbol do you want to search for?"));
+  }
+
+  private ResultSet getSymbolPostgresql(String symbol) {
+    DatabaseConnection databaseConnection = new DatabaseConnection();
+    PreparedStatement sqlCode;
+    ResultSet resultSet = null;
+
     try {
-      statement = databaseConnection.connect().createStatement();
-      System.out.println("What symbol do you want to search for?");
-      symbol = scanner.nextLine();
-      sqlCode = "SELECT * FROM stockbuild WHERE \"Symbol\" = " + symbol + ";";
-      result = statement.executeQuery(sqlCode);
-      System.out.printf("%-12.12s %-12.12s %-8.8s %-8.8s %-8.8s %-8.8s%n", "Symbol", "Date", "Open", "High", "Low", "Close");
-      while (result.next()) {
-        System.out
-            .printf("%-12.12s %-12.12s %-8.8s %-8.8s %-8.8s %-8.8s%n", result.getString("date"), result.getString("symbol"), result.getString("open"), result.getString("high"),
-                result.getString("low"), result.getString("close"));
-      }
+      sqlCode = databaseConnection.connect().prepareStatement("SELECT * FROM stockbuild WHERE \"Symbol\" = ?;");
+      sqlCode.setString(1, symbol);
+      resultSet = sqlCode.executeQuery();
+      return resultSet;
     } catch (SQLException e) {
-      e.printStackTrace();
+      System.out.println("The symbol " + symbol + " is not in the database");
     }
-    return null;
+
+    return resultSet;
   }
 }

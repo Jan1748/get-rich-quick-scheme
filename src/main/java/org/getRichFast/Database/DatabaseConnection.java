@@ -1,24 +1,19 @@
 package org.getRichFast.Database;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
-import java.util.Calendar;
 import org.getRichFast.Entity.StockBuild;
 import org.postgresql.util.PSQLException;
 
 public class DatabaseConnection {
   private String user = "postgres";
-  private String password = "1234";
-  private String databaseName = "Test";
+  private String password = "Rockstar2015!";
+  private String databaseName = "postgres";
 
   public void outputAllDataFromDatabase() {
     Connection connection = connect();

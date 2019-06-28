@@ -10,6 +10,7 @@ import java.util.Scanner;
 import org.getRichFast.Database.DatabaseConnection;
 import org.getRichFast.Entity.DataShifter;
 import org.getRichFast.Entity.StockBuild;
+import org.getRichFast.Searching.DateSearcher;
 import org.getRichFast.Searching.SymbolSearcher;
 import org.getRichFast.Searching.ValueSearcher;
 
@@ -35,21 +36,30 @@ public class Menus {
   }
 
   private void searchMenu() {
-      ResultSet searchedStocks = null;
-      ValueSearcher valueSearcher = new ValueSearcher();
-      SymbolSearcher symbolSearcher = new SymbolSearcher();
-      menuChoice = scan("What do you want to search for? \n1: Date \n2: Symbol");
-      switch (menuChoice) {
-        case "1":
-          searchedStocks = valueSearcher.searchForDate();
-          break;
-        case "2":
-          searchedStocks = symbolSearcher.searchForSymbol();
-          break;
-        default:
-          System.out.println("Please enter a valid choice");
-      }
+    ResultSet[] searchedValues = null;
+    DateSearcher dateSearcher = new DateSearcher();
+    ValueSearcher valueSearcher = new ValueSearcher();
+    SymbolSearcher symbolSearcher = new SymbolSearcher();
+    DatabaseOutput databaseOutput = new DatabaseOutput();
+    ResultSet searchedSymbols;
+    menuChoice = scan("What do you want to search for? \n1: Date \n2: Symbol");
+    switch (menuChoice) {
+      case "1":
+        searchedValues = valueSearcher.searchForValue(dateSearcher.searchForDate());
+        if (searchedValues != null){
+          //databaseOutput.outputDatabaseDataArray(searchedValues);
+        }
+        break;
+      case "2":
+        searchedSymbols = symbolSearcher.searchForSymbol();
+        if (searchedSymbols != null) {
+          databaseOutput.outputDatabaseData(searchedSymbols);
+        }
+        break;
+      default:
+        System.out.println("Please enter a valid choice");
     }
+  }
 
   private void menu() throws IOException, ParseException {
     Boolean abort = false;
@@ -77,13 +87,13 @@ public class Menus {
           break;
 
         case "2":
-            searchMenu();
+          searchMenu();
           break;
         case "3":
           DatabaseConnection database = new DatabaseConnection();
           database.outputAllDataFromDatabase();
           break;
-        case"e":
+        case "e":
           System.exit(0);
           break;
         default:
