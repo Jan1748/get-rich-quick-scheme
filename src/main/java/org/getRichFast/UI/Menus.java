@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import org.getRichFast.Database.DatabaseConnection;
+import org.getRichFast.Downloading.QuandlCodeFinder;
 import org.getRichFast.Entity.DataShifter;
 import org.getRichFast.Entity.StockBuild;
 import org.getRichFast.Searching.SymbolSearcher;
@@ -17,6 +18,8 @@ public class Menus {
 
   private ArrayList<StockBuild> stocks;
   private String menuChoice;
+  private String quandlApiKey;
+
 
   public void startMenu() {
     try {
@@ -62,15 +65,30 @@ public class Menus {
       menuChoice = scan("1: Start download and parsing \n2: Search in the data \n3: Output all Data from Database to your Console \ne: exit (Please enter your choice)");
       switch (menuChoice) {
         case "1":
-          //quandlApiKey = scan("Enter your api-code:");
-          quandlCode = scan("Enter the Quandl-code:");
+          //String quandlApiKeyNew = scan("Enter your new api-code or press 'o' to use the old one:");
+          //if(!quandlApiKeyNew.equals("o")) {
+          //  quandlApiKey = quandlApiKeyNew;
+          //}
+          //quandlCode = scan("Enter the Quandl-code:");
           quandlApiKey = "VAuKhbFRLKYeucyzd868";
-          //quandlCode = "FSE/EON_X";
+          quandlCode = "FSE/ON_X";
 
-          if (scan("Start downloading Quandl data: " + quandlCode + "with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
-            stocks = data.getAndParseData(quandlApiKey, quandlCode);
-            DatabaseConnection database = new DatabaseConnection();
-            database.insertDataToDatabase(stocks);
+          if (scan("Start downloading Quandl data: " + quandlCode + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
+            QuandlCodeFinder quandlCodeFinder = new QuandlCodeFinder();
+            ArrayList<String> quandlCodes = null;
+            try {
+              quandlCodes = quandlCodeFinder.getQuandlCodes("FSE", "VAuKhbFRLKYeucyzd868");
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+            String quandlCodee;
+            for(int i = 0; i < quandlCodes.size(); i++) {
+              quandlCodee = "FSE/" + quandlCodes.get(i);
+              System.out.println("Stock nr. " + i + ": " + quandlCodee);
+              stocks = data.getAndParseData(quandlApiKey, quandlCodee);
+              DatabaseConnection database = new DatabaseConnection();
+              database.insertDataToDatabase(stocks);
+            }
           } else {
             System.out.println("abort");
           }
@@ -83,6 +101,7 @@ public class Menus {
           DatabaseConnection database = new DatabaseConnection();
           database.outputAllDataFromDatabase();
           break;
+        case "E":
         case"e":
           System.exit(0);
           break;
