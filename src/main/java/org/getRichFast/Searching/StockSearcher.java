@@ -1,133 +1,144 @@
 package org.getRichFast.Searching;
 
-import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
+import org.getRichFast.Database.DatabaseConnection;
 import org.getRichFast.Entity.StockBuild;
 import org.getRichFast.UI.InputFunctions;
 
 public class StockSearcher {
 
   //FIXME: maybe separate UI- code from Model- from Data-Code
-
-  private ArrayList<StockBuild> stocks;
+  private DatabaseConnection databaseConnection = new DatabaseConnection();
   private Scanner scanner = new Scanner(System.in);
 
-  public StockSearcher(ArrayList<StockBuild> stocks) {
-    this.stocks = stocks;
-  }
-
-  public ArrayList<StockBuild> searchForDate() {
+  public ResultSet searchForDate() {
     ArrayList<StockBuild> stocksFound;
-
+    String sqlCode = null;
+    String date;
+    String date2;
     System.out.println("What type of date do you want to search for? 1: Exact date 2: Interval of dates 3: Everything before date 4: Everything after date");
     String choice = scanner.nextLine();
 
     switch (choice) {
       case "1":
-        stocksFound = SearchMethods.dateSearch(stocks, "exact");
-        System.out.println(searchForValue(stocksFound));
-        return stocksFound;
+        date = InputFunctions.getInputDateString();
+        sqlCode = "WHERE \"Date\" = ' "+ date + "'";
+        searchForValue(sqlCode);
+        break;
       case "2":
-        stocksFound = SearchMethods.dateSearch(stocks, "interval");
-        System.out.println(searchForValue(stocksFound));
-        return stocksFound;
+        date = InputFunctions.getInputDateString();
+        date2 = InputFunctions.getInputDateString();
+        sqlCode = "WHERE \"Date\" > '" + date +"' AND \"Date\" < '" + date2 + "'";
+        searchForValue(sqlCode);
+        break;
       case "3":
-        stocksFound = SearchMethods.dateSearch(stocks, "before");
-        System.out.println(searchForValue(stocksFound));
-        return stocksFound;
+        date = InputFunctions.getInputDateString();
+        sqlCode = "WHERE \"Date\" < '" + date + "'";
+        searchForValue(sqlCode);
+        break;
       case "4":
-        stocksFound = SearchMethods.dateSearch(stocks, "after");
-        System.out.println(searchForValue(stocksFound));
-        return stocksFound;
+        date = InputFunctions.getInputDateString();
+        sqlCode = "WHERE \"Date\" > '" + date + "'";
+        searchForValue(sqlCode);
+        break;
     }
     return null;
-  }
 
-  private void checkIfNull(BigDecimal value, String highOrLow, String dataType) {
-    if (value == null) {
-      System.out.println("Error no Value available");
-    } else {
-      System.out.println("This is the " + highOrLow + " " + dataType + ": " + value);
-    }
   }
-
 
   public ArrayList<StockBuild> searchForSymbol() {
     String choice = InputFunctions.scan("Type in the searched Symbol: ");
-    return SearchMethods.searchSymbol(stocks, choice);
+    return null;//SearchMethods.searchSymbol(stocks, choice);
   }
 
-
-  public StockBuild searchForValue(ArrayList<StockBuild> stocksFound) {
-    Sorter sorter = new Sorter();
-    StockBuild stock;
-    sorter.searchHighestAndLowest(stocksFound);
+  public ResultSet searchForValue(String dateCondition) {
+    Statement statement;
+    ResultSet result;
+    String sqlCode = null;
     String highLowChoice = InputFunctions.scan("What do you want to search for? 1: Lowest value 2: Highest value 3: All Highest and Lowest");
     String[] valueNames = new String[]{"Open", "High", "Low", "Close", "Lowest", "Highest"};
 
-    switch (highLowChoice) {
-      case "1":
-        String choice = InputFunctions.scan("For which data do you want the lowest value? 1: " + valueNames[0] + "2: " + valueNames[1] + "3: " + valueNames[2] + "4: " + valueNames[3]);
-        switch (choice) {
-          case "1":
-            stock = sorter.getCurrentLowestOpen();
-            checkIfNull(stock.getOpen(), valueNames[4], valueNames[0]);
-            return stock;
-          case "2":
-            stock = sorter.getCurrentLowestHigh();
-            checkIfNull(stock.getHigh(), valueNames[4], valueNames[1]);
-            return stock;
-          case "3":
-            stock = sorter.getCurrentLowestLow();
-            checkIfNull(stock.getLow(), valueNames[4], valueNames[2]);
-            return stock;
-          case "4":
-            stock = sorter.getCurrentLowestClose();
-            checkIfNull(stock.getClose(), valueNames[4], valueNames[3]);
-            return stock;
-        }
-        break;
-      case "2":
-        choice = InputFunctions.scan("For which data do you want the highest value? 1: Open 2: High 3: Low 4: Close");
-        switch (choice) {
-          case "1":
-            stock = sorter.getCurrentHighestOpen();
-            checkIfNull(stock.getOpen(), valueNames[5], valueNames[0]);
-            return stock;
-          case "2":
-            stock = sorter.getCurrentHighestHigh();
-            checkIfNull(stock.getHigh(), valueNames[5], valueNames[1]);
-            return stock;
-          case "3":
-            stock = sorter.getCurrentHighestLow();
-            checkIfNull(stock.getLow(), valueNames[5], valueNames[2]);
-            return stock;
-          case "4":
-            stock = sorter.getCurrentHighestClose();
-            checkIfNull(stock.getClose(), valueNames[5], valueNames[3]);
-            return stock;
-        }
-      case "3":
-        stock = sorter.getCurrentLowestOpen();
-        checkIfNull(stock.getOpen(), valueNames[4], valueNames[0]);
-        stock = sorter.getCurrentLowestHigh();
-        checkIfNull(stock.getHigh(), valueNames[4], valueNames[1]);
-        stock = sorter.getCurrentLowestLow();
-        checkIfNull(stock.getLow(), valueNames[4], valueNames[2]);
-        stock = sorter.getCurrentLowestClose();
-        checkIfNull(stock.getClose(), valueNames[4], valueNames[3]);
+    try {
+      statement = databaseConnection.connect().createStatement();
 
-        stock = sorter.getCurrentHighestOpen();
-        checkIfNull(stock.getOpen(), valueNames[5], valueNames[0]);
-        stock = sorter.getCurrentHighestHigh();
-        checkIfNull(stock.getHigh(), valueNames[5], valueNames[1]);
-        stock = sorter.getCurrentHighestLow();
-        checkIfNull(stock.getLow(), valueNames[5], valueNames[2]);
-        stock = sorter.getCurrentHighestClose();
-        checkIfNull(stock.getClose(), valueNames[5], valueNames[3]);
-        break;
-    }
+      switch (highLowChoice) {
+        case "1":
+          String choice = InputFunctions.scan("For which data do you want the lowest value? 1: " + valueNames[0] + "2: " + valueNames[1] + "3: " + valueNames[2] + "4: " + valueNames[3]);
+          switch (choice) {
+            case "1":
+              sqlCode = "SELECT MIN (\"Open\") FROM stockbuild " + dateCondition + ";";
+              result = statement.executeQuery(sqlCode);
+              while(result.next()) {
+                System.out.println("Min open: " + result.getDouble("Min"));
+              }
+              break;
+            case "2":
+              sqlCode = "SELECT MIN (\"High\") FROM stockbuild " + dateCondition + ";";
+              result = statement.executeQuery(sqlCode);
+              while(result.next()) {
+                System.out.println("Min high: " + result.getDouble("Min"));
+              }
+              break;
+            case "3":
+              sqlCode = "SELECT MIN (\"Low\") FROM stockbuild " + dateCondition + ";";
+              result = statement.executeQuery(sqlCode);
+              while(result.next()) {
+                System.out.println("Min low: " + result.getDouble("Min"));
+              }
+              break;
+            case "4":
+              sqlCode = "SELECT MIN (\"Close\") FROM stockbuild " + dateCondition + ";";
+              result = statement.executeQuery(sqlCode);
+              while(result.next()) {
+                System.out.println("Min close: " + result.getDouble("Min"));
+              }
+              break;
+          }
+          break;
+        case "2":
+          choice = InputFunctions.scan("For which data do you want the highest value? 1: Open 2: High 3: Low 4: Close");
+          switch (choice) {
+            case "1":
+              sqlCode = "SELECT MAX (\"Open\") FROM stockbuild " + dateCondition + ";";
+              result = statement.executeQuery(sqlCode);
+              while(result.next()) {
+                System.out.println("Max open: " + result.getDouble("Max"));
+              }
+              break;
+            case "2":
+              sqlCode = "SELECT MAX (\"High\") FROM stockbuild " + dateCondition + ";";
+              result = statement.executeQuery(sqlCode);
+              while(result.next()) {
+                System.out.println("Max high: " + result.getDouble("Max"));
+              }
+              break;
+            case "3":
+              sqlCode = "SELECT MAX (\"Low\") FROM stockbuild " +dateCondition + ";";
+              result = statement.executeQuery(sqlCode);
+              while(result.next()) {
+                System.out.println("Max low: " + result.getDouble("Max"));
+              }
+              break;
+            case "4":
+              sqlCode = "SELECT MAX (\"Close\") FROM stockbuild " +dateCondition + ";";
+              result = statement.executeQuery(sqlCode);
+              while(result.next()) {
+                System.out.println("Max close: " + result.getDouble("Max"));
+              }
+              break;
+          }
+        case "3":
+          //sqlCode = "SELECT MIN (\"Open\") FROM stockbuild;SELECT MIN (\"High\") FROM stockbuild;SELECT MIN (\"Low\") FROM stockbuild;SELECT MIN (\"Close\") FROM stockbuild;SELECT MAX (\"Open\") FROM stockbuild;SELECT MAX (\"High\") FROM stockbuild;SELECT MAX (\"Low\") FROM stockbuild;SELECT MAX (\"Close\") FROM stockbuild;";
+          break;
+      }
+      return null;
+    }catch (SQLException e) {
+        e.printStackTrace();
+      }
     return null;
   }
 }

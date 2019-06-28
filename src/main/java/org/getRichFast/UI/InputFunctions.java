@@ -34,4 +34,11 @@ public class InputFunctions {
     return sc.next();
   }
 
+  public static String getInputDateString(){
+    System.out.println("Please enter the date with this pattern: " + "yyyy-MM-dd");
+    Scanner scanner = new Scanner(System.in);
+    String date = scanner.nextLine();
+    return date;
+  }
+
 }

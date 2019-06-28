@@ -3,6 +3,7 @@ package org.getRichFast.UI;
 //https://search.maven.org/search?q=g:org.junit.jupiter%20AND%20v:5.4.2
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,7 +17,6 @@ import org.getRichFast.Searching.StockSearcher;
 public class Menus {
 
   private ArrayList<StockBuild> stocks;
-  private ArrayList<StockBuild> searchedStocks;
   private String menuChoice;
 
   public void startMenu() {
@@ -36,22 +36,22 @@ public class Menus {
   }
 
   private void searchMenu() {
-    searchedStocks = null;
-    StockSearcher stockSearcher = new StockSearcher(stocks);
-    menuChoice = scan("What do you want to search for? 1: \nDate 2: Symbol \n");
-    switch (menuChoice) {
-      case "1":
-        searchedStocks = stockSearcher.searchForDate();
-        break;
-      case "2":
-        if (searchedStocks != null) {
-          stockSearcher.searchForSymbol();
-        } else {
-          stockSearcher.searchForSymbol();
-        }
-        break;
+      ResultSet searchedStocks = null;
+      StockSearcher stockSearcher = new StockSearcher();
+      menuChoice = scan("What do you want to search for? 1: \nDate 2: Symbol \n");
+      switch (menuChoice) {
+        case "1":
+          searchedStocks = stockSearcher.searchForDate();
+         break;
+        case "2":
+         if (searchedStocks != null) {
+           stockSearcher.searchForSymbol();
+         } else {
+            stockSearcher.searchForSymbol();
+         }
+         break;
+      }
     }
-  }
 
   private void menu() throws IOException, ParseException {
     Boolean abort = false;
@@ -79,11 +79,11 @@ public class Menus {
           break;
 
         case "2":
-          if (stocks != null) {
+          //if (stocks != null) {
             searchMenu();
-          } else {
-            System.out.println("You have to download data before searching");
-          }
+          //} else {
+          //  System.out.println("You have to download data before searching");
+          //}
           break;
         case "3":
           DatabaseConnection database = new DatabaseConnection();

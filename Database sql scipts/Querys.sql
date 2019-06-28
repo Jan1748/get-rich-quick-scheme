@@ -14,4 +14,6 @@ SELECT * FROM stockbuild1 WHERE "Symbol" = 'FSE/EON_X'; /*Gibt alle Elemente aus
 
 /*Value*/
 SELECT * FROM stockbuild WHERE "Open" IS NOT NULL ORDER BY "Open" DESC; /*Gibt alle Elemente von Open absteigend sortiert zurück (Höchster zu erst)*/
+SELECT MAX ("Open") FROM stockbuild;
 SELECT * FROM stockbuild WHERE "Open" IS NOT NULL ORDER BY "Open" ASC; /*Gibt alle Elemente von Open aufsteigend sortiert zurück (Niedrigster zu erst)*/
+SELECT MIN ("Open") FROM stockbuild;
