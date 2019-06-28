@@ -70,7 +70,7 @@ public class DatabaseConnection {
     }
   }
 
-  private Connection connect() {
+  public Connection connect() {
     String url = "jdbc:postgresql://localhost:5432/" + databaseName;
     try {
       return DriverManager.getConnection(url, user, password);

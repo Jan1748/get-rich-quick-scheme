@@ -1,7 +1,5 @@
 package org.getRichFast;
 
-import org.getRichFast.Database.DatabaseConnection;
-import org.getRichFast.Searching.StockSearcher;
 import org.getRichFast.UI.Menus;
 
 public class Main {
