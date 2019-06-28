@@ -17,8 +17,8 @@ import org.postgresql.util.PSQLException;
 
 public class DatabaseConnection {
   private String user = "postgres";
-  private String password = "Rockstar2015!";
-  private String databaseName = "Postgresql";
+  private String password = "1234";
+  private String databaseName = "Test";
 
   public void outputAllDataFromDatabase() {
     Connection connection = connect();

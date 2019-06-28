@@ -1,4 +1,4 @@
-package org.getRichFast.UI;
+package org.getRichFast.Entity;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -10,7 +10,6 @@ import org.getRichFast.Parsing.CsvParser;
 
 public class DataShifter {
 
-  //FIXME: is this really an ui component ?
   public ArrayList<StockBuild> getAndParseData(String quandlApiKey, String quandlCode) throws IOException, ParseException {
 
     QuandlDownloader quandlDownloader = new QuandlDownloader(quandlApiKey);

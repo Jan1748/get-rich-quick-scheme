@@ -16,7 +16,6 @@ public class StockSearcher {
   private Scanner scanner = new Scanner(System.in);
 
   public ResultSet searchForDate() {
-    ArrayList<StockBuild> stocksFound;
     String sqlCode = null;
     String date;
     String date2;
@@ -48,11 +47,6 @@ public class StockSearcher {
     }
     return null;
 
-  }
-
-  public ArrayList<StockBuild> searchForSymbol() {
-    String choice = InputFunctions.scan("Type in the searched Symbol: ");
-    return null;//SearchMethods.searchSymbol(stocks, choice);
   }
 
   public ResultSet searchForValue(String dateCondition) {

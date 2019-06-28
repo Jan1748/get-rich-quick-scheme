@@ -4,13 +4,11 @@ package org.getRichFast.UI;
 
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 import org.getRichFast.Database.DatabaseConnection;
+import org.getRichFast.Entity.DataShifter;
 import org.getRichFast.Entity.StockBuild;
 import org.getRichFast.Searching.StockSearcher;
 
@@ -45,9 +43,8 @@ public class Menus {
          break;
         case "2":
          if (searchedStocks != null) {
-           stockSearcher.searchForSymbol();
+           //TODO: Search for symbol
          } else {
-            stockSearcher.searchForSymbol();
          }
          break;
       }
@@ -79,11 +76,7 @@ public class Menus {
           break;
 
         case "2":
-          //if (stocks != null) {
             searchMenu();
-          //} else {
-          //  System.out.println("You have to download data before searching");
-          //}
           break;
         case "3":
           DatabaseConnection database = new DatabaseConnection();
