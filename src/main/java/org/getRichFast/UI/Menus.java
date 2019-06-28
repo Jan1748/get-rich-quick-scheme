@@ -10,7 +10,8 @@ import java.util.Scanner;
 import org.getRichFast.Database.DatabaseConnection;
 import org.getRichFast.Entity.DataShifter;
 import org.getRichFast.Entity.StockBuild;
-import org.getRichFast.Searching.StockSearcher;
+import org.getRichFast.Searching.SymbolSearcher;
+import org.getRichFast.Searching.ValueSearcher;
 
 public class Menus {
 
@@ -35,18 +36,18 @@ public class Menus {
 
   private void searchMenu() {
       ResultSet searchedStocks = null;
-      StockSearcher stockSearcher = new StockSearcher();
-      menuChoice = scan("What do you want to search for? 1: \nDate 2: Symbol \n");
+      ValueSearcher valueSearcher = new ValueSearcher();
+      SymbolSearcher symbolSearcher = new SymbolSearcher();
+      menuChoice = scan("What do you want to search for? \n1: Date \n2: Symbol");
       switch (menuChoice) {
         case "1":
-          searchedStocks = stockSearcher.searchForDate();
-         break;
+          searchedStocks = valueSearcher.searchForDate();
+          break;
         case "2":
-         if (searchedStocks != null) {
-           //TODO: Search for symbol
-         } else {
-         }
-         break;
+          searchedStocks = symbolSearcher.searchForSymbol();
+          break;
+        default:
+          System.out.println("Please enter a valid choice");
       }
     }
 
@@ -58,13 +59,13 @@ public class Menus {
       String quandlCode;
       DataShifter data = new DataShifter();
       System.out.println("Quandl Downloader and Parser");
-      menuChoice = scan("1: Start download and parsing \n2: Search in the data \n3: Output all Data from Database to your Console \nE: exit (Please enter your choice)");
+      menuChoice = scan("1: Start download and parsing \n2: Search in the data \n3: Output all Data from Database to your Console \ne: exit (Please enter your choice)");
       switch (menuChoice) {
         case "1":
           //quandlApiKey = scan("Enter your api-code:");
-          //quandlCode = scan("Enter the Quandl-code:");
+          quandlCode = scan("Enter the Quandl-code:");
           quandlApiKey = "VAuKhbFRLKYeucyzd868";
-          quandlCode = "FSE/EON_X";
+          //quandlCode = "FSE/EON_X";
 
           if (scan("Start downloading Quandl data: " + quandlCode + "with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
             stocks = data.getAndParseData(quandlApiKey, quandlCode);
@@ -82,10 +83,11 @@ public class Menus {
           DatabaseConnection database = new DatabaseConnection();
           database.outputAllDataFromDatabase();
           break;
-        case "E":
         case"e":
           System.exit(0);
           break;
+        default:
+          System.out.println("Please enter a valid choice");
       }
     }
   }
