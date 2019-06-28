@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Scanner;
 import org.getRichFast.Database.DatabaseConnection;
 import org.getRichFast.Downloading.QuandlCodeFinder;
@@ -67,6 +68,7 @@ public class Menus {
   private void menu() throws IOException, ParseException {
     Boolean abort = false;
     while (!abort) {
+      Properties properties = new Properties();
       String menuChoice;
       String quandlApiKey;
       String quandlCode;
@@ -80,7 +82,7 @@ public class Menus {
           //  quandlApiKey = quandlApiKeyNew;
           //}
           //quandlCode = scan("Enter the Quandl-code:");
-          quandlApiKey = "VAuKhbFRLKYeucyzd868";
+          properties.load();
           quandlCode = "FSE/ON_X";
 
           if (scan("Start downloading Quandl data: " + quandlCode + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
