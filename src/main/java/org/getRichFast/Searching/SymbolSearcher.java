@@ -29,4 +29,13 @@ public class SymbolSearcher {
 
     return resultSet;
   }
+
+  public String symbolCondition(){
+    return getSymbolCondition(InputFunctions.scan("With which symbol do you want to search?"));
+  }
+
+  private String getSymbolCondition(String symbol){
+    String symbolCode = "AND \"Symbol\" = '" + symbol + "'";
+    return symbolCode;
+  }
 }

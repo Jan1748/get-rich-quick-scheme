@@ -54,7 +54,7 @@ public class Menus {
       case "1":
         searchedValues = valueSearcher.searchForValue(dateSearcher.searchForDate());
         if (searchedValues != null){
-          //databaseOutput.outputDatabaseDataArray(searchedValues);
+          databaseOutput.outputDatabaseDataArray(searchedValues);
         }
         break;
       case "2":
