@@ -73,45 +73,47 @@ public class Menus {
 
   private void searchMenu() {
     String date = null;
+    String date2 = null;
     String symbol;
     menuChoice = InputFunctions.scan("What do you want to search for? \n1: Date \n2: Symbol \n3: Value");
     switch (menuChoice) {
       case "1":
         switch (InputFunctions.scan("What type of date do you want to search for? 1: Exact date 2: Interval of dates 3: Everything before date 4: Everything after date")) {
           case "1":
-            //TODO: add a method for exact date
+            date = InputFunctions.getInputDateString();
             break;
           case "2":
-            //TODO: add a method for interval of date
+            date = InputFunctions.getInputDateString();
+            date2 = InputFunctions.getInputDateString();
             break;
           case "3":
-            //TODO: add a method for everything before date
+            date = InputFunctions.getInputDateString();
             break;
           case "4":
-            //TODO: add a method for everything after date
+            date = InputFunctions.getInputDateString();
             break;
           default:
             System.out.println("Please enter a valid choice");
         }
         if (InputFunctions.scan("Do you want to search for a symbol? (y/n)").equals("y")) {
           symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
-          searchForValueMenu(date, symbol);
+          searchForValueMenu(date, date2, symbol);
         } else {
-          searchForValueMenu(date, null);
+          searchForValueMenu(date, date2, null);
         }
         break;
       case "2":
         symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
-        searchForValueMenu(null, symbol);
+        searchForValueMenu(null, null, symbol);
         break;
       case "3":
-        searchForValueMenu(null, null);
+        searchForValueMenu(null, null, null);
       default:
         System.out.println("Please enter a valid choice");
     }
   }
 
-  private void searchForValueMenu(String date, String symbol) {
+  private void searchForValueMenu(String date, String date2, String symbol) {
     switch (InputFunctions.scan("What do you want to search? \n1: Highest value \n2: Lowest value")) {
       case "1":
         //TODO: add search for highest value

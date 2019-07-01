@@ -15,7 +15,7 @@ public class DatabaseInserter {
       try {
         Statement statement = connection.createStatement();
         int counter = 0;
-        int succesfullCounter = 0;
+        int successfulCounter = 0;
         for (int i = 0; i < stocks.size(); i++) {
           StockBuild stock = stocks.get(i);
           java.sql.Date sqlDate = new java.sql.Date(stock.getDate().getTimeInMillis());
@@ -29,14 +29,14 @@ public class DatabaseInserter {
           sql.setBigDecimal(6, stock.getClose());
           try {
             sql.executeUpdate();
-            succesfullCounter++;
+            successfulCounter++;
           } catch (PSQLException e) {
             counter++;
           }
           sql.close();
         }
         if(counter != 0) {
-          System.out.println("\nDuplicated Data! " + counter + " Database entry's are already inside the Database.\n" +succesfullCounter + " New entry's were added\nTotal entry's: " + stocks.size() +"\n");
+          System.out.println("\nDuplicated Data! " + counter + " Database entry's are already inside the Database.\n" +successfulCounter + " New entry's were added\nTotal entry's: " + stocks.size() +"\n");
         }else {
           System.out.println("\nAll " + stocks.size() +" entry's were successfully added\n");
         }
