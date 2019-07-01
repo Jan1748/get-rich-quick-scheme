@@ -2,7 +2,9 @@ package org.getRichFast.UI;
 
 //https://search.maven.org/search?q=g:org.junit.jupiter%20AND%20v:5.4.2
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import org.getRichFast.Database.DatabaseConnection;
 import org.getRichFast.Downloading.QuandlCodeFinder;
 import org.getRichFast.Entity.DataShifter;
 import org.getRichFast.Entity.StockBuild;
+import org.getRichFast.Properties.PropertiesCreate;
 import org.getRichFast.Searching.DateSearcher;
 import org.getRichFast.Searching.SymbolSearcher;
 import org.getRichFast.Searching.ValueSearcher;
@@ -66,15 +69,21 @@ public class Menus {
   }
 
   private void menu() throws IOException, ParseException {
+    try {
+      InputStream input = new FileInputStream("src/main/resources/config.properties");
+      Properties prop =new Properties();
+      prop.load(input);
+      this.quandlApiKey = prop.getProperty("api.Key");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     Boolean abort = false;
     while (!abort) {
-      Properties properties = new Properties();
       String menuChoice;
-      String quandlApiKey;
       String quandlCode;
       DataShifter data = new DataShifter();
       System.out.println("Quandl Downloader and Parser");
-      menuChoice = scan("1: Start download and parsing \n2: Search in the data \n3: Output all Data from Database to your Console \ne: exit (Please enter your choice)");
+      menuChoice = scan("1: Start download and parsing \n2: Search in the data \n3: Output all Data from Database to your Console \n4: Set all Properties to Default\ne: exit (Please enter your choice)");
       switch (menuChoice) {
         case "1":
           //String quandlApiKeyNew = scan("Enter your new api-code or press 'o' to use the old one:");
@@ -82,7 +91,6 @@ public class Menus {
           //  quandlApiKey = quandlApiKeyNew;
           //}
           //quandlCode = scan("Enter the Quandl-code:");
-          properties.load();
           quandlCode = "FSE/ON_X";
 
           if (scan("Start downloading Quandl data: " + quandlCode + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
@@ -113,6 +121,8 @@ public class Menus {
           DatabaseConnection database = new DatabaseConnection();
           database.outputAllDataFromDatabase();
           break;
+        case "4":
+          PropertiesCreate.createProperties();
         case "e":
           System.exit(0);
           break;

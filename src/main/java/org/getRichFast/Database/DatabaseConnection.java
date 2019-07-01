@@ -1,5 +1,9 @@
 package org.getRichFast.Database;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,13 +11,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
 import org.getRichFast.Entity.StockBuild;
 import org.postgresql.util.PSQLException;
 
 public class DatabaseConnection {
-  private String user = "postgres";
-  private String password = "Rockstar2015!";
-  private String databaseName = "postgres";
+  private String user;
+  private String password;
+  private String databaseName;
 
   public void outputAllDataFromDatabase() {
     Connection connection = connect();
@@ -73,12 +78,23 @@ public class DatabaseConnection {
   }
 
   public Connection connect() {
+    try {
+      InputStream input = new FileInputStream("src/main/resources/config.properties");
+      Properties prop =new Properties();
+      prop.load(input);
+      setUser(prop.getProperty("db.user"));
+      setDatabaseName(prop.getProperty("db.name"));
+      setPassword(prop.getProperty("db.password"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     String url = "jdbc:postgresql://localhost:5432/" + databaseName;
+    System.out.println("User: " + user);
     try {
       return DriverManager.getConnection(url, user, password);
     } catch (SQLException e) {
       System.out.println("Failed to connect to Database");
-      e.printStackTrace();
+      //e.printStackTrace();
     }
     return null;
   }
