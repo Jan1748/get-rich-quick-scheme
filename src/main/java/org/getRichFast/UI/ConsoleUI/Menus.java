@@ -1,4 +1,4 @@
-package org.getRichFast.UI;
+package org.getRichFast.UI.ConsoleUI;
 
 //https://search.maven.org/search?q=g:org.junit.jupiter%20AND%20v:5.4.2
 
@@ -10,14 +10,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
-import org.getRichFast.Database.DatabaseConnection;
-import org.getRichFast.Downloading.QuandlCodeFinder;
-import org.getRichFast.Entity.DataShifter;
-import org.getRichFast.Entity.StockBuild;
+import org.getRichFast.Data.Database.DatabaseConnection;
+import org.getRichFast.Data.Downloading.QuandlCodeFinder;
+import org.getRichFast.Data.Entity.DataShifter;
+import org.getRichFast.Data.Entity.StockBuild;
 import org.getRichFast.Properties.PropertiesCreate;
-import org.getRichFast.Searching.DateSearcher;
-import org.getRichFast.Searching.SymbolSearcher;
-import org.getRichFast.Searching.ValueSearcher;
+import org.getRichFast.Model.Searching.DateSearcher;
+import org.getRichFast.Model.Searching.SymbolSearcher;
+import org.getRichFast.Model.Searching.ValueSearcher;
 
 public class Menus {
 
@@ -85,6 +85,7 @@ public class Menus {
       System.out.println("Quandl Downloader and Parser");
       menuChoice = scan("1: Start download and parsing \n2: Search in the data \n3: Output all Data from Database to your Console \n4: Set all Properties to Default\ne: exit (Please enter your choice)");
       switch (menuChoice) {
+
         case "1":
           quandlCode = InputFunctions.scan("Enter the Quandle Code.");
           if (scan("Start downloading Quandl data: " + quandlCode + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {

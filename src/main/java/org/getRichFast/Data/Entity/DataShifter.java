@@ -1,10 +1,10 @@
-package org.getRichFast.Entity;
+package org.getRichFast.Data.Entity;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import org.getRichFast.Downloading.QuandlDownloader;
-import org.getRichFast.Parsing.CsvParser;
+import org.getRichFast.Data.Downloading.QuandlDownloader;
+import org.getRichFast.Model.Parsing.CsvParser;
 
 public class DataShifter {
 

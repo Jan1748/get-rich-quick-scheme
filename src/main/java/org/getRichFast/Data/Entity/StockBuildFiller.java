@@ -1,9 +1,9 @@
-package org.getRichFast.Entity;
+package org.getRichFast.Data.Entity;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import org.getRichFast.Parsing.LineParser;
+import org.getRichFast.Model.Parsing.LineParser;
 
 public class StockBuildFiller {
 

@@ -1,6 +1,6 @@
 package org.getRichFast;
 
-import org.getRichFast.UI.Menus;
+import org.getRichFast.UI.ConsoleUI.Menus;
 
 public class Main {
 

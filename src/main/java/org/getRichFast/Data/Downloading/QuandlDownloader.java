@@ -1,4 +1,4 @@
-package org.getRichFast.Downloading;
+package org.getRichFast.Data.Downloading;
 
 import java.io.BufferedReader;
 import java.io.IOException;

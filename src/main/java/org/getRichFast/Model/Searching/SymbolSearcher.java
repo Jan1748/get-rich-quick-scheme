@@ -1,11 +1,10 @@
-package org.getRichFast.Searching;
+package org.getRichFast.Model.Searching;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
-import org.getRichFast.Database.DatabaseConnection;
-import org.getRichFast.UI.InputFunctions;
+import org.getRichFast.Data.Database.DatabaseConnection;
+import org.getRichFast.UI.ConsoleUI.InputFunctions;
 
 public class SymbolSearcher {
 

@@ -1,4 +1,4 @@
-package org.getRichFast.UI;
+package org.getRichFast.UI.ConsoleUI;
 
 import java.math.BigDecimal;
 import java.text.ParseException;

@@ -1,4 +1,4 @@
-package org.getRichFast.Downloading;
+package org.getRichFast.Data.Downloading;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.getRichFast.Parsing.QuandlCodeParser;
+import org.getRichFast.Model.Parsing.QuandlCodeParser;
 
 public class QuandlCodeFinder {
 

@@ -1,4 +1,4 @@
-package org.getRichFast.Entity;
+package org.getRichFast.Data.Entity;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;

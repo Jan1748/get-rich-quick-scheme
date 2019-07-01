@@ -1,7 +1,6 @@
-package org.getRichFast.Searching;
+package org.getRichFast.Model.Searching;
 
-import java.sql.ResultSet;
-import org.getRichFast.UI.InputFunctions;
+import org.getRichFast.UI.ConsoleUI.InputFunctions;
 
 public class DateSearcher {
 

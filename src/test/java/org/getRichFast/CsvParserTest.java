@@ -1,7 +1,7 @@
 package org.getRichFast;
 
 import java.util.ArrayList;
-import org.getRichFast.Parsing.CsvParser;
+import org.getRichFast.Model.Parsing.CsvParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

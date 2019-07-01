@@ -1,7 +1,6 @@
-package org.getRichFast.Database;
+package org.getRichFast.Data.Database;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -12,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
-import org.getRichFast.Entity.StockBuild;
+import org.getRichFast.Data.Entity.StockBuild;
 import org.postgresql.util.PSQLException;
 
 public class DatabaseConnection {
