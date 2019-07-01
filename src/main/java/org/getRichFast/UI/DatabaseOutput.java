@@ -21,7 +21,16 @@ public class DatabaseOutput {
   public void outputDatabaseDataArray(ResultSet[] resultSets){
     String[] value = new String[]{"Open", "High", "Low", "Close"};
     for(int x = 0; x < 4; x++){
-
+      try {
+        resultSets[x].next();
+        System.out.println(value[x] + ": " + Double.toString(resultSets[x].getDouble("MAX")));
+      } catch (SQLException e) {
+        try {
+          System.out.println(value[x] + ": " + Double.toString(resultSets[x].getDouble("MIN")));
+        } catch (SQLException ex) {
+          ex.printStackTrace();
+        }
+      }
     }
   }
 }
