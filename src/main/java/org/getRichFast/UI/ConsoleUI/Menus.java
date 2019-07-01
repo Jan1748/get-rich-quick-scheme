@@ -5,129 +5,118 @@ package org.getRichFast.UI.ConsoleUI;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.ResultSet;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Properties;
-import java.util.Scanner;
-import org.getRichFast.Data.Database.DatabaseConnection;
-import org.getRichFast.Data.Downloading.QuandlCodeFinder;
-import org.getRichFast.Data.Entity.DataShifter;
-import org.getRichFast.Data.Entity.StockBuild;
-import org.getRichFast.Properties.PropertiesCreate;
-import org.getRichFast.Model.Searching.DateSearcher;
-import org.getRichFast.Model.Searching.SymbolSearcher;
-import org.getRichFast.Model.Searching.ValueSearcher;
 
 public class Menus {
 
-  private ArrayList<StockBuild> stocks;
   private String menuChoice;
   private String quandlApiKey;
 
-
   public void startMenu() {
-    try {
-      menu();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
+    menu();
   }
 
-  private String scan(String message) {
-    Scanner sc = new Scanner(System.in);
-    System.out.println(message);
-    return sc.next();
-  }
-
-  private void searchMenu() {
-    ResultSet[] searchedValues = null;
-    DateSearcher dateSearcher = new DateSearcher();
-    ValueSearcher valueSearcher = new ValueSearcher();
-    SymbolSearcher symbolSearcher = new SymbolSearcher();
-    DatabaseOutput databaseOutput = new DatabaseOutput();
-    ResultSet searchedSymbols;
-    menuChoice = scan("What do you want to search for? \n1: Date \n2: Symbol");
-    switch (menuChoice) {
-      case "1":
-        searchedValues = valueSearcher.searchForValue(dateSearcher.searchForDate());
-        if (searchedValues != null){
-          databaseOutput.outputDatabaseDataArray(searchedValues);
-        }
-        break;
-      case "2":
-        searchedSymbols = symbolSearcher.searchForSymbol();
-        if (searchedSymbols != null) {
-          databaseOutput.outputDatabaseData(searchedSymbols);
-        }
-        break;
-      default:
-        System.out.println("Please enter a valid choice");
-    }
-  }
-
-  private void menu() throws IOException, ParseException {
+  private void menu() {
     try {
       InputStream input = new FileInputStream("src/main/resources/config.properties");
-      Properties prop =new Properties();
+      Properties prop = new Properties();
       prop.load(input);
       this.quandlApiKey = prop.getProperty("api.Key");
     } catch (IOException e) {
       e.printStackTrace();
     }
+    String symbol;
     Boolean abort = false;
     while (!abort) {
-      String menuChoice;
-      String quandlCode;
-      DataShifter data = new DataShifter();
       System.out.println("Quandl Downloader and Parser");
-      menuChoice = scan("1: Start download and parsing \n2: Search in the data \n3: Output all Data from Database to your Console \n4: Set all Properties to Default\ne: exit (Please enter your choice)");
+      menuChoice = InputFunctions.scan("1: Start download and parsing \n2: Search in the data \ne: exit (Please enter your choice)");
       switch (menuChoice) {
-
         case "1":
-          quandlCode = InputFunctions.scan("Enter the Quandle Code.");
-          if (scan("Start downloading Quandl data: " + quandlCode + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
-              stocks = data.getAndParseData(quandlApiKey, quandlCode);
-              DatabaseConnection database = new DatabaseConnection();
-              database.insertDataToDatabase(stocks);
+          switch (InputFunctions.scan("What do you want to download? 1: All data from a stock market 2: Single stock")) {
+            case "1":
+              symbol = InputFunctions.scan("Please enter the symbol for the stock market.");
+              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
+
+              } else {
+                System.out.println("abort");
+              }
+              //TODO: add a method that downloads all data from a stock market
+              break;
+            case "2":
+              symbol = InputFunctions.scan("Please enter the symbol for the stock.");
+              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
+
+              } else {
+                System.out.println("abort");
+              }
+              //TODO: add a method that downloads a single share price
+              break;
+          }
+          symbol = InputFunctions.scan("Please enter the symbol.");
+          if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
+
           } else {
             System.out.println("abort");
           }
           break;
-
         case "2":
           searchMenu();
           break;
-        case "3":
-          DatabaseConnection database = new DatabaseConnection();
-          database.outputAllDataFromDatabase();
-          break;
-        case "4":
-          PropertiesCreate.createProperties();
-        case "5":
-          QuandlCodeFinder quandlCodeFinder = new QuandlCodeFinder();
-          ArrayList<String> quandlCodes = null;
-          try {
-            quandlCodes = quandlCodeFinder.getQuandlCodes("FSE", "VAuKhbFRLKYeucyzd868");
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-          String quandlCodee;
-          for(int i = 1; i < quandlCodes.size(); i++) {
-            quandlCodee = "FSE/" + quandlCodes.get(i);
-            System.out.println("Stock nr. " + i + ": " + quandlCodee);
-            stocks = data.getAndParseData(quandlApiKey, quandlCodee);
-            DatabaseConnection databases = new DatabaseConnection();
-            databases.insertDataToDatabase(stocks);
-          }
         case "e":
           System.exit(0);
           break;
         default:
           System.out.println("Please enter a valid choice");
       }
+    }
+  }
+
+  private void searchMenu() {
+    String date = null;
+    String symbol;
+    menuChoice = InputFunctions.scan("What do you want to search for? \n1: Date \n2: Symbol \n3: Value");
+    switch (menuChoice) {
+      case "1":
+        switch (InputFunctions.scan("What type of date do you want to search for? 1: Exact date 2: Interval of dates 3: Everything before date 4: Everything after date")) {
+          case "1":
+            //TODO: add a method for exact date
+            break;
+          case "2":
+            //TODO: add a method for interval of date
+            break;
+          case "3":
+            //TODO: add a method for everything before date
+            break;
+          case "4":
+            //TODO: add a method for everything after date
+            break;
+          default:
+            System.out.println("Please enter a valid choice");
+        }
+        if (InputFunctions.scan("Do you want to search for a symbol? (y/n)").equals("y")) {
+          symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
+          searchForValueMenu(date, symbol);
+        } else {
+          searchForValueMenu(date, null);
+        }
+        break;
+      case "2":
+        symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
+        searchForValueMenu(null, symbol);
+        break;
+      case "3":
+        searchForValueMenu(null, null);
+      default:
+        System.out.println("Please enter a valid choice");
+    }
+  }
+
+  private void searchForValueMenu(String date, String symbol) {
+    switch (InputFunctions.scan("What do you want to search? \n1: Highest value \n2: Lowest value")) {
+      case "1":
+        //TODO: add search for highest value
+      case "2":
+        //TODO: add search for lowest value
     }
   }
 }
