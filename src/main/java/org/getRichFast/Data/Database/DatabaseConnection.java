@@ -12,52 +12,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 import org.getRichFast.Data.DataReceiver;
-import org.postgresql.util.PSQLException;
 import org.getRichFast.Data.Entity.StockBuild;
 
 public class DatabaseConnection implements DataReceiver {
+
   private String user;
   private String password;
   private String databaseName;
-
-
-  public void insertDataToDatabase(ArrayList<StockBuild> stocks) {
-    Connection connection = connect();
-    if (connection != null) {
-      System.out.println("Connected to PostgreSQL database!");
-      try {
-        Statement statement = connection.createStatement();
-        int counter = 0;
-        int succesfullCounter = 0;
-        for (int i = 0; i < stocks.size(); i++) {
-          StockBuild stock = stocks.get(i);
-          java.sql.Date sqlDate = new java.sql.Date(stock.getDate().getTimeInMillis());
-          PreparedStatement sql = null;
-          sql = connection.prepareStatement("INSERT INTO stockbuild VALUES (?,?,?,?,?,?)");
-          sql.setString(1, stock.getSymbol());
-          sql.setDate(2, sqlDate);
-          sql.setBigDecimal(3, stock.getOpen());
-          sql.setBigDecimal(4, stock.getHigh());
-          sql.setBigDecimal(5, stock.getLow());
-          sql.setBigDecimal(6, stock.getClose());
-          try {
-            sql.executeUpdate();
-            succesfullCounter++;
-          } catch (PSQLException e) {
-            counter++;
-          }
-          sql.close();
-        }
-        if(counter != 0) {
-          System.out.println("\nDuplicated Data! " + counter + " Database entry's are already inside the Database.\n" +succesfullCounter + " New entry's were added\nTotal entry's: " + stocks.size() +"\n");
-        }else {
-          System.out.println("\nAll " + stocks.size() +" entry's were successfully added\n");
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    }
-  }
+  private Connection connection;
 
   public Connection connect() {
     String url = "jdbc:postgresql://localhost:5432/" + databaseName;
@@ -87,7 +49,7 @@ public class DatabaseConnection implements DataReceiver {
   public void initialize() {
     try {
       InputStream input = new FileInputStream("src/main/resources/config.properties");
-      Properties prop =new Properties();
+      Properties prop = new Properties();
       prop.load(input);
       setUser(prop.getProperty("db.user"));
       setDatabaseName(prop.getProperty("db.name"));
@@ -95,46 +57,56 @@ public class DatabaseConnection implements DataReceiver {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    connect();
+    this.connection = connect();
   }
 
   @Override
-  public void getMaximalDateValue() {
-
+  public void insertDataToDatabase(ArrayList<StockBuild> stocks) {
+    DatabaseInserter.insertDataToDatabase(stocks, connection);
   }
 
   @Override
-  public void getMaximalDateSymbolValue() {
-
+  public void getMaximalDateValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1) {
+    DatabaseRequestBuilder.requestBuild(ValueEnum.MAX, columNameEnum, dateEnum, date, date1, null);
   }
 
   @Override
-  public void getMaximalSymbolValue() {
-
-  }
-
-  @Override
-  public void getMaximalValue() {
+  public void getMaximalDateSymbolValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date,String date1, String symbol) {
+    DatabaseRequestBuilder.requestBuild(ValueEnum.MAX, columNameEnum, dateEnum, date, date1, symbol);
 
   }
 
   @Override
-  public void getMinimalDateValue() {
+  public void getMaximalSymbolValue(ColumNameEnum columNameEnum, String symbol) {
+    DatabaseRequestBuilder.requestBuild(ValueEnum.MAX, columNameEnum, DateEnum.NULL, null, null, symbol);
 
   }
 
   @Override
-  public void getMinimalDateSymbolValue() {
+  public void getMaximalValue(ColumNameEnum columNameEnum) {
+    DatabaseRequestBuilder.requestBuild(ValueEnum.MAX, columNameEnum, DateEnum.NULL, null, null, null);
+  }
+
+  @Override
+  public void getMinimalDateValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1) {
+    DatabaseRequestBuilder.requestBuild(ValueEnum.MIN, columNameEnum, DateEnum.NULL, date, date1, null);
 
   }
 
   @Override
-  public void getMinimalSymbolValue() {
+  public void getMinimalDateSymbolValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1, String symbol) {
+    DatabaseRequestBuilder.requestBuild(ValueEnum.MIN, columNameEnum, DateEnum.NULL, date, date1, symbol);
 
   }
 
   @Override
-  public void getMinimalValue() {
-
+  public void getMinimalSymbolValue(ColumNameEnum columNameEnum,String symbol) {
+    DatabaseRequestBuilder.requestBuild(ValueEnum.MIN, columNameEnum, DateEnum.NULL, null, null, symbol);
   }
+
+  @Override
+  public void getMinimalValue(ColumNameEnum columNameEnum) {
+    DatabaseRequestBuilder.requestBuild(ValueEnum.MIN, columNameEnum, DateEnum.NULL, null, null, null);
+  }
+
 }

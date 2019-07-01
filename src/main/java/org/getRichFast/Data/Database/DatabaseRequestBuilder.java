@@ -3,7 +3,7 @@ package org.getRichFast.Data.Database;
 
 public class DatabaseRequestBuilder {
 
-  public String requestBuild(ValueEnum valueEnum,ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1, String Symbol) {
+  public static String requestBuild(ValueEnum valueEnum,ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1, String Symbol) {
     String sqlCode = "SELECT ";
     if(valueEnum == ValueEnum.MIN){
       sqlCode += "MIN ";

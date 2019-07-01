@@ -1,5 +1,10 @@
 package org.getRichFast.Data;
 
+import java.util.ArrayList;
+import org.getRichFast.Data.Database.ColumNameEnum;
+import org.getRichFast.Data.Database.DateEnum;
+import org.getRichFast.Data.Entity.StockBuild;
+
 public interface DataReceiver {
 
   /**
@@ -7,14 +12,16 @@ public interface DataReceiver {
    */
   void initialize();
 
-  void getMaximalDateValue();
-  void getMaximalDateSymbolValue();
-  void getMaximalSymbolValue();
-  void getMaximalValue();
+  void insertDataToDatabase(ArrayList<StockBuild> stocks);
 
-  void getMinimalDateValue();
-  void getMinimalDateSymbolValue();
-  void getMinimalSymbolValue();
-  void getMinimalValue();
+  void getMaximalDateValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1);
+  void getMaximalDateSymbolValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date,String date1, String symbol);
+  void getMaximalSymbolValue(ColumNameEnum columNameEnum, String symbol);
+  void getMaximalValue(ColumNameEnum columNameEnum);
+
+  void getMinimalDateValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1);
+  void getMinimalDateSymbolValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1, String symbol);
+  void getMinimalSymbolValue(ColumNameEnum columNameEnum,String symbol);
+  void getMinimalValue(ColumNameEnum columNameEnum);
 
 }
