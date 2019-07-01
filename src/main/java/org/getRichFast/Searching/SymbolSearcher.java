@@ -35,7 +35,7 @@ public class SymbolSearcher {
   }
 
   private String getSymbolCondition(String symbol){
-    String symbolCode = "AND \"Symbol\" = " + symbol;
+    String symbolCode = "AND \"Symbol\" = '" + symbol + "'";
     return symbolCode;
   }
 }
