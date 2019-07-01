@@ -1,29 +1,18 @@
 package org.getRichFast.Downloading;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import org.getRichFast.Parsing.QuandlCodeParser;
-import org.getRichFast.UI.InputFunctions;
 
 public class QuandlCodeFinder {
 
   public ArrayList<String> getQuandlCodes(String stockCode, String quandlApiKey) throws IOException {
+    System.out.println("QuandlCodeFinder Beginn");
     ArrayList<String> quandleCodes = new ArrayList<>();
     System.out.println("Start download data");
     ArrayList<String> content = new ArrayList<>();
@@ -36,18 +25,22 @@ public class QuandlCodeFinder {
     System.out.println("\tRequest Method: " + apiConnection.getRequestMethod());
     int status = apiConnection.getResponseCode();
     System.out.println("\tHTTP response: " + status);
-    ZipInputStream in = new ZipInputStream(apiConnection.getInputStream());
-    for (ZipEntry zipEntry;(zipEntry = in.getNextEntry()) != null; )
-    {
-      System.out.println("reading zipEntry " + zipEntry.getName());
-      Scanner sc = new Scanner(in);
-      String quandleCode;
-      while (sc.hasNextLine()) {
-        quandleCodes.add(QuandlCodeParser.getQuandlCodes(sc.nextLine()));
+    if(status == 200) {
+      ZipInputStream in = new ZipInputStream(apiConnection.getInputStream());
+      for (ZipEntry zipEntry; (zipEntry = in.getNextEntry()) != null; ) {
+        System.out.println("reading zipEntry " + zipEntry.getName());
+        Scanner sc = new Scanner(in);
+        String quandleCode;
+        while (sc.hasNextLine()) {
+          quandleCodes.add(QuandlCodeParser.getQuandlCodes(sc.nextLine()));
+        }
+        System.out.println("reading " + zipEntry.getName() + " completed");
       }
-      System.out.println("reading " + zipEntry.getName() + " completed");
+      in.close();
+    }else {
+      System.out.println("Error something went wrong");
     }
-    in.close();
+      System.out.println("QuandlCodeFinder End");
     return quandleCodes;
   }
 }
