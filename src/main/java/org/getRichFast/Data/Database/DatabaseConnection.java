@@ -11,32 +11,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
-import org.getRichFast.Data.Entity.StockBuild;
+import org.getRichFast.Data.DataReceiver;
 import org.postgresql.util.PSQLException;
+import org.getRichFast.Data.Entity.StockBuild;
 
-public class DatabaseConnection {
+public class DatabaseConnection implements DataReceiver {
   private String user;
   private String password;
   private String databaseName;
 
-  public void outputAllDataFromDatabase() {
-    Connection connection = connect();
-    if (connection != null) {
-      Statement statement = null;
-      try {
-        statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.stockbuild");
-        System.out.printf("%-12.12s %-12.12s %-8.8s %-8.8s %-8.8s %-8.8s%n", "Symbol", "Date", "Open", "High", "Low", "Close");
-        while (resultSet.next()) {
-          System.out
-              .printf("%-12.12s %-12.12s %-8.8s %-8.8s %-8.8s %-8.8s%n", resultSet.getString("date"), resultSet.getString("symbol"), resultSet.getString("open"), resultSet.getString("high"),
-                  resultSet.getString("low"), resultSet.getString("close"));
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    }
-  }
 
   public void insertDataToDatabase(ArrayList<StockBuild> stocks) {
     Connection connection = connect();
@@ -77,16 +60,6 @@ public class DatabaseConnection {
   }
 
   public Connection connect() {
-    try {
-      InputStream input = new FileInputStream("src/main/resources/config.properties");
-      Properties prop =new Properties();
-      prop.load(input);
-      setUser(prop.getProperty("db.user"));
-      setDatabaseName(prop.getProperty("db.name"));
-      setPassword(prop.getProperty("db.password"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
     String url = "jdbc:postgresql://localhost:5432/" + databaseName;
     System.out.println("User: " + user);
     try {
@@ -108,5 +81,60 @@ public class DatabaseConnection {
 
   public void setDatabaseName(String databaseName) {
     this.databaseName = databaseName;
+  }
+
+  @Override
+  public void initialize() {
+    try {
+      InputStream input = new FileInputStream("src/main/resources/config.properties");
+      Properties prop =new Properties();
+      prop.load(input);
+      setUser(prop.getProperty("db.user"));
+      setDatabaseName(prop.getProperty("db.name"));
+      setPassword(prop.getProperty("db.password"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    connect();
+  }
+
+  @Override
+  public void getMaximalDateValue() {
+
+  }
+
+  @Override
+  public void getMaximalDateSymbolValue() {
+
+  }
+
+  @Override
+  public void getMaximalSymbolValue() {
+
+  }
+
+  @Override
+  public void getMaximalValue() {
+
+  }
+
+  @Override
+  public void getMinimalDateValue() {
+
+  }
+
+  @Override
+  public void getMinimalDateSymbolValue() {
+
+  }
+
+  @Override
+  public void getMinimalSymbolValue() {
+
+  }
+
+  @Override
+  public void getMinimalValue() {
+
   }
 }
