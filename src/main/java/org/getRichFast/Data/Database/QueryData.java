@@ -13,7 +13,7 @@ public class QueryData {
     String[] requests = request.split(";");
     for (int i = 0; i < 7; i += 2) {
       Statement statement = connection.createStatement();
-      String requestNew = requests[i] + ";";
+      String requestNew = requests[i/2] + ";";
       try {
         resultSet = statement.executeQuery(requestNew);
 

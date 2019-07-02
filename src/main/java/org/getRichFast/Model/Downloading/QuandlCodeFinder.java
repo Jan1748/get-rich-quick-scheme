@@ -36,7 +36,9 @@ public class QuandlCodeFinder {
         Scanner sc = new Scanner(in);
 
         while (sc.hasNextLine()) {
-          quandleCodes.add(QuandlCodeParser.getQuandlCodes(sc.nextLine()));
+          String addingCode = stockCode + "/";
+          addingCode += QuandlCodeParser.getQuandlCodes(sc.nextLine());
+          quandleCodes.add(addingCode);
         }
         System.out.println("reading " + zipEntry.getName() + " completed");
       }
