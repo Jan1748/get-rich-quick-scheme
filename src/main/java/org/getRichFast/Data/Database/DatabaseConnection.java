@@ -71,7 +71,7 @@ public class DatabaseConnection implements DataReceiver {
   public void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
     String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, date, date2, symbol);
     try {
-      Double[] datas = QueryData.getQueriedData(request, this.connection);
+      Double[] data = QueryData.getQueriedData(request, this.connection);
     } catch (SQLException e) {
       e.printStackTrace();
     }

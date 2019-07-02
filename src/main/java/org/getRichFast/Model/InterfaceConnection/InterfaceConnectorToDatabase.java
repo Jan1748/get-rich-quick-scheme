@@ -1,7 +1,7 @@
 package org.getRichFast.Model.InterfaceConnection;
 
 import org.getRichFast.Data.DataReceiver;
-import org.getRichFast.Data.Database.ModelToDatabaseConnection;
+import org.getRichFast.Data.Database.DatabaseConnection;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
@@ -10,7 +10,7 @@ import org.getRichFast.Model.RequestEditor;
 
 public class InterfaceConnectorToDatabase implements ProcessDecisions {
 
-  private DataReceiver dataReceiver = new ModelToDatabaseConnection();
+  private DataReceiver dataReceiver = new DatabaseConnection();
   private RequestEditor requestEditor = new RequestEditor();
 
 
