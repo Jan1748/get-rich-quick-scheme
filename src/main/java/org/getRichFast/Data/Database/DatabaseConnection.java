@@ -63,47 +63,7 @@ public class DatabaseConnection implements DataReceiver {
   }
 
   @Override
-  public void getMaximalDateValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1) {
-    DatabaseRequestBuilder.requestBuild(ValueEnum.MAX, columNameEnum, dateEnum, date, date1, null);
+  public void searchForValue(ValueEnum valueEnum, ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+    DatabaseRequestBuilder.requestBuild(valueEnum, columNameEnum, dateEnum, date, date2, symbol);
   }
-
-  @Override
-  public void getMaximalDateSymbolValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date,String date1, String symbol) {
-    DatabaseRequestBuilder.requestBuild(ValueEnum.MAX, columNameEnum, dateEnum, date, date1, symbol);
-
-  }
-
-  @Override
-  public void getMaximalSymbolValue(ColumNameEnum columNameEnum, String symbol) {
-    DatabaseRequestBuilder.requestBuild(ValueEnum.MAX, columNameEnum, DateEnum.NULL, null, null, symbol);
-
-  }
-
-  @Override
-  public void getMaximalValue(ColumNameEnum columNameEnum) {
-    DatabaseRequestBuilder.requestBuild(ValueEnum.MAX, columNameEnum, DateEnum.NULL, null, null, null);
-  }
-
-  @Override
-  public void getMinimalDateValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1) {
-    DatabaseRequestBuilder.requestBuild(ValueEnum.MIN, columNameEnum, DateEnum.NULL, date, date1, null);
-
-  }
-
-  @Override
-  public void getMinimalDateSymbolValue(ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1, String symbol) {
-    DatabaseRequestBuilder.requestBuild(ValueEnum.MIN, columNameEnum, DateEnum.NULL, date, date1, symbol);
-
-  }
-
-  @Override
-  public void getMinimalSymbolValue(ColumNameEnum columNameEnum,String symbol) {
-    DatabaseRequestBuilder.requestBuild(ValueEnum.MIN, columNameEnum, DateEnum.NULL, null, null, symbol);
-  }
-
-  @Override
-  public void getMinimalValue(ColumNameEnum columNameEnum) {
-    DatabaseRequestBuilder.requestBuild(ValueEnum.MIN, columNameEnum, DateEnum.NULL, null, null, null);
-  }
-
 }

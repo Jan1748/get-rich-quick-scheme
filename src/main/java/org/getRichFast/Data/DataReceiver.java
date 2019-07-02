@@ -3,7 +3,8 @@ package org.getRichFast.Data;
 import java.util.ArrayList;
 import org.getRichFast.Data.Database.ColumNameEnum;
 import org.getRichFast.Data.Database.DateEnum;
-import org.getRichFast.Model.Entity.StockBuild;
+import org.getRichFast.Data.Database.ValueEnum;
+import org.getRichFast.Data.Entity.StockBuild;
 
 public interface DataReceiver {
 
@@ -13,7 +14,6 @@ public interface DataReceiver {
   void initialize();
 
   void insertDataToDatabase(ArrayList<StockBuild> stocks);
-  void searchForHighestValue(String sqlCode);
-  void searchForlowestValue(String sqlCode);
+  void searchForValue(ValueEnum valueEnum, ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date2, String symbol);
 
 }

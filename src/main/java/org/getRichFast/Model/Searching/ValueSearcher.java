@@ -40,7 +40,7 @@ public class ValueSearcher implements ProcessDecisions {
 
   @Override
   public void searchForHighestValue(DateEnum dateEnum, String date, String date2, String symbol) {
-    getHighestValues();
+
   }
 
   @Override

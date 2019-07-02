@@ -3,45 +3,60 @@ package org.getRichFast.Data.Database;
 
 public class DatabaseRequestBuilder {
 
-  public static String requestBuild(ValueEnum valueEnum,ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date1, String Symbol) {
-    String sqlCode = "SELECT ";
-    if(valueEnum == ValueEnum.MIN){
-      sqlCode += "MIN ";
+  public static String requestBuild(ValueEnum valueEnum, ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+    String symbolCode = null;
+    String dateCode = null;
+    if (date != null) {
+      dateCode = getStringExactDatePostgresql(date, date2, dateEnum);
     }
-    if(valueEnum == ValueEnum.MAX){
-      sqlCode += "MAX ";
+    if (symbol != null) {
+      symbolCode = getSymbolCondition(symbol);
     }
-    if(columNameEnum == ColumNameEnum.OPEN){
-      sqlCode += "(\"Open\") ";
+    switch (valueEnum) {
+      case MAX:
+        return getHighestValues(dateCode, columNameEnum, symbolCode);
+      case MIN:
+        return getLowestValues(dateCode, columNameEnum, symbolCode);
     }
-    if(columNameEnum == ColumNameEnum.HIGH){
-      sqlCode += "(\"High\") ";
-    }
-    if(columNameEnum == ColumNameEnum.LOW){
-      sqlCode += "(\"Low\") ";
-    }
-    if(columNameEnum == ColumNameEnum.CLOSE){
-      sqlCode += "(\"Close\") ";
-    }
-      sqlCode += "FROM stockbuild WHERE ";
-    if (dateEnum == DateEnum.EXACT) {
-      sqlCode += "\"Date\" = ' " + date + "'";
-    }
-    if (dateEnum == DateEnum.INTERVALL && date1 != null) {
-      sqlCode += "\"Date\" > '" + date + "' AND \"Date\" < '" + date1 + "'";
-    }
-    if (dateEnum == DateEnum.BEFORE) {
-      sqlCode += "\"Date\" < '" + date + "'";
-    }
-    if (dateEnum == DateEnum.AFTER) {
-      sqlCode += "\"Date\" > '" + date + "'";
-    }
-    if(Symbol != null){
-      sqlCode += " AND \"Symbol\" = '" + Symbol + "'";
-    }
-
-    sqlCode += ";";
-    return sqlCode;
+    return null;
   }
 
+
+  private static String getStringExactDatePostgresql(String date, String date2, DateEnum dateEnum) {
+    String sqlCode;
+    switch (dateEnum) {
+      case EXACT:
+        sqlCode = "WHERE \"Date\" = ' " + date + "'";
+        return sqlCode;
+      case INTERVALL:
+        sqlCode = "WHERE \"Date\" > '" + date + "' AND \"Date\" < '" + date2 + "'";
+        return sqlCode;
+      case BEFORE:
+        sqlCode = "WHERE \"Date\" < '" + date + "'";
+        return sqlCode;
+      case AFTER:
+        sqlCode = "WHERE \"Date\" > '" + date + "'";
+        return sqlCode;
+    }
+    return null;
+  }
+
+  private static String getSymbolCondition(String symbol) {
+    String symbolCode = "AND \"Symbol\" = '" + symbol + "'";
+    return symbolCode;
+  }
+
+  private static String getHighestValues(String dateCondition, ColumNameEnum columNameEnum, String symbol) {
+    String code = null;
+    code = "SELECT MAX (\"" + columNameEnum.toString() + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+    return code;
+  }
+
+  private static String getLowestValues(String dateCondition, ColumNameEnum columNameEnum, String symbol) {
+    String code = null;
+    code = "SELECT MIN (\"" + columNameEnum.toString() + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+    return code;
+  }
 }
+
+
