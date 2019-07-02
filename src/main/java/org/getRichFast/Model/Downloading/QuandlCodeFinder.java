@@ -11,7 +11,7 @@ import org.getRichFast.Model.Parsing.QuandlCodeParser;
 
 public class QuandlCodeFinder {
 
-  public ArrayList<String> getQuandlCodes(String stockCode, String quandlApiKey) throws IOException {
+  public static ArrayList<String> getQuandlCodes(String stockCode, String quandlApiKey) throws IOException {
     System.out.println("QuandlCodeFinder Beginn");
     ArrayList<String> quandleCodes = new ArrayList<>();
     System.out.println("Start download data");

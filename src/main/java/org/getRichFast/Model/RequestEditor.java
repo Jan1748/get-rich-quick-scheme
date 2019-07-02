@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import org.getRichFast.Data.Database.DatabaseConnection;
+import org.getRichFast.Model.Downloading.QuandlCodeFinder;
 import org.getRichFast.Model.Entity.DataShifter;
 import org.getRichFast.Model.Entity.StockBuild;
 
@@ -11,7 +12,13 @@ public class RequestEditor {
 
   private DatabaseConnection databaseConnection = new DatabaseConnection();
 
-  public void downloadQuandlWholeStockMarket(ArrayList<String> symbols, String apiKey) {
+  public void downloadQuandlWholeStockMarket(String symbol, String apiKey) {
+    ArrayList<String> symbols = null;
+    try {
+      symbols = QuandlCodeFinder.getQuandlCodes(symbol, apiKey);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     for (int i = 0; i < symbols.size(); i++) {
       ArrayList<StockBuild> stocks = null;
       try {

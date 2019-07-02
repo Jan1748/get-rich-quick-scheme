@@ -14,12 +14,12 @@ public class InterfaceConnector implements ProcessDecisions {
 
   @Override
   public void searchForValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    dataReceiver.searchForValue(valueEnum, dateEnum, date, date2, symbol);
+    dataReceiver.search(valueEnum, dateEnum, date, date2, symbol);
   }
 
   @Override
-  public void downloadQuandlWholeStockMarket(ArrayList<String> symbols, String apiKey) {
-    requestEditor.downloadQuandlWholeStockMarket(symbols, apiKey);
+  public void downloadQuandlWholeStockMarket(String symbol, String apiKey) {
+    requestEditor.downloadQuandlWholeStockMarket(symbol, apiKey);
   }
 
   @Override

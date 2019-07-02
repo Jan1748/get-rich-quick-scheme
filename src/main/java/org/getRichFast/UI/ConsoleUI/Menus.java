@@ -6,11 +6,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import org.getRichFast.Data.Database.Enum.DateEnum;
+import org.getRichFast.Data.Database.Enum.ValueEnum;
+import org.getRichFast.Model.ProcessDecisions;
 
 public class Menus {
 
   private String menuChoice;
   private String quandlApiKey;
+  private ProcessDecisions processDecisions;
 
   public void startMenu() {
     menu();
@@ -36,20 +40,18 @@ public class Menus {
             case "1":
               symbol = InputFunctions.scan("Please enter the symbol for the stock market.");
               if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
-
+                processDecisions.downloadQuandlWholeStockMarket(symbol, quandlApiKey);
               } else {
                 System.out.println("abort");
               }
-              //TODO: add a method that downloads all data from a stock market
               break;
             case "2":
               symbol = InputFunctions.scan("Please enter the symbol for the stock.");
               if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
-
+                processDecisions.downloadQuandlSingleStock(symbol, quandlApiKey);
               } else {
                 System.out.println("abort");
               }
-              //TODO: add a method that downloads a single share price
               break;
           }
           symbol = InputFunctions.scan("Please enter the symbol.");
@@ -74,6 +76,7 @@ public class Menus {
   private void searchMenu() {
     String date = null;
     String date2 = null;
+    DateEnum dateEnum = DateEnum.NULL;
     String symbol;
     menuChoice = InputFunctions.scan("What do you want to search for? \n1: Date \n2: Symbol \n3: Value");
     switch (menuChoice) {
@@ -81,44 +84,48 @@ public class Menus {
         switch (InputFunctions.scan("What type of date do you want to search for? 1: Exact date 2: Interval of dates 3: Everything before date 4: Everything after date")) {
           case "1":
             date = InputFunctions.getInputDateString();
+            dateEnum = DateEnum.EXACT;
             break;
           case "2":
             date = InputFunctions.getInputDateString();
             date2 = InputFunctions.getInputDateString();
+            dateEnum = DateEnum.INTERVALL;
             break;
           case "3":
             date = InputFunctions.getInputDateString();
+            dateEnum = DateEnum.BEFORE;
             break;
           case "4":
             date = InputFunctions.getInputDateString();
+            dateEnum = DateEnum.AFTER;
             break;
           default:
             System.out.println("Please enter a valid choice");
         }
         if (InputFunctions.scan("Do you want to search for a symbol? (y/n)").equals("y")) {
           symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
-          searchForValueMenu(date, date2, symbol);
+          searchForValueMenu(dateEnum, date, date2, symbol);
         } else {
-          searchForValueMenu(date, date2, null);
+          searchForValueMenu(dateEnum, date, date2, null);
         }
         break;
       case "2":
         symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
-        searchForValueMenu(null, null, symbol);
+        searchForValueMenu(dateEnum, null, null, symbol);
         break;
       case "3":
-        searchForValueMenu(null, null, null);
+        searchForValueMenu(dateEnum, null, null, null);
       default:
         System.out.println("Please enter a valid choice");
     }
   }
 
-  private void searchForValueMenu(String date, String date2, String symbol) {
+  private void searchForValueMenu(DateEnum dateEnum, String date, String date2, String symbol) {
     switch (InputFunctions.scan("What do you want to search? \n1: Highest value \n2: Lowest value")) {
       case "1":
-        //TODO: add search for highest value
+        processDecisions.searchForValue(ValueEnum.MAX, dateEnum, date, date2, symbol);
       case "2":
-        //TODO: add search for lowest value
+        processDecisions.searchForValue(ValueEnum.MIN, dateEnum, date, date2, symbol);
     }
   }
 }
