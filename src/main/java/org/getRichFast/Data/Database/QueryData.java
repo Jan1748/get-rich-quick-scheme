@@ -16,13 +16,19 @@ public class QueryData {
   public static String[] getQueriedData(String request, Connection connection) throws SQLException {
     String[] datas = new String[4];
     request = "SELECT MAX (\"Open\") FROM stockbuild WHERE \"Date\" < '2013-05-05' ;SELECT MAX (\"High\") FROM stockbuild WHERE \"Date\" < '2013-05-05' ;SELECT MAX (\"Low\") FROM stockbuild WHERE \"Date\" < '2013-05-05' ;SELECT MAX (\"Close\") FROM stockbuild WHERE \"Date\" < '2013-05-05' ;";
-    Statement statement = connection.createStatement();
-    ResultSet resultSet = statement.executeQuery(request);
-    int i = 0;
-    String[] values = new String[]{"Open", "High", "Low", "Close"};
-    while (resultSet.next()) {
-      datas[i] = resultSet.getString(values[i]);
-      i++;
+    String[] requests = request.split(";");
+    for(int i = 0; i < 4; i++) {
+      Statement statement = connection.createStatement();
+      String requestNew = requests[i] + ";";
+      ResultSet resultSet = statement.executeQuery(requestNew);
+      //String[] values = new String[]{"Open", "High", "Low", "Close"};
+      while (resultSet.next()) {
+        try {
+          datas[i] = resultSet.getString("Min");
+        }catch (Exception e) {
+          datas[i] = resultSet.getString("Max");
+        }
+      }
     }
     return datas;
   }

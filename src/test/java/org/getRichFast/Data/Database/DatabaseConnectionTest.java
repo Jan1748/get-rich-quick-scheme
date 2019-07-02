@@ -1,6 +1,5 @@
 package org.getRichFast.Data.Database;
 
-import java.sql.SQLException;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.junit.jupiter.api.Assertions;
@@ -10,11 +9,7 @@ public class DatabaseConnectionTest {
   //@Test
   //public void searchForValueTest(){
   //  DatabaseConnection databaseConnection = new DatabaseConnection();
-  //  try {
-  //    Assertions.assertEquals("Gaming", QueryData.getQueriedData());
-  //  } catch (SQLException e) {
-  //    e.printStackTrace();
-  //  }
+  //  Assertions.assertEquals("Gaming", databaseConnection.getValue(ValueEnum.MAX, DateEnum.BEFORE, "2013-05-05", null, null));
   //}
 
 }
