@@ -63,7 +63,7 @@ public class DatabaseRequestBuilder {
   }
 
   private static String getHighestValues(String dateCondition, String symbol) {
-    String code = null;
+    String code = "";
     for (ColumNameEnum columnName : ColumNameEnum.values()) {
       code += "SELECT MAX (\"" + columnNameString(columnName) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
     }
@@ -71,7 +71,7 @@ public class DatabaseRequestBuilder {
   }
 
   private static String getLowestValues(String dateCondition, String symbol) {
-    String code = null;
+    String code = "";
     for (ColumNameEnum columnName : ColumNameEnum.values()) {
       code += "SELECT MIN (\"" + columnNameString(columnName) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
     }
