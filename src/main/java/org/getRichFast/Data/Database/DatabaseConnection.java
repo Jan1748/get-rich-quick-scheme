@@ -57,13 +57,12 @@ public class DatabaseConnection implements DataReceiver {
     this.connection = connect();
   }
 
-  @Override
   public void insertDataToDatabase(ArrayList<StockBuild> stocks) {
     DatabaseInserter.insertDataToDatabase(stocks, connection);
   }
 
   @Override
-  public void searchForValue(ValueEnum valueEnum, ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    DatabaseRequestBuilder.requestBuild(valueEnum, columNameEnum, dateEnum, date, date2, symbol);
+  public void searchForValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+    DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
   }
 }

@@ -3,7 +3,7 @@ package org.getRichFast.Data.Database;
 
 public class DatabaseRequestBuilder {
 
-  public static String requestBuild(ValueEnum valueEnum, ColumNameEnum columNameEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+  public static String requestBuild(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
     String symbolCode = null;
     String dateCode = null;
     if (date != null) {
@@ -14,9 +14,9 @@ public class DatabaseRequestBuilder {
     }
     switch (valueEnum) {
       case MAX:
-        return getHighestValues(dateCode, columNameEnum, symbolCode);
+        return getHighestValues(dateCode, symbolCode);
       case MIN:
-        return getLowestValues(dateCode, columNameEnum, symbolCode);
+        return getLowestValues(dateCode, symbolCode);
     }
     return null;
   }
@@ -46,15 +46,19 @@ public class DatabaseRequestBuilder {
     return symbolCode;
   }
 
-  private static String getHighestValues(String dateCondition, ColumNameEnum columNameEnum, String symbol) {
+  private static String getHighestValues(String dateCondition, String symbol) {
     String code = null;
-    code = "SELECT MAX (\"" + columNameEnum.toString() + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+    for (ColumNameEnum columnName : ColumNameEnum.values()) {
+      code = "SELECT MAX (\"" + columnName.toString() + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+    }
     return code;
   }
 
-  private static String getLowestValues(String dateCondition, ColumNameEnum columNameEnum, String symbol) {
+  private static String getLowestValues(String dateCondition, String symbol) {
     String code = null;
-    code = "SELECT MIN (\"" + columNameEnum.toString() + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+    for (ColumNameEnum columnName : ColumNameEnum.values()) {
+      code = "SELECT MIN (\"" + columnName.toString() + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+    }
     return code;
   }
 }

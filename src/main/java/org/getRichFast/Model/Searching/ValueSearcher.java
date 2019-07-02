@@ -1,8 +1,11 @@
 package org.getRichFast.Model.Searching;
 
+import java.util.ArrayList;
 import org.getRichFast.Data.DataReceiver;
 import org.getRichFast.Data.Database.DatabaseConnection;
+import org.getRichFast.Data.Database.DatabaseRequestBuilder;
 import org.getRichFast.Data.Database.DateEnum;
+import org.getRichFast.Data.Database.ValueEnum;
 import org.getRichFast.Model.ProcessDecisions;
 
 public class ValueSearcher implements ProcessDecisions {
@@ -39,17 +42,12 @@ public class ValueSearcher implements ProcessDecisions {
   private DataReceiver dataReceiver;
 
   @Override
-  public void searchForHighestValue(DateEnum dateEnum, String date, String date2, String symbol) {
-
+  public void searchForValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+    dataReceiver.searchForValue(valueEnum, dateEnum, date, date2, symbol);
   }
 
   @Override
-  public void searchForLowestValue(DateEnum dateEnum, String date, String date2, String symbol) {
-
-  }
-
-  @Override
-  public void downloadQuandlWholeStockMarket(String symbol, String apiKey) {
+  public void downloadQuandlWholeStockMarket(ArrayList<String> symbols, String apiKey) {
 
   }
 
