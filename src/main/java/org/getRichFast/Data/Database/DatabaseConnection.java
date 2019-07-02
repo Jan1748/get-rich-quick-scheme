@@ -5,14 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 import org.getRichFast.Data.DataReceiver;
-import org.getRichFast.Data.Entity.StockBuild;
+import org.getRichFast.Model.Entity.StockBuild;
 
 public class DatabaseConnection implements DataReceiver {
 

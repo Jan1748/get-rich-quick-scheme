@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import org.getRichFast.Data.Entity.StockBuild;
+import org.getRichFast.Model.Entity.StockBuild;
 import org.postgresql.util.PSQLException;
 
 public class DatabaseInserter {

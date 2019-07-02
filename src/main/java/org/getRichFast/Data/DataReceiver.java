@@ -3,7 +3,7 @@ package org.getRichFast.Data;
 import java.util.ArrayList;
 import org.getRichFast.Data.Database.ColumNameEnum;
 import org.getRichFast.Data.Database.DateEnum;
-import org.getRichFast.Data.Entity.StockBuild;
+import org.getRichFast.Model.Entity.StockBuild;
 
 public interface DataReceiver {
 

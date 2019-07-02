@@ -1,14 +1,14 @@
-package org.getRichFast.Data.Entity;
+package org.getRichFast.Model.Entity;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import org.getRichFast.Data.Downloading.QuandlDownloader;
+import org.getRichFast.Model.Downloading.QuandlDownloader;
 import org.getRichFast.Model.Parsing.CsvParser;
 
 public class DataShifter {
 
-  public ArrayList<StockBuild> getAndParseData(String quandlApiKey, String quandlCode) throws IOException, ParseException {
+  public static ArrayList<StockBuild> getAndParseData(String quandlApiKey, String quandlCode) throws IOException, ParseException {
 
     QuandlDownloader quandlDownloader = new QuandlDownloader(quandlApiKey);
     ArrayList<String> data = quandlDownloader.getNotParsedDataArraylist(quandlCode);

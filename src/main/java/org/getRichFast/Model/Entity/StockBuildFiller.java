@@ -1,4 +1,4 @@
-package org.getRichFast.Data.Entity;
+package org.getRichFast.Model.Entity;
 
 import java.text.ParseException;
 import java.util.ArrayList;

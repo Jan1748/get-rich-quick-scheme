@@ -1,4 +1,4 @@
-package org.getRichFast.Data.Downloading;
+package org.getRichFast.Model.Downloading;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
