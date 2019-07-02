@@ -1,16 +1,15 @@
 package org.getRichFast.Model.InterfaceConnection;
 
-import java.util.ArrayList;
 import org.getRichFast.Data.DataReceiver;
-import org.getRichFast.Data.Database.DatabaseConnection;
+import org.getRichFast.Data.Database.ModelToDatabaseConnection;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.ProcessDecisions;
 import org.getRichFast.Model.RequestEditor;
 
-public class InterfaceConnector implements ProcessDecisions {
+public class InterfaceConnectorToDatabase implements ProcessDecisions {
 
-  private DataReceiver dataReceiver = new DatabaseConnection();
+  private DataReceiver dataReceiver = new ModelToDatabaseConnection();
   private RequestEditor requestEditor = new RequestEditor();
 
 

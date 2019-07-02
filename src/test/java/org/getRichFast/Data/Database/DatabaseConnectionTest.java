@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class DatabaseConnectionTest {
   //@Test
   //public void searchForValueTest(){
-  //  DatabaseConnection databaseConnection = new DatabaseConnection();
+  //  ModelToDatabaseConnection databaseConnection = new ModelToDatabaseConnection();
   //  Assertions.assertEquals("Gaming", databaseConnection.getValue(ValueEnum.MAX, DateEnum.BEFORE, "2013-05-05", null, null));
   //}
 

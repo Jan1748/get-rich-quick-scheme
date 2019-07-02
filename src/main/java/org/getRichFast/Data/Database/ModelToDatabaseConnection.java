@@ -13,14 +13,15 @@ import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.Entity.StockBuild;
 
-public class DatabaseConnection implements DataReceiver {
+public class ModelToDatabaseConnection implements DataReceiver {
 
   private String user;
   private String password;
   private String databaseName;
   private Connection connection;
+  private DatabaseToModel databaseToModel;
 
-  public DatabaseConnection(){
+  public ModelToDatabaseConnection(){
     initialize();
   }
 
@@ -70,7 +71,7 @@ public class DatabaseConnection implements DataReceiver {
   public void search(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
     String request = DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
     try {
-      String[] datas = QueryData.getQueriedData(request, this.connection);
+      databaseToModel.outputValues(QueryData.getQueriedData(request, this.connection));
     } catch (SQLException e) {
       e.printStackTrace();
     }

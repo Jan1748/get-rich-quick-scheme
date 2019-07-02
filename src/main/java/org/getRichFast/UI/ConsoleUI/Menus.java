@@ -8,15 +8,14 @@ import java.io.InputStream;
 import java.util.Properties;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
-import org.getRichFast.Model.InterfaceConnection.InterfaceConnector;
+import org.getRichFast.Model.InterfaceConnection.InterfaceConnectorToDatabase;
 import org.getRichFast.Model.ProcessDecisions;
-import org.getRichFast.Model.RequestEditor;
 
 public class Menus {
 
   private String menuChoice;
   private String quandlApiKey;
-  private ProcessDecisions processDecisions = new InterfaceConnector();
+  private ProcessDecisions processDecisions = new InterfaceConnectorToDatabase();
 
   public void startMenu() {
     menu();
