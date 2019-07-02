@@ -65,4 +65,7 @@ public class DatabaseConnection implements DataReceiver {
   public void searchForValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
     DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
   }
+  public String getValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol){
+    return DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
+  }
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.getRichFast.Data.Database.DatabaseConnection;
 import org.getRichFast.Data.Database.DatabaseInserter;
 import org.getRichFast.Data.Database.DateEnum;
+import org.getRichFast.Data.Database.ValueEnum;
 import org.getRichFast.Model.Entity.DataShifter;
 import org.getRichFast.Model.Entity.StockBuild;
 
@@ -14,12 +15,7 @@ public class RequestEditor implements ProcessDecisions {
   private DatabaseConnection databaseConnection = new DatabaseConnection();
 
   @Override
-  public void searchForHighestValue(DateEnum dateEnum, String date, String date2, String symbol) {
-
-  }
-
-  @Override
-  public void searchForLowestValue(DateEnum dateEnum, String date, String date2, String symbol) {
+  public void searchForValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
 
   }
 
@@ -32,7 +28,7 @@ public class RequestEditor implements ProcessDecisions {
       } catch (IOException e) {
         e.printStackTrace();
       } catch (ParseException e) {
-        e.printStackTrace();
+        System.out.println("No Valuable Stock");
       }
       if (stocks != null) {
         databaseConnection.insertDataToDatabase(stocks);
@@ -48,8 +44,10 @@ public class RequestEditor implements ProcessDecisions {
     } catch (IOException e) {
       e.printStackTrace();
     } catch (ParseException e) {
-      e.printStackTrace();
+      System.out.println("No Valuable Stock");
     }
-    databaseConnection.insertDataToDatabase(stocks);
+    if (stocks != null) {
+      databaseConnection.insertDataToDatabase(stocks);
+    }
   }
 }

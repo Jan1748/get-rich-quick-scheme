@@ -51,6 +51,7 @@ public class ValueSearcher implements ProcessDecisions {
 
   }
 
+
   @Override
   public void downloadQuandlSingleStock(String symbol, String apiKey) {
 

@@ -4,8 +4,8 @@ package org.getRichFast.Data.Database;
 public class DatabaseRequestBuilder {
 
   public static String requestBuild(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    String symbolCode = null;
-    String dateCode = null;
+    String symbolCode = "";
+    String dateCode = "";
     if (date != null) {
       dateCode = getStringExactDatePostgresql(date, date2, dateEnum);
     }
