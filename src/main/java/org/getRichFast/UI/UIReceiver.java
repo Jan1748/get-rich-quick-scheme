@@ -2,7 +2,7 @@ package org.getRichFast.UI;
 
 public interface UIReceiver {
   public void outputStringToConsole(String output);
-  public void valueConsoleOutput(String[] values);
+  public void valueConsoleOutput(Double[] values);
 
 
 }

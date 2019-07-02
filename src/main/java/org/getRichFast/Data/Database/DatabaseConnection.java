@@ -20,6 +20,7 @@ public class DatabaseConnection implements DataReceiver {
   private String password;
   private String databaseName;
   private Connection connection;
+  private DatabaseToModelConnection databaseToModel = new DatabaseToModel();
 
   public DatabaseConnection(){
     initialize();
@@ -31,7 +32,6 @@ public class DatabaseConnection implements DataReceiver {
       return DriverManager.getConnection(url, user, password);
     } catch (SQLException e) {
       System.out.println("Failed to connect to Database");
-      //e.printStackTrace();
     }
     return null;
   }
@@ -72,6 +72,7 @@ public class DatabaseConnection implements DataReceiver {
     String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, date, date2, symbol);
     try {
       Double[] datas = QueryData.getQueriedData(request, this.connection);
+      databaseToModel.outputValues(datas);
     } catch (SQLException e) {
       e.printStackTrace();
     }

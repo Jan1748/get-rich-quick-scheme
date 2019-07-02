@@ -10,7 +10,7 @@ public class ConsoleOutputReceiver implements UIReceiver {
   }
 
   @Override
-  public void valueConsoleOutput(String[] values) {
+  public void valueConsoleOutput(Double[] values) {
     System.out.println("Gaming");
     String[] names = new String[]{"Open", "High", "Low", "Close"};
     for (int i = 0; i < 4; i++){

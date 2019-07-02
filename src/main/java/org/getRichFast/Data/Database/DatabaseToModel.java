@@ -1,11 +1,13 @@
 package org.getRichFast.Data.Database;
 
+import org.getRichFast.Model.ConnectToUI;
+import org.getRichFast.Model.InterfaceConnection.ModelToUIConnection;
 import org.getRichFast.UI.ConsoleUI.ConsoleOutputReceiver;
 
 public class DatabaseToModel implements DatabaseToModelConnection {
-  private ConsoleOutputReceiver consoleOutputReceiver;
+  private ConnectToUI connectToUI = new ModelToUIConnection();
   @Override
-  public void outputValues(String[] values) {
-    consoleOutputReceiver.valueConsoleOutput(values);
+  public void outputValues(Double[] values) {
+    connectToUI.outputValues(values);
   }
 }
