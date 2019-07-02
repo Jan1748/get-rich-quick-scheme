@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.Properties;
 import org.getRichFast.Data.DataReceiver;
 import org.getRichFast.Data.Database.Enum.DateEnum;
+import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.Entity.StockBuild;
 
-public class ModelToDatabaseConnection implements DataReceiver {
+public class DatabaseConnection implements DataReceiver {
 
   private String user;
   private String password;
   private String databaseName;
   private Connection connection;
-  private DatabaseToModel databaseToModel;
 
-  public ModelToDatabaseConnection(){
+  public DatabaseConnection(){
     initialize();
   }
 
@@ -68,16 +68,16 @@ public class ModelToDatabaseConnection implements DataReceiver {
   }
 
   @Override
-  public void search(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    String request = DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
+  public void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, date, date2, symbol);
     try {
-      databaseToModel.outputValues(QueryData.getQueriedData(request, this.connection));
+      Double[] datas = QueryData.getQueriedData(request, this.connection);
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
-  public String getValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    return DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
+  public String getValue(ValueEnum valueEnum,SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+    return DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, date, date2, symbol);
   }
 }

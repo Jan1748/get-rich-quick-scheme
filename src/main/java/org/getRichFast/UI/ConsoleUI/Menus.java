@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import org.getRichFast.Data.Database.Enum.DateEnum;
+import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.InterfaceConnection.InterfaceConnectorToDatabase;
 import org.getRichFast.Model.ProcessDecisions;
@@ -73,6 +74,7 @@ public class Menus {
     String date = null;
     String date2 = null;
     DateEnum dateEnum = DateEnum.NULL;
+    SymbolEnum symbolEnum = SymbolEnum.NULL;
     String symbol;
     menuChoice = InputFunctions.scan("What do you want to search for? \n1: Date \n2: Symbol \n3: Value");
     switch (menuChoice) {
@@ -85,7 +87,7 @@ public class Menus {
           case "2":
             date = InputFunctions.getInputDateString();
             date2 = InputFunctions.getInputDateString();
-            dateEnum = DateEnum.INTERVALL;
+            dateEnum = DateEnum.INTERVAL;
             break;
           case "3":
             date = InputFunctions.getInputDateString();
@@ -100,28 +102,30 @@ public class Menus {
         }
         if (InputFunctions.scan("Do you want to search for a symbol? (y/n)").equals("y")) {
           symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
-          searchForValueMenu(dateEnum, date, date2, symbol);
+          symbolEnum = SymbolEnum.ATTACHED;
+          searchForValueMenu(dateEnum, symbolEnum, date, date2, symbol);
         } else {
-          searchForValueMenu(dateEnum, date, date2, null);
+          searchForValueMenu(dateEnum, symbolEnum, date, date2, null);
         }
         break;
       case "2":
         symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
-        searchForValueMenu(dateEnum, null, null, symbol);
+        symbolEnum = SymbolEnum.SINGLE;
+        searchForValueMenu(dateEnum, symbolEnum, null, null, symbol);
         break;
       case "3":
-        searchForValueMenu(dateEnum, null, null, null);
+        searchForValueMenu(dateEnum, symbolEnum, null, null, null);
       default:
         System.out.println("Please enter a valid choice");
     }
   }
 
-  private void searchForValueMenu(DateEnum dateEnum, String date, String date2, String symbol) {
+  private void searchForValueMenu(DateEnum dateEnum, SymbolEnum symbolEnum, String date, String date2, String symbol) {
     switch (InputFunctions.scan("What do you want to search? \n1: Highest value \n2: Lowest value")) {
       case "1":
-        processDecisions.searchForValue(ValueEnum.MAX, dateEnum, date, date2, symbol);
+        processDecisions.searchForValue(ValueEnum.MAX, symbolEnum, dateEnum, date, date2, symbol);
       case "2":
-        processDecisions.searchForValue(ValueEnum.MIN, dateEnum, date, date2, symbol);
+        processDecisions.searchForValue(ValueEnum.MIN, symbolEnum, dateEnum, date, date2, symbol);
     }
   }
 }
