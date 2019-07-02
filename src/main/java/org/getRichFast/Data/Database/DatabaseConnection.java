@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 import org.getRichFast.Data.DataReceiver;
+import org.getRichFast.Data.Database.Enum.DateEnum;
+import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.Entity.StockBuild;
 
 public class DatabaseConnection implements DataReceiver {

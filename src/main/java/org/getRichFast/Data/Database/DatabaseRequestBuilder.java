@@ -1,6 +1,10 @@
 package org.getRichFast.Data.Database;
 
 
+import org.getRichFast.Data.Database.Enum.ColumNameEnum;
+import org.getRichFast.Data.Database.Enum.DateEnum;
+import org.getRichFast.Data.Database.Enum.ValueEnum;
+
 public class DatabaseRequestBuilder {
 
   public static String requestBuild(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
