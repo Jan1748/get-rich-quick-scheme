@@ -115,6 +115,7 @@ public class Menus {
         break;
       case "3":
         searchForValueMenu(dateEnum, symbolEnum, null, null, null);
+        break;
       default:
         System.out.println("Please enter a valid choice");
     }
@@ -124,8 +125,10 @@ public class Menus {
     switch (InputFunctions.scan("What do you want to search? \n1: Highest value \n2: Lowest value")) {
       case "1":
         processDecisions.searchForValue(ValueEnum.MAX, symbolEnum, dateEnum, date, date2, symbol);
+        break;
       case "2":
         processDecisions.searchForValue(ValueEnum.MIN, symbolEnum, dateEnum, date, date2, symbol);
+        break;
     }
   }
 }

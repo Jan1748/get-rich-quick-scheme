@@ -32,6 +32,7 @@ public class DatabaseConnection implements DataReceiver {
       return DriverManager.getConnection(url, user, password);
     } catch (SQLException e) {
       System.out.println("Failed to connect to Database");
+      //e.printStackTrace();
     }
     return null;
   }

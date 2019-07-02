@@ -14,22 +14,23 @@ import org.getRichFast.Model.Parsing.QuandlCodeParser;
 
 public class QueryData {
   public static Double[] getQueriedData(String request, Connection connection) throws SQLException {
-    Double[] datas = new Double[4];
+    Double[] data = new Double[4];
     ResultSet resultSet = null;
     String[] requests = request.split(";");
+
     for(int i = 0; i < 4; i++) {
       Statement statement = connection.createStatement();
       String requestNew = requests[i] + ";";
-      System.out.println("Gaming " + requestNew);
       resultSet = statement.executeQuery(requestNew);
+
       while (resultSet.next()) {
         try {
-          datas[i] = resultSet.getDouble("min");
+          data[i] = resultSet.getDouble("min");
         }catch (Exception e) {
-          datas[i] = resultSet.getDouble("max");
+          data[i] = resultSet.getDouble("max");
         }
       }
     }
-    return datas;
+    return data;
   }
 }
