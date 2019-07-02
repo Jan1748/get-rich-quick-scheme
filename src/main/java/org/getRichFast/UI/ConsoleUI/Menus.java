@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.ProcessDecisions;
+import org.getRichFast.Model.RequestEditor;
 
 public class Menus {
 

@@ -65,7 +65,13 @@ public class DatabaseConnection implements DataReceiver {
 
   @Override
   public void search(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
+    String request = DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
+    try {
+      String[] datas = QueryData.getQueriedData(request, this.connection);
+      System.out.println("Datas: " + datas[0] + " " +datas[1]+" " +datas[2]+ " " +datas[3]);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
 
