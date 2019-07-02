@@ -13,20 +13,21 @@ import java.util.zip.ZipInputStream;
 import org.getRichFast.Model.Parsing.QuandlCodeParser;
 
 public class QueryData {
-  public static String[] getQueriedData(String request, Connection connection) throws SQLException {
-    String[] datas = new String[4];
+  public static Double[] getQueriedData(String request, Connection connection) throws SQLException {
+    Double[] datas = new Double[4];
+    ResultSet resultSet = null;
     //request = "SELECT MAX (\"Open\") FROM stockbuild WHERE \"Date\" < '2013-05-05' ;SELECT MAX (\"High\") FROM stockbuild WHERE \"Date\" < '2013-05-05' ;SELECT MAX (\"Low\") FROM stockbuild WHERE \"Date\" < '2013-05-05' ;SELECT MAX (\"Close\") FROM stockbuild WHERE \"Date\" < '2013-05-05' ;";
     String[] requests = request.split(";");
     for(int i = 0; i < 4; i++) {
       Statement statement = connection.createStatement();
       String requestNew = requests[i] + ";";
-      ResultSet resultSet = statement.executeQuery(requestNew);
-      //String[] values = new String[]{"Open", "High", "Low", "Close"};
+      System.out.println(requestNew);
+      resultSet = statement.executeQuery(requestNew);
       while (resultSet.next()) {
         try {
-          datas[i] = resultSet.getString("Min");
+          datas[i] = resultSet.getDouble("min");
         }catch (Exception e) {
-          datas[i] = resultSet.getString("Max");
+          datas[i] = resultSet.getDouble("max");
         }
       }
     }

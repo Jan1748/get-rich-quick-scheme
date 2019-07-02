@@ -3,18 +3,19 @@ package org.getRichFast.Data.Database;
 
 import org.getRichFast.Data.Database.Enum.ColumNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
+import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 
 public class DatabaseRequestBuilder {
 
-  public static String requestBuild(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+  public static String requestBuild(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
     String symbolCode = "";
     String dateCode = "";
     if (date != null) {
       dateCode = getStringExactDatePostgresql(date, date2, dateEnum);
     }
     if (symbol != null) {
-      symbolCode = getSymbolCondition(symbol);
+      symbolCode = getSymbolCondition(symbol, symbolEnum);
     }
     switch (valueEnum) {
       case MAX:
@@ -31,7 +32,7 @@ public class DatabaseRequestBuilder {
       case EXACT:
         sqlCode = "WHERE \"Date\" = ' " + date + "'";
         return sqlCode;
-      case INTERVALL:
+      case INTERVAL:
         sqlCode = "WHERE \"Date\" > '" + date + "' AND \"Date\" < '" + date2 + "'";
         return sqlCode;
       case BEFORE:
@@ -44,10 +45,17 @@ public class DatabaseRequestBuilder {
     return null;
   }
 
-  private static String getSymbolCondition(String symbol) {
+  private static String getSymbolCondition(String symbol, SymbolEnum symbolEnum) {
     String symbolCode = "";
-    if (symbol != null) {
-      symbolCode = "AND \"Symbol\" = '" + symbol + "'";
+    if (symbolEnum == SymbolEnum.ATTACHED) {
+      if (symbol != null) {
+        symbolCode = "AND \"Symbol\" = '" + symbol + "'";
+      }
+    }
+    if (symbolEnum == SymbolEnum.SINGLE) {
+      if (symbol != null) {
+        symbolCode = "WHERE \"Symbol\" = '" + symbol + "';";
+      }
     }
     return symbolCode;
   }
@@ -69,7 +77,7 @@ public class DatabaseRequestBuilder {
   private static String getHighestValues(String dateCondition, String symbol) {
     String code = "";
     for (ColumNameEnum columnName : ColumNameEnum.values()) {
-      code += "SELECT MAX (\"" + columnNameString(columnName) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+      code += "SELECT MAX (\"" + columnNameString(columnName) + "\") FROM stockbuild" + dateCondition + " " + symbol + ";";
     }
     return code;
   }

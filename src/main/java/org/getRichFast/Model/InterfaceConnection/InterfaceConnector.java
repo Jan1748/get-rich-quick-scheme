@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import org.getRichFast.Data.DataReceiver;
 import org.getRichFast.Data.Database.DatabaseConnection;
 import org.getRichFast.Data.Database.Enum.DateEnum;
+import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.ProcessDecisions;
 import org.getRichFast.Model.RequestEditor;
@@ -16,8 +17,8 @@ public class InterfaceConnector implements ProcessDecisions {
 
 
   @Override
-  public void searchForValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    dataReceiver.search(valueEnum, dateEnum, date, date2, symbol);
+  public void searchForValue(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+    dataReceiver.search(valueEnum, symbolEnum, dateEnum, date, date2, symbol);
   }
 
   @Override
