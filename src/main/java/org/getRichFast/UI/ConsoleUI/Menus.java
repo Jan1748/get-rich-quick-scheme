@@ -31,6 +31,7 @@ public class Menus {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
     String symbol;
     Boolean abort = false;
     while (!abort) {
@@ -55,12 +56,6 @@ public class Menus {
                 System.out.println("abort");
               }
               break;
-          }
-          symbol = InputFunctions.scan("Please enter the symbol.");
-          if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
-
-          } else {
-            System.out.println("abort");
           }
           break;
         case "2":

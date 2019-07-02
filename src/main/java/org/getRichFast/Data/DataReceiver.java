@@ -13,6 +13,7 @@ public interface DataReceiver {
   void initialize();
 
   void insertDataToDatabase(ArrayList<StockBuild> stocks);
+
   void search(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol);
 
 }

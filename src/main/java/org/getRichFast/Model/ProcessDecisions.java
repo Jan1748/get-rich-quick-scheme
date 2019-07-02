@@ -9,5 +9,6 @@ public interface ProcessDecisions {
   public void searchForValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol);
 
   public void downloadQuandlWholeStockMarket(String symbol, String apiKey);
+
   public void downloadQuandlSingleStock(String symbol, String apiKey);
 }

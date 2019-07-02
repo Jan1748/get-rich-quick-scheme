@@ -20,9 +20,12 @@ public class DatabaseConnection implements DataReceiver {
   private String databaseName;
   private Connection connection;
 
+  public DatabaseConnection(){
+    initialize();
+  }
+
   public Connection connect() {
     String url = "jdbc:postgresql://localhost:5432/" + databaseName;
-    System.out.println("User: " + user);
     try {
       return DriverManager.getConnection(url, user, password);
     } catch (SQLException e) {
@@ -68,14 +71,12 @@ public class DatabaseConnection implements DataReceiver {
     String request = DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
     try {
       String[] datas = QueryData.getQueriedData(request, this.connection);
-      System.out.println("Datas: " + datas[0] + " " +datas[1]+" " +datas[2]+ " " +datas[3]);
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
-
-  public String getValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol){
+  public String getValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
     return DatabaseRequestBuilder.requestBuild(valueEnum, dateEnum, date, date2, symbol);
   }
 }

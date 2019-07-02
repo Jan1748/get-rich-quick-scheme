@@ -2,6 +2,7 @@ package org.getRichFast.Model.InterfaceConnection;
 
 import java.util.ArrayList;
 import org.getRichFast.Data.DataReceiver;
+import org.getRichFast.Data.Database.DatabaseConnection;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.ProcessDecisions;
@@ -9,8 +10,10 @@ import org.getRichFast.Model.RequestEditor;
 
 public class InterfaceConnector implements ProcessDecisions {
 
-  private DataReceiver dataReceiver;
+  private DataReceiver dataReceiver = new DatabaseConnection();
   private RequestEditor requestEditor = new RequestEditor();
+
+
 
   @Override
   public void searchForValue(ValueEnum valueEnum, DateEnum dateEnum, String date, String date2, String symbol) {
