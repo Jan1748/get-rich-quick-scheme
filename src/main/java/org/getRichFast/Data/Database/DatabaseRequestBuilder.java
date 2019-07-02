@@ -21,7 +21,6 @@ public class DatabaseRequestBuilder {
     return null;
   }
 
-
   private static String getStringExactDatePostgresql(String date, String date2, DateEnum dateEnum) {
     String sqlCode;
     switch (dateEnum) {
@@ -42,14 +41,31 @@ public class DatabaseRequestBuilder {
   }
 
   private static String getSymbolCondition(String symbol) {
-    String symbolCode = "AND \"Symbol\" = '" + symbol + "'";
+    String symbolCode = "";
+    if (symbol != null) {
+      symbolCode = "AND \"Symbol\" = '" + symbol + "'";
+    }
     return symbolCode;
+  }
+
+  private static String columnNameString(ColumNameEnum columNameEnum) {
+    switch (columNameEnum) {
+      case CLOSE:
+        return "Close";
+      case LOW:
+        return "Low";
+      case OPEN:
+        return "Open";
+      case HIGH:
+        return "High";
+    }
+    return null;
   }
 
   private static String getHighestValues(String dateCondition, String symbol) {
     String code = null;
     for (ColumNameEnum columnName : ColumNameEnum.values()) {
-      code = "SELECT MAX (\"" + columnName.toString() + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+      code += "SELECT MAX (\"" + columnNameString(columnName) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
     }
     return code;
   }
@@ -57,7 +73,7 @@ public class DatabaseRequestBuilder {
   private static String getLowestValues(String dateCondition, String symbol) {
     String code = null;
     for (ColumNameEnum columnName : ColumNameEnum.values()) {
-      code = "SELECT MIN (\"" + columnName.toString() + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+      code += "SELECT MIN (\"" + columnNameString(columnName) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
     }
     return code;
   }
