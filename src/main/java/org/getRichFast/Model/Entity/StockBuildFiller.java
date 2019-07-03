@@ -14,7 +14,6 @@ public class StockBuildFiller {
     System.out.println("Start filling StockBuild");
 
     ArrayList<StockBuild> stock = new ArrayList<>();
-    Calendar date = null;
     for (int x = 1; x < data.size(); x++) {
       StockBuild stockBuild = new StockBuild(name, lineParser.parseToCalendar(data.get(x)[0]));
       stockBuild.setOpen(lineParser.parseToBigDecimal(data.get(x)[1]));
@@ -22,7 +21,6 @@ public class StockBuildFiller {
       stockBuild.setLow(lineParser.parseToBigDecimal(data.get(x)[3]));
       stockBuild.setClose(lineParser.parseToBigDecimal(data.get(x)[4]));
       stock.add(stockBuild);
-      //System.out.println("\tstockBuild " + x + " filled");
     }
     System.out.println("StockBuild filled successfully");
     return stock;

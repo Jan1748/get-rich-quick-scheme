@@ -15,8 +15,7 @@ public class LineParser {
       Calendar cal = Calendar.getInstance();
       cal.setTime(date);
       return cal;
-    }
-    catch (ParseException e){
+    } catch (ParseException e) {
       System.out.println("Please enter a parsable date");
       return null;
     }

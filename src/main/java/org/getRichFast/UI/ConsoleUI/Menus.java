@@ -56,6 +56,8 @@ public class Menus {
                 System.out.println("abort");
               }
               break;
+            default:
+              System.out.println("Please enter a valid choice.");
           }
           break;
         case "2":
@@ -65,7 +67,7 @@ public class Menus {
           System.exit(0);
           break;
         default:
-          System.out.println("Please enter a valid choice");
+          System.out.println("Please enter a valid choice.");
       }
     }
   }
@@ -98,7 +100,7 @@ public class Menus {
             dateEnum = DateEnum.AFTER;
             break;
           default:
-            System.out.println("Please enter a valid choice");
+            System.out.println("Please enter a valid choice.");
         }
         if (InputFunctions.scan("Do you want to search for a symbol? (y/n)").equals("y")) {
           symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
@@ -117,7 +119,7 @@ public class Menus {
         searchForValueMenu(dateEnum, symbolEnum, null, null, null);
         break;
       default:
-        System.out.println("Please enter a valid choice");
+        System.out.println("Please enter a valid choice.");
     }
   }
 
@@ -129,6 +131,8 @@ public class Menus {
       case "2":
         processDecisions.searchForValue(ValueEnum.MIN, symbolEnum, dateEnum, date, date2, symbol);
         break;
+      default:
+        System.out.println("Please enter a valid choice.");
     }
   }
 }
