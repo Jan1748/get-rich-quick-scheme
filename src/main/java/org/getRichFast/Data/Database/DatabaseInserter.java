@@ -12,7 +12,7 @@ public class DatabaseInserter {
 
   public static void insertDataToDatabase(ArrayList<StockBuild> stocks, Connection connection) {
     if (connection != null) {
-      System.out.println("Connected to PostgreSQL database!");
+      //System.out.println("Connected to PostgreSQL database!");
       try {
         int counter = 0;
         int successfulCounter = 0;

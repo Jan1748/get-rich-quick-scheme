@@ -16,17 +16,22 @@ public class QuandlDownloader {
   private String quandlApiKey;
 
   private ArrayList<String> downloadDataFromQuandl(String quandlCode) throws IOException {
-    System.out.println("Start download data");
+    System.out.println("Start download data from stock: " + quandlCode);
     ArrayList<String> content = new ArrayList<>();
     String url =
         "https://www.quandl.com/api/v3/datasets/" + quandlCode + ".csv?api_key=" + quandlApiKey;
     URL apiUrl = new URL(url);
     HttpURLConnection apiConnection = (HttpURLConnection) apiUrl.openConnection();
-    System.out.println("\tTrying connect to: " + url);
+    //System.out.println("\tTrying connect to: " + url);
     apiConnection.setRequestMethod("GET");
-    System.out.println("\tRequest Method: " + apiConnection.getRequestMethod());
-    int status = apiConnection.getResponseCode();
-    System.out.println("\tHTTP response: " + status);
+    //System.out.println("\tRequest Method: " + apiConnection.getRequestMethod());
+    int status = 0;
+    try {
+      status = apiConnection.getResponseCode();
+    }catch (Exception e){
+      System.out.println("Error nr 1");
+    }
+    //System.out.println("\tHTTP response: " + status);
     if (status == 200) {
       BufferedReader in = new BufferedReader(new InputStreamReader(apiConnection.getInputStream()));
       String inputLine;
@@ -34,8 +39,10 @@ public class QuandlDownloader {
         content.add(inputLine);
       }
       in.close();
-      System.out.println("\tDownload successfully completed");
-    } else {
+      //System.out.println("\tDownload successfully completed");
+    }else if (status == 429){
+      System.out.println("Error Limit reached " +quandlCode);
+    }else {
       System.out.println("Error invalid API-Key");
     }
     return content;

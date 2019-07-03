@@ -5,8 +5,13 @@ import org.getRichFast.Data.Database.DatabaseConnection;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
+import org.getRichFast.Model.Downloading.QuandlCodeFinder;
 import org.getRichFast.Model.ProcessDecisions;
 import org.getRichFast.Model.RequestEditor;
+import org.getRichFast.Model.RequestEditorThreads;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class InterfaceConnectorToDatabase implements ProcessDecisions {
 
@@ -21,7 +26,26 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
 
   @Override
   public void downloadQuandlWholeStockMarket(String symbol, String apiKey) {
-    requestEditor.downloadQuandlWholeStockMarket(symbol, apiKey);
+    //requestEditor.downloadQuandlWholeStockMarket(symbol, apiKey);
+    ArrayList<String> symbols = null;
+    try {
+      symbols = QuandlCodeFinder.getQuandlCodes(symbol, apiKey);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    int threads = 8;
+    int numbersize = symbols.size() / threads;
+    int number = 1;
+    for(int i = 0; i < threads; i++) {
+      RequestEditorThreads requestEditorThreads = new RequestEditorThreads(symbols, symbol, apiKey, number, (number + numbersize), i);
+      requestEditorThreads.start();
+      try {
+        Thread.sleep(200);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      number+=numbersize;
+    }
   }
 
   @Override
