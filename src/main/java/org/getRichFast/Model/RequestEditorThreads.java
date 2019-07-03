@@ -25,6 +25,7 @@ public class RequestEditorThreads extends Thread {
     private int startpoint;
     private int end;
     private int threadnumber;
+    private int errors;
 
     public RequestEditorThreads(ArrayList<String> symbols, String symbol, String apiKey, int startpoint, int end, int threadnumber) {
         this.symbols = symbols;
@@ -33,6 +34,8 @@ public class RequestEditorThreads extends Thread {
         this.startpoint = startpoint;
         this.symbol = symbol;
         this.threadnumber = threadnumber;
+        this.errors = 0;
+
     }
 
     public void run() {
@@ -50,7 +53,11 @@ public class RequestEditorThreads extends Thread {
                     databaseConnection.insertDataToDatabase(stocks);
                 }
             }catch (Exception e){
+                if(errors > 3){
+                    i++;
+                }
                 System.out.println("Restart Stock Download");
+                errors++;
                 i--;
             }
         }
