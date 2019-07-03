@@ -27,15 +27,15 @@ public class QuandlDownloader {
     System.out.println("\tRequest Method: " + apiConnection.getRequestMethod());
     int status = apiConnection.getResponseCode();
     System.out.println("\tHTTP response: " + status);
-    if(status == 200) {
+    if (status == 200) {
       BufferedReader in = new BufferedReader(new InputStreamReader(apiConnection.getInputStream()));
-      String inputline;
-      while ((inputline = in.readLine()) != null) {
-        content.add(inputline);
+      String inputLine;
+      while ((inputLine = in.readLine()) != null) {
+        content.add(inputLine);
       }
       in.close();
       System.out.println("\tDownload successfully completed");
-    }else {
+    } else {
       System.out.println("Error invalid API-Key");
     }
     return content;

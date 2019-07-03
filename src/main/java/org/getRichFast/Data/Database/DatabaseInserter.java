@@ -9,11 +9,11 @@ import org.getRichFast.Model.Entity.StockBuild;
 import org.postgresql.util.PSQLException;
 
 public class DatabaseInserter {
+
   public static void insertDataToDatabase(ArrayList<StockBuild> stocks, Connection connection) {
     if (connection != null) {
       System.out.println("Connected to PostgreSQL database!");
       try {
-        Statement statement = connection.createStatement();
         int counter = 0;
         int successfulCounter = 0;
         for (int i = 0; i < stocks.size(); i++) {
@@ -35,10 +35,11 @@ public class DatabaseInserter {
           }
           sql.close();
         }
-        if(counter != 0) {
-          System.out.println("\nDuplicated Data! " + counter + " Database entry's are already inside the Database.\n" +successfulCounter + " New entry's were added\nTotal entry's: " + stocks.size() +"\n");
-        }else {
-          System.out.println("\nAll " + stocks.size() +" entry's were successfully added\n");
+        if (counter != 0) {
+          System.out.println(
+              "\nDuplicated Data! " + counter + " Database entry's are already inside the Database.\n" + successfulCounter + " New entry's were added\nTotal entry's: " + stocks.size() + "\n");
+        } else {
+          System.out.println("\nAll " + stocks.size() + " entry's were successfully added\n");
         }
       } catch (SQLException e) {
         e.printStackTrace();

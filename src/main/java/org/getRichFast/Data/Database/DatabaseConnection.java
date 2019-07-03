@@ -26,17 +26,6 @@ public class DatabaseConnection implements DataReceiver {
     initialize();
   }
 
-  public Connection connect() {
-    String url = "jdbc:postgresql://localhost:5432/" + databaseName;
-    try {
-      return DriverManager.getConnection(url, user, password);
-    } catch (SQLException e) {
-      System.out.println("Failed to connect to Database");
-      //e.printStackTrace();
-    }
-    return null;
-  }
-
   public void setUser(String user) {
     this.user = user;
   }
@@ -47,6 +36,17 @@ public class DatabaseConnection implements DataReceiver {
 
   public void setDatabaseName(String databaseName) {
     this.databaseName = databaseName;
+  }
+
+  public Connection connect() {
+    String url = "jdbc:postgresql://localhost:5432/" + databaseName;
+    try {
+      return DriverManager.getConnection(url, user, password);
+    } catch (SQLException e) {
+      System.out.println("Failed to connect to Database");
+      //e.printStackTrace();
+    }
+    return null;
   }
 
   @Override

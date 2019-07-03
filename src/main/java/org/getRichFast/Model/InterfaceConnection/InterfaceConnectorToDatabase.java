@@ -14,7 +14,6 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
   private RequestEditor requestEditor = new RequestEditor();
 
 
-
   @Override
   public void searchForValue(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
     dataReceiver.search(valueEnum, symbolEnum, dateEnum, date, date2, symbol);
