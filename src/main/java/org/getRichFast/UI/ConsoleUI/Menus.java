@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
@@ -42,7 +43,7 @@ public class Menus {
           switch (InputFunctions.scan("What do you want to download? 1: All data from a stock market 2: Single stock")) {
             case "1":
               symbol = InputFunctions.scan("Please enter the symbol for the stock market.");
-              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
+              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/ColumnNameEnum)").equals("y")) {
                 processDecisions.downloadQuandlWholeStockMarket(symbol, quandlApiKey);
               } else {
                 System.out.println("abort");
@@ -50,7 +51,7 @@ public class Menus {
               break;
             case "2":
               symbol = InputFunctions.scan("Please enter the symbol for the stock.");
-              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
+              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/ColumnNameEnum)").equals("y")) {
                 processDecisions.downloadQuandlSingleStock(symbol, quandlApiKey);
               } else {
                 System.out.println("abort");
@@ -102,34 +103,34 @@ public class Menus {
           default:
             System.out.println("Please enter a valid choice.");
         }
-        if (InputFunctions.scan("Do you want to search for a symbol? (y/n)").equals("y")) {
+        if (InputFunctions.scan("Do you want to search for a symbol? (y/ColumnNameEnum)").equals("y")) {
           symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
           symbolEnum = SymbolEnum.ATTACHED;
-          searchForValueMenu(dateEnum, symbolEnum, date, date2, symbol);
+          searchForValueMenu(dateEnum, symbolEnum, ColumnNameEnum.ALL, date, date2, symbol);
         } else {
-          searchForValueMenu(dateEnum, symbolEnum, date, date2, null);
+          searchForValueMenu(dateEnum, symbolEnum, ColumnNameEnum.ALL, date, date2, null);
         }
         break;
       case "2":
         symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
         symbolEnum = SymbolEnum.SINGLE;
-        searchForValueMenu(dateEnum, symbolEnum, null, null, symbol);
+        searchForValueMenu(dateEnum, symbolEnum, ColumnNameEnum.ALL, null, null, symbol);
         break;
       case "3":
-        searchForValueMenu(dateEnum, symbolEnum, null, null, null);
+        searchForValueMenu(dateEnum, symbolEnum, ColumnNameEnum.ALL, null, null, null);
         break;
       default:
         System.out.println("Please enter a valid choice.");
     }
   }
 
-  private void searchForValueMenu(DateEnum dateEnum, SymbolEnum symbolEnum, String date, String date2, String symbol) {
+  private void searchForValueMenu(DateEnum dateEnum, SymbolEnum symbolEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     switch (InputFunctions.scan("What do you want to search? \n1: Highest value \n2: Lowest value")) {
       case "1":
-        processDecisions.searchForValue(ValueEnum.MAX, symbolEnum, dateEnum, date, date2, symbol);
+        processDecisions.searchForValue(ValueEnum.MAX, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
         break;
       case "2":
-        processDecisions.searchForValue(ValueEnum.MIN, symbolEnum, dateEnum, date, date2, symbol);
+        processDecisions.searchForValue(ValueEnum.MIN, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
         break;
       default:
         System.out.println("Please enter a valid choice.");

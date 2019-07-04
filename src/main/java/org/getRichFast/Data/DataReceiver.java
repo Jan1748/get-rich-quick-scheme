@@ -1,6 +1,7 @@
 package org.getRichFast.Data;
 
 import java.util.ArrayList;
+import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
@@ -16,7 +17,7 @@ public interface DataReceiver {
 
   void insertDataToDatabase(ArrayList<StockBuild> stocks);
 
-  void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol);
+  void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol);
 
   JDBCCategoryDataset getQueriedDataset(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol);
 }

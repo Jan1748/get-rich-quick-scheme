@@ -2,6 +2,7 @@ package org.getRichFast.Model.InterfaceConnection;
 
 import org.getRichFast.Data.DataReceiver;
 import org.getRichFast.Data.Database.DatabaseConnection;
+import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
@@ -20,8 +21,8 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
 
 
   @Override
-  public void searchForValue(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    dataReceiver.search(valueEnum, symbolEnum, dateEnum, date, date2, symbol);
+  public void searchForValue(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+    dataReceiver.search(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
   }
 
   @Override
