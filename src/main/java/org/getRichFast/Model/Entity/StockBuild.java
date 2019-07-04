@@ -63,6 +63,8 @@ public class StockBuild {
     this.high = high;
   }
 
+  public void setDate(Calendar date) {this.date = date;}
+
   @Override
   public String toString() {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

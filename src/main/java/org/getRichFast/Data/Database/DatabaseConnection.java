@@ -20,6 +20,7 @@ import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.Entity.StockBuild;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
+import org.jfree.data.time.RegularTimePeriod;
 
 public class DatabaseConnection implements DataReceiver {
 
@@ -29,7 +30,7 @@ public class DatabaseConnection implements DataReceiver {
   private Connection connection;
   private DatabaseToModelConnection databaseToModel = new DatabaseToModel();
 
-  public DatabaseConnection(){
+  public DatabaseConnection() {
     initialize();
   }
 
@@ -76,7 +77,7 @@ public class DatabaseConnection implements DataReceiver {
   }
 
   @Override
-  public void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+  public void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
     try {
       Double[] datas = QueryData.getQueriedData(request, this.connection);
@@ -88,39 +89,50 @@ public class DatabaseConnection implements DataReceiver {
 
   @Override
   public ArrayList<StockBuild> getQueriedDataset(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date1, String date2, String symbol) {
-    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum,date1, date2, symbol);
-      Connection connection = connect();
-      ArrayList<StockBuild> stocks = new ArrayList<>();
-      if(connection != null){
-        Statement statement = null;
-        try {
-          statement = connection.createStatement();
-          ResultSet resultSet = statement.executeQuery(request);
-          Date date;
-          while (resultSet.next()) {
-            Calendar cal = Calendar.getInstance();
-            date = convertDate(resultSet.getDate("Date"));
-            cal.setTime(date);
-            StockBuild stockBuild = new StockBuild(resultSet.getString("symbol"), cal);
-            System.out.println("date " + stockBuild.getDate().getTime());
-            stockBuild.setOpen(resultSet.getBigDecimal("open"));
-            stockBuild.setHigh(resultSet.getBigDecimal("high"));
-            stockBuild.setLow(resultSet.getBigDecimal("low"));
-            stockBuild.setClose(resultSet.getBigDecimal("close"));
-            System.out.println(stockBuild.hashCode());
-            stocks.add(stockBuild);
-          }
-        } catch (SQLException e) {
-          e.printStackTrace();
+    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum, date1, date2, symbol);
+    Connection connection = connect();
+    ArrayList<StockBuild> stocks = new ArrayList<>();
+    if (connection != null) {
+      Statement statement = null;
+      try {
+        statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(request);
+        while (resultSet.next()) {
+          StockBuild stockBuild = new StockBuild(resultSet.getString("symbol"), getCalendar(convertDate(resultSet.getDate("Date"))));
+          getStockbuild(resultSet, stockBuild);
+          stocks.add(stockBuild);
         }
-     }
-      return stocks;
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
-
-  public String getValue(ValueEnum valueEnum,SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
-    return DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum,columnNameEnum, date, date2, symbol);
+    return stocks;
   }
-  private java.util.Date convertDate(java.sql.Date sqldate){
+
+  private Calendar getCalendar(Date date) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    return calendar;
+  }
+
+  private StockBuild getStockbuild(ResultSet resultSet, StockBuild stockBuild) {
+    try {
+      stockBuild.setOpen(resultSet.getBigDecimal("open"));
+      stockBuild.setHigh(resultSet.getBigDecimal("high"));
+      stockBuild.setLow(resultSet.getBigDecimal("low"));
+      stockBuild.setClose(resultSet.getBigDecimal("close"));
+      return stockBuild;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  public String getValue(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+    return DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
+  }
+
+  private java.util.Date convertDate(java.sql.Date sqldate) {
     return new java.util.Date(sqldate.getTime());
   }
 

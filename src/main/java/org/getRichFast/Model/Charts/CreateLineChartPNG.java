@@ -19,7 +19,6 @@ public class CreateLineChartPNG {
 
   public void generateChartPNG(ArrayList<StockBuild> input) {
 
-    System.out.println("Data length " + input.size());
     StockBuild stockBuild = input.get(0);
     TimeSeriesCollection dataset = createDataset(input);
     JFreeChart chart = ChartFactory.createTimeSeriesChart(
@@ -42,9 +41,7 @@ public class CreateLineChartPNG {
       StockBuild stockBuild = data.get(i);
       Date currentDate;
       currentDate = data.get(i).getDate().getTime();
-      System.out.println(currentDate);
       RegularTimePeriod regularTimePeriod = new Day(currentDate);
-      System.out.println(regularTimePeriod);
       series1.addOrUpdate(regularTimePeriod, data.get(i).getOpen());
     }
     TimeSeriesCollection dataset = new TimeSeriesCollection();
