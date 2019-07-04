@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 import org.getRichFast.Data.DataReceiver;
+import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
@@ -70,8 +71,8 @@ public class DatabaseConnection implements DataReceiver {
   }
 
   @Override
-  public void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, date, date2, symbol);
+  public void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
     try {
       Double[] datas = QueryData.getQueriedData(request, this.connection);
       databaseToModel.outputValues(datas);
@@ -81,8 +82,8 @@ public class DatabaseConnection implements DataReceiver {
   }
 
   @Override
-  public JDBCCategoryDataset getQueriedDataset(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, date, date2, symbol)
+  public JDBCCategoryDataset getQueriedDataset(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum,date, date2, symbol);
     try {
       JDBCCategoryDataset jdbcCategoryDataset = new JDBCCategoryDataset(connection, request);
       jdbcCategoryDataset.executeQuery(connection, request);
@@ -93,7 +94,7 @@ public class DatabaseConnection implements DataReceiver {
     return null;
   }
 
-  public String getValue(ValueEnum valueEnum,SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
-    return DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, date, date2, symbol);
+  public String getValue(ValueEnum valueEnum,SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+    return DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum,columnNameEnum, date, date2, symbol);
   }
 }

@@ -6,6 +6,7 @@ import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
+import org.getRichFast.Model.Charts.CreateLineChartPNG;
 import org.getRichFast.Model.Downloading.QuandlCodeFinder;
 import org.getRichFast.Model.ProcessDecisions;
 import org.getRichFast.Model.RequestEditor;
@@ -13,6 +14,7 @@ import org.getRichFast.Model.RequestEditorThreads;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
 
 public class InterfaceConnectorToDatabase implements ProcessDecisions {
 
@@ -52,5 +54,12 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
   @Override
   public void downloadQuandlSingleStock(String symbol, String apiKey) {
     requestEditor.downloadQuandlSingleStock(symbol, apiKey);
+  }
+
+  @Override
+  public void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+    JDBCCategoryDataset jdbcCategoryDataset = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum,columnNameEnum, date, date2, symbol);
+    CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
+    createLineChartPNG.generateChartPNG(jdbcCategoryDataset, symbol);
   }
 }

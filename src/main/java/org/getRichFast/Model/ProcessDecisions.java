@@ -12,4 +12,6 @@ public interface ProcessDecisions {
   void downloadQuandlWholeStockMarket(String symbol, String apiKey);
 
   void downloadQuandlSingleStock(String symbol, String apiKey);
+
+  void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol);
 }
