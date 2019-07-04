@@ -16,12 +16,12 @@ public class CsvParser {
   }
 
   public ArrayList<String[]> getDataArrayList(ArrayList<String> lines) {
-    System.out.println("Start parsing data");
+    //System.out.println("Start parsing data");
     ArrayList<String[]> data = new ArrayList<>();
     for (int i = 0; i < lines.size(); i++) {
       data.add(splitingStringLine(lines.get(i)));
     }
-    System.out.println("Csv parsing successfully completed");
+    //System.out.println("Csv parsing successfully completed");
     return data;
   }
 }

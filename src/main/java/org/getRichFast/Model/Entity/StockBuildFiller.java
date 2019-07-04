@@ -11,7 +11,7 @@ public class StockBuildFiller {
 
   public ArrayList<StockBuild> fillStockBuild(ArrayList<String[]> data, String name) throws ParseException {
 
-    System.out.println("Start filling StockBuild");
+    //System.out.println("Start filling StockBuild");
 
     ArrayList<StockBuild> stock = new ArrayList<>();
     for (int x = 1; x < data.size(); x++) {
@@ -22,7 +22,7 @@ public class StockBuildFiller {
       stockBuild.setClose(lineParser.parseToBigDecimal(data.get(x)[4]));
       stock.add(stockBuild);
     }
-    System.out.println("StockBuild filled successfully");
+    //System.out.println("StockBuild filled successfully");
     return stock;
   }
 
