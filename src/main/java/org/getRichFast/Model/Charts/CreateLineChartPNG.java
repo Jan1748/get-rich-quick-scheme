@@ -9,26 +9,23 @@ import org.getRichFast.Model.Entity.StockBuild;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.RegularTimePeriod;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
 
 
 public class CreateLineChartPNG {
-  private ArrayList<StockBuild> data;
+
   public void generateChartPNG(ArrayList<StockBuild> input) {
 
-    data = input;
-    System.out.println("Data length " + data.size());
-    StockBuild stockBuild = data.get(0);
-    DefaultCategoryDataset dataset = createDataset(stockBuild.getSymbol());
-    System.out.println(dataset.getColumnKeys());
-    JFreeChart chart = ChartFactory.createLineChart(
+    System.out.println("Data length " + input.size());
+    StockBuild stockBuild = input.get(0);
+    TimeSeriesCollection dataset = createDataset(input);
+    JFreeChart chart = ChartFactory.createTimeSeriesChart(
         stockBuild.getSymbol(),
-        "Years","Number of Schools",
-        dataset,
-        PlotOrientation.VERTICAL,
-        true,true,false);
-
+        "Time", "Value",
+        dataset);
 
     try {
       ChartUtils.saveChartAsPNG(new File("LineChart.png"), chart, 800, 600);
@@ -37,21 +34,21 @@ public class CreateLineChartPNG {
       System.out.println("ERROR");
     }
   }
-  private DefaultCategoryDataset createDataset(String symbol) {
-    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-    //for(int i = 0; i < data.size(); i++) {
-      StockBuild stockBuild = data.get(0);
-      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-      Date dateTest = stockBuild.getDate().getTime();
-      String dateString = dateFormat.format(dateTest);
-      dataset.setValue(1, "Open", dateString);
-    stockBuild = data.get(1);
-      dataset.addValue(2, "Open", dateString);
-    stockBuild = data.get(2);
-      dataset.addValue(3, "Open", dateString);
-
-    //}
+  private TimeSeriesCollection createDataset(ArrayList<StockBuild> data) {
+    TimeSeries series1 = new TimeSeries("Data");
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    for (int i = 0; i < data.size();i++) {
+      StockBuild stockBuild = data.get(i);
+      Date currentDate;
+      currentDate = data.get(i).getDate().getTime();
+      System.out.println(currentDate);
+      RegularTimePeriod regularTimePeriod = new Day(currentDate);
+      System.out.println(regularTimePeriod);
+      series1.addOrUpdate(regularTimePeriod, data.get(i).getOpen());
+    }
+    TimeSeriesCollection dataset = new TimeSeriesCollection();
+    dataset.addSeries(series1);
     return dataset;
   }
 }

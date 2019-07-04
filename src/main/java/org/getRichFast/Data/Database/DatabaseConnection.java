@@ -3,6 +3,7 @@ package org.getRichFast.Data.Database;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import org.getRichFast.Data.DataReceiver;
 import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
@@ -94,15 +96,18 @@ public class DatabaseConnection implements DataReceiver {
         try {
           statement = connection.createStatement();
           ResultSet resultSet = statement.executeQuery(request);
-          Calendar cal = Calendar.getInstance();
+          Date date;
           while (resultSet.next()) {
-            java.util.Date date = new java.util.Date(resultSet.getDate("date").getTime());
+            Calendar cal = Calendar.getInstance();
+            date = convertDate(resultSet.getDate("Date"));
             cal.setTime(date);
             StockBuild stockBuild = new StockBuild(resultSet.getString("symbol"), cal);
+            System.out.println("date " + stockBuild.getDate().getTime());
             stockBuild.setOpen(resultSet.getBigDecimal("open"));
             stockBuild.setHigh(resultSet.getBigDecimal("high"));
             stockBuild.setLow(resultSet.getBigDecimal("low"));
             stockBuild.setClose(resultSet.getBigDecimal("close"));
+            System.out.println(stockBuild.hashCode());
             stocks.add(stockBuild);
           }
         } catch (SQLException e) {
@@ -115,4 +120,8 @@ public class DatabaseConnection implements DataReceiver {
   public String getValue(ValueEnum valueEnum,SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     return DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum,columnNameEnum, date, date2, symbol);
   }
+  private java.util.Date convertDate(java.sql.Date sqldate){
+    return new java.util.Date(sqldate.getTime());
+  }
+
 }
