@@ -13,6 +13,7 @@ import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.Entity.StockBuild;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
 
 public class DatabaseConnection implements DataReceiver {
 
@@ -77,6 +78,19 @@ public class DatabaseConnection implements DataReceiver {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public JDBCCategoryDataset getQueriedDataset(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
+    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, date, date2, symbol)
+    try {
+      JDBCCategoryDataset jdbcCategoryDataset = new JDBCCategoryDataset(connection, request);
+      jdbcCategoryDataset.executeQuery(connection, request);
+      return jdbcCategoryDataset;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   public String getValue(ValueEnum valueEnum,SymbolEnum symbolEnum, DateEnum dateEnum, String date, String date2, String symbol) {
