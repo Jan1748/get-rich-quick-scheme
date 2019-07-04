@@ -12,7 +12,7 @@ import org.getRichFast.UI.ConsoleUI.Menus;
 public class Main {
   public static void main(String[] args) {
     InterfaceConnectorToDatabase interfaceConnectorToDatabase = new InterfaceConnectorToDatabase();
-    interfaceConnectorToDatabase.createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED, DateEnum.BEFORE, ColumnNameEnum.OPEN, "2015-01-01", null, "FSE/EON_X");
+    interfaceConnectorToDatabase.createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED, DateEnum.BEFORE, ColumnNameEnum.OPEN, "2020-01-01", null, "FSE/1COV_X");
 
     Menus menus = new Menus();
     menus.startMenu();
