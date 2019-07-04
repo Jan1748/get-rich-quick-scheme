@@ -94,7 +94,7 @@ public class DatabaseRequestBuilder {
 
   private static String getChartValues(String dateCondition, ColumnNameEnum columnNameEnum, String symbol){
     String code = "";
-    code = "SELECT \"Date\", \"" + columnNameString(columnNameEnum) + "\" FROM stockbuild " + dateCondition + " " + getSymbolCondition(symbol,SymbolEnum.ATTACHED) + " ORDER BY \"Date\" ASC;";
+    code = "SELECT * FROM stockbuild " + dateCondition + " " + getSymbolCondition(symbol,SymbolEnum.ATTACHED) + ";";
     System.out.println(code);
     return code;
   }

@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Properties;
 import org.getRichFast.Data.DataReceiver;
 import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
@@ -82,17 +85,32 @@ public class DatabaseConnection implements DataReceiver {
   }
 
   @Override
-  public JDBCCategoryDataset getQueriedDataset(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
-    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum,date, date2, symbol);
-    try {
-      JDBCCategoryDataset jdbcCategoryDataset = new JDBCCategoryDataset(connection, request);
-      jdbcCategoryDataset.executeQuery(connection, request);
-      return jdbcCategoryDataset;
-    } catch (SQLException e) {
-      e.printStackTrace();
+  public ArrayList<StockBuild> getQueriedDataset(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date1, String date2, String symbol) {
+    String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum,date1, date2, symbol);
+      Connection connection = connect();
+      ArrayList<StockBuild> stocks = new ArrayList<>();
+      if(connection != null){
+        Statement statement = null;
+        try {
+          statement = connection.createStatement();
+          ResultSet resultSet = statement.executeQuery(request);
+          Calendar cal = Calendar.getInstance();
+          while (resultSet.next()) {
+            java.util.Date date = new java.util.Date(resultSet.getDate("date").getTime());
+            cal.setTime(date);
+            StockBuild stockBuild = new StockBuild(resultSet.getString("symbol"), cal);
+            stockBuild.setOpen(resultSet.getBigDecimal("open"));
+            stockBuild.setHigh(resultSet.getBigDecimal("high"));
+            stockBuild.setLow(resultSet.getBigDecimal("low"));
+            stockBuild.setClose(resultSet.getBigDecimal("close"));
+            stocks.add(stockBuild);
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+     }
+      return stocks;
     }
-    return null;
-  }
 
   public String getValue(ValueEnum valueEnum,SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     return DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum,columnNameEnum, date, date2, symbol);

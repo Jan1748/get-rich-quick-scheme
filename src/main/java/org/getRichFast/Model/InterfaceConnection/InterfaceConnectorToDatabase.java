@@ -8,6 +8,7 @@ import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.Charts.CreateLineChartPNG;
 import org.getRichFast.Model.Downloading.QuandlCodeFinder;
+import org.getRichFast.Model.Entity.StockBuild;
 import org.getRichFast.Model.ProcessDecisions;
 import org.getRichFast.Model.RequestEditor;
 import org.getRichFast.Model.RequestEditorThreads;
@@ -58,8 +59,9 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
 
   @Override
   public void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
-    JDBCCategoryDataset jdbcCategoryDataset = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum,columnNameEnum, date, date2, symbol);
+    ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum,columnNameEnum, date, date2, symbol);
+
     CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
-    createLineChartPNG.generateChartPNG(jdbcCategoryDataset, symbol);
+    createLineChartPNG.generateChartPNG(stockData);
   }
 }
