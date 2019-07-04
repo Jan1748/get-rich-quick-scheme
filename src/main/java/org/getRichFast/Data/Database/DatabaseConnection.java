@@ -102,12 +102,10 @@ public class DatabaseConnection implements DataReceiver {
             date = convertDate(resultSet.getDate("Date"));
             cal.setTime(date);
             StockBuild stockBuild = new StockBuild(resultSet.getString("symbol"), cal);
-            System.out.println("date " + stockBuild.getDate().getTime());
             stockBuild.setOpen(resultSet.getBigDecimal("open"));
             stockBuild.setHigh(resultSet.getBigDecimal("high"));
             stockBuild.setLow(resultSet.getBigDecimal("low"));
             stockBuild.setClose(resultSet.getBigDecimal("close"));
-            System.out.println(stockBuild.hashCode());
             stocks.add(stockBuild);
           }
         } catch (SQLException e) {

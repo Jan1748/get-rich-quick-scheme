@@ -19,7 +19,6 @@ public class CreateLineChartPNG {
 
   public void generateChartPNG(ArrayList<StockBuild> input) {
 
-    System.out.println("Data length " + input.size());
     StockBuild stockBuild = input.get(0);
     TimeSeriesCollection dataset = createDataset(input);
     JFreeChart chart = ChartFactory.createTimeSeriesChart(
@@ -28,7 +27,17 @@ public class CreateLineChartPNG {
         dataset);
 
     try {
-      ChartUtils.saveChartAsPNG(new File("LineChart.png"), chart, 800, 600);
+      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      Date testDate = input.get(0).getDate().getTime();
+      String dateString1 = dateFormat.format(testDate);
+      testDate = input.get(input.size()-1).getDate().getTime();
+      String dateString2 = dateFormat.format(testDate);
+      String name = stockBuild.getSymbol();
+      name = name.replace("/", "-");
+      String path = "ChartPNG's/" + name + "_from_" +dateString2 + "_to_" + dateString1 + ".png";
+
+      System.out.println("Path " + path);
+      ChartUtils.saveChartAsPNG(new File(path), chart, 800, 600);
       System.out.println("PNG Created");
     } catch (Exception e) {
       System.out.println("ERROR");
@@ -42,9 +51,7 @@ public class CreateLineChartPNG {
       StockBuild stockBuild = data.get(i);
       Date currentDate;
       currentDate = data.get(i).getDate().getTime();
-      System.out.println(currentDate);
       RegularTimePeriod regularTimePeriod = new Day(currentDate);
-      System.out.println(regularTimePeriod);
       series1.addOrUpdate(regularTimePeriod, data.get(i).getOpen());
     }
     TimeSeriesCollection dataset = new TimeSeriesCollection();
