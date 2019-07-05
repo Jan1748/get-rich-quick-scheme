@@ -48,7 +48,11 @@ public class CreateLineChartPNG {
   }
 
   private TimeSeriesCollection createDataset(ArrayList<StockBuild> data) {
-    TimeSeries series1 = new TimeSeries("Data");
+    TimeSeries series1 = new TimeSeries("Open");
+    TimeSeries series2 = new TimeSeries("High");
+    TimeSeries series3 = new TimeSeries("Low");
+    TimeSeries series4 = new TimeSeries("Close");
+
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     for (int i = 0; i < data.size();i++) {
       StockBuild stockBuild = data.get(i);
@@ -56,9 +60,17 @@ public class CreateLineChartPNG {
       currentDate = data.get(i).getDate().getTime();
       RegularTimePeriod regularTimePeriod = new Day(currentDate);
       series1.addOrUpdate(regularTimePeriod, data.get(i).getOpen());
+      series2.addOrUpdate(regularTimePeriod, data.get(i).getHigh());
+      series3.addOrUpdate(regularTimePeriod, data.get(i).getLow());
+      series4.addOrUpdate(regularTimePeriod, data.get(i).getClose());
+
     }
     TimeSeriesCollection dataset = new TimeSeriesCollection();
     dataset.addSeries(series1);
+    dataset.addSeries(series2);
+    dataset.addSeries(series3);
+    dataset.addSeries(series4);
+
     return dataset;
   }
 }
