@@ -23,7 +23,7 @@ public class DatabaseRequestBuilder {
       case MIN:
         return getLowestValues(dateCode, symbolCode);
       case ALL:
-        return getChartValues(dateCode, columnNameEnum, symbol);
+        return getChartValues(dateCode, columnNameEnum, symbol, symbolEnum);
     }
     return null;
   }
@@ -48,6 +48,7 @@ public class DatabaseRequestBuilder {
   }
 
   private static String getSymbolCondition(String symbol, SymbolEnum symbolEnum) {
+    System.out.println(symbolEnum);
     String symbolCode = "";
     if (symbolEnum == SymbolEnum.ATTACHED) {
       if (symbol != null) {
@@ -92,9 +93,9 @@ public class DatabaseRequestBuilder {
     return code1;
   }
 
-  private static String getChartValues(String dateCondition, ColumnNameEnum columnNameEnum, String symbol){
+  private static String getChartValues(String dateCondition, ColumnNameEnum columnNameEnum, String symbol, SymbolEnum symbolEnum){
     String code = "";
-    code = "SELECT * FROM stockbuild " + dateCondition + " " + getSymbolCondition(symbol,SymbolEnum.ATTACHED) + ";";
+    code = "SELECT * FROM stockbuild " + dateCondition + " " + getSymbolCondition(symbol, symbolEnum) + ";";
     System.out.println(code);
     return code;
   }
