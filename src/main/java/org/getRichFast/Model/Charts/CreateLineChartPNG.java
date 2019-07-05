@@ -36,13 +36,14 @@ public class CreateLineChartPNG {
       String dateString2 = dateFormat.format(testDate);
       String name = stockBuild.getSymbol();
       name = name.replace("/", "-");
-      String path = "ChartPNG's/" + name + "_from_" +dateString2 + "_to_" + dateString1 + ".png";
+      String path = "ChartsPNG's/" + name + "_from_" +dateString2 + "_to_" + dateString1 + ".png";
 
       System.out.println("Path " + path);
       ChartUtils.saveChartAsPNG(new File(path), chart, 800, 600);
       System.out.println("PNG Created");
     } catch (Exception e) {
       System.out.println("ERROR");
+      e.printStackTrace();
     }
   }
 

@@ -6,6 +6,7 @@ import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
+import org.getRichFast.Model.Charts.CreateCandleStickChartPNG;
 import org.getRichFast.Model.Charts.CreateLineChartPNG;
 import org.getRichFast.Model.Downloading.QuandlCodeFinder;
 import org.getRichFast.Model.Entity.StockBuild;
@@ -60,8 +61,10 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
   @Override
   public void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum,columnNameEnum, date, date2, symbol);
-    CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
-    createLineChartPNG.generateChartPNG(stockData);
+    CreateCandleStickChartPNG createCandleStickChartPNG = new CreateCandleStickChartPNG();
+    createCandleStickChartPNG.candlestick(stockData);
+    //CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
+    //createLineChartPNG.generateChartPNG(stockData);
   }
 
   @Override
