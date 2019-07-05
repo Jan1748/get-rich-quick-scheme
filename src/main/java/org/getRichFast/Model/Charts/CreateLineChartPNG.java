@@ -18,7 +18,6 @@ import org.jfree.data.time.TimeSeriesCollection;
 public class CreateLineChartPNG {
 
   public void generateChartPNG(ArrayList<StockBuild> input) {
-
     StockBuild stockBuild = input.get(0);
     TimeSeriesCollection dataset = createDataset(input);
     JFreeChart chart = ChartFactory.createTimeSeriesChart(
@@ -39,7 +38,7 @@ public class CreateLineChartPNG {
       String path = "ChartsPNG's/" + name + "_from_" +dateString2 + "_to_" + dateString1 + ".png";
 
       System.out.println("Path " + path);
-      ChartUtils.saveChartAsPNG(new File(path), chart, 800, 600);
+      ChartUtils.saveChartAsPNG(new File(path), chart, 1920, 1080);
       System.out.println("PNG Created");
     } catch (Exception e) {
       System.out.println("ERROR");

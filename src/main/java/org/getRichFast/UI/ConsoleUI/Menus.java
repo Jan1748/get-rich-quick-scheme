@@ -132,18 +132,24 @@ public class Menus {
       case "2":
         processDecisions.searchForValue(ValueEnum.MIN, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
         break;
-      case "3": chartMenu(dateEnum, columnNameEnum, date, date2, symbol);
+      case "3":
+        chartMenu(dateEnum, columnNameEnum, date, date2, symbol);
       default:
         System.out.println("Please enter a valid choice.");
     }
   }
-  private void chartMenu(DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol){
-    switch (InputFunctions.scan("Choose your preferred chart \n1: LineChart \n2: CandleStickChart")){
-      case "1": processDecisions.createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED ,dateEnum,columnNameEnum,date,date2,symbol);
-      break;
-      case "2": processDecisions.createCandleStickChart(ValueEnum.ALL, SymbolEnum.ATTACHED ,dateEnum,columnNameEnum,date,date2,symbol);
-      break;
-      default: System.out.println("Please enter a valid choice."); break;
+
+  private void chartMenu(DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+    switch (InputFunctions.scan("Choose your preferred chart \n1: LineChart \n2: CandleStickChart")) {
+      case "1":
+        processDecisions.createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, columnNameEnum, date, date2, symbol);
+        break;
+      case "2":
+        processDecisions.createCandleStickChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, columnNameEnum, date, date2, symbol);
+        break;
+      default:
+        System.out.println("Please enter a valid choice.");
+        break;
     }
   }
 }

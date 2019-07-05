@@ -41,7 +41,7 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
     int threads = 8;
     int numbersize = symbols.size() / threads;
     int number = 1;
-    for(int i = 0; i < threads; i++) {
+    for (int i = 0; i < threads; i++) {
       RequestEditorThreads requestEditorThreads = new RequestEditorThreads(symbols, symbol, apiKey, number, (number + numbersize), i);
       requestEditorThreads.start();
       try {
@@ -49,7 +49,7 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      number+=numbersize;
+      number += numbersize;
     }
   }
 
@@ -59,16 +59,16 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
   }
 
   @Override
-  public void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
-    ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum,columnNameEnum, date, date2, symbol);
-    CreateCandleStickChartPNG createCandleStickChartPNG = new CreateCandleStickChartPNG();
-    createCandleStickChartPNG.candlestick(stockData);
-    //CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
-    //createLineChartPNG.generateChartPNG(stockData);
+  public void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+    ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
+    CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
+    createLineChartPNG.generateChartPNG(stockData);
   }
 
   @Override
   public void createCandleStickChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
-
+    ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
+    CreateCandleStickChartPNG createCandleStickChartPNG = new CreateCandleStickChartPNG();
+    createCandleStickChartPNG.candlestick(stockData);
   }
 }
