@@ -63,4 +63,9 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
     CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
     createLineChartPNG.generateChartPNG(stockData);
   }
+
+  @Override
+  public void createCandleStickChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+
+  }
 }

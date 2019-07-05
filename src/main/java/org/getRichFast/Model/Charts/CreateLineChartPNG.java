@@ -27,6 +27,8 @@ public class CreateLineChartPNG {
         dataset);
 
     try {
+      File folder = new File("ChartsPNG's");
+      folder.mkdir();
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
       Date testDate = input.get(0).getDate().getTime();
       String dateString1 = dateFormat.format(testDate);
