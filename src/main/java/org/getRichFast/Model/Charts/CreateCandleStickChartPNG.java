@@ -18,13 +18,17 @@ public class CreateCandleStickChartPNG {
 
     CandlestickRenderer renderer = new CandlestickRenderer();
     DefaultHighLowDataset dataset = getData(input);
+    double lowestLow = getLowestLow(dataset);
+    double highestHigh = getHighestHigh(dataset);
     JFreeChart jFreeChart = createChart(dataset);
+    jFreeChart.getXYPlot().getRangeAxis().setRange(lowestLow*0.95, highestHigh*1.05);
+
 
     try {
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
       Date testDate = input.get(0).getDate().getTime();
       String dateString1 = dateFormat.format(testDate);
-      testDate = input.get(input.size()).getDate().getTime();
+      testDate = input.get(input.size()-1).getDate().getTime();
       String dateString2 = dateFormat.format(testDate);
       String name = input.get(0).getSymbol();
       name = name.replace("/", "-");
@@ -79,5 +83,29 @@ public class CreateCandleStickChartPNG {
   private JFreeChart createChart(DefaultHighLowDataset dataset) {
     JFreeChart jFreeChart = ChartFactory.createCandlestickChart("Test", "Time", "Value", dataset, true);
     return jFreeChart;
+  }
+  private double getLowestLow(DefaultHighLowDataset dataset){
+    double lowest;
+    lowest = dataset.getLowValue(0,0);
+    for(int i=1;i<dataset.getItemCount(0);i++){
+      if(dataset.getLowValue(0,i) < lowest){
+        lowest = dataset.getLowValue(0,i);
+      }
+    }
+
+    return lowest;
+  }
+
+
+  private double getHighestHigh(DefaultHighLowDataset dataset){
+    double highest;
+    highest = dataset.getHighValue(0,0);
+    for(int i=1;i<dataset.getItemCount(0);i++){
+      if(dataset.getLowValue(0,i) > highest){
+        highest = dataset.getHighValue(0,i);
+      }
+    }
+
+    return highest;
   }
 }
