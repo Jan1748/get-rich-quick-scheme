@@ -44,39 +44,57 @@ public class CreateCandleStickChartPNG {
   }
 
   protected DefaultHighLowDataset getData(ArrayList<StockBuild> stockBuild) {
-    Date[] date = new Date[stockBuild.size()];
-    double[] open = new double[stockBuild.size()];
-    double[] high = new double[stockBuild.size()];
-    double[] low = new double[stockBuild.size()];
-    double[] close = new double[stockBuild.size()];
-    double[] volume = new double[stockBuild.size()];
+    int scale = 20;
+    int blend = stockBuild.size() % scale;
 
-    for (int x = 0; x < stockBuild.size(); x++) {
-      date[x] = stockBuild.get(x).getDate().getTime();
+    Date[] date = new Date[((stockBuild.size() - blend) / scale)];
+    double[] open = new double[((stockBuild.size() - blend) / scale)];
+    double[] high = new double[((stockBuild.size() - blend) / scale)];
+    double[] low = new double[((stockBuild.size() - blend) / scale)];
+    double[] close = new double[((stockBuild.size() - blend) / scale)];
+    double[] volume = new double[((stockBuild.size() - blend) / scale)];
+
+    int y = 0;
+
+    for (int x = 0; x < stockBuild.size() - blend; x += scale) {
+      date[y] = stockBuild.get(x).getDate().getTime();
       if (stockBuild.get(x).getOpen() != null) {
-        open[x] = stockBuild.get(x).getOpen().doubleValue();
+        open[y] = stockBuild.get(x).getOpen().doubleValue();
       } else {
-        open[x] = open[x - 1];
+        if (x != 0){
+          open[y] = open[y - 1];
+        }
+        else {
+          open[y] = stockBuild.get(x).getLow().doubleValue();
+        }
       }
       if (stockBuild.get(x).getHigh() != null) {
-        high[x] = stockBuild.get(x).getHigh().doubleValue();
+        high[y] = stockBuild.get(x).getHigh().doubleValue();
       } else {
-        high[x] = high[x - 1];
+        if (x != 0) {
+          high[y] = high[y - 1];
+        }
       }
       if (stockBuild.get(x).getLow() != null) {
-        low[x] = stockBuild.get(x).getLow().doubleValue();
+        low[y] = stockBuild.get(x).getLow().doubleValue();
       } else {
-        low[x] = low[x - 1];
+        if (x != 0){
+          low[y] = low[y - 1];
+        }
       }
       if (stockBuild.get(x).getClose() != null) {
-        close[x] = stockBuild.get(x).getClose().doubleValue();
+        close[y] = stockBuild.get(x).getClose().doubleValue();
       } else {
-        close[x] = close[x - 1];
+        if (x != 0){
+          close[y] = close[y - 1];
+        }
       }
-      volume[x] = 2d;
+      volume[y] = 20d;
+      y++;
     }
+    System.out.println("Date " + date + " Open " +open+ " High " + high+ " Low " + low  +" Close " +close + " Volume " + volume);
 
-    DefaultHighLowDataset item = new DefaultHighLowDataset("", date, open, high, low, close, volume);
+    DefaultHighLowDataset item = new DefaultHighLowDataset("test", date, open, high, low, close, volume);
     return item;
   }
 

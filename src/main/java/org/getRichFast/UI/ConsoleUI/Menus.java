@@ -103,7 +103,7 @@ public class Menus {
           default:
             System.out.println("Please enter a valid choice.");
         }
-        if (InputFunctions.scan("Do you want to search for a symbol? (y/ColumnNameEnum)").equals("y")) {
+        if (InputFunctions.scan("Do you want to search for a symbol? (y/n)").equals("y")) {
           symbol = InputFunctions.scan("Please enter the symbol you want to search for.");
           symbolEnum = SymbolEnum.ATTACHED;
           searchForValueMenu(dateEnum, symbolEnum, ColumnNameEnum.ALL, date, date2, symbol);
@@ -134,6 +134,7 @@ public class Menus {
         break;
       case "3":
         chartMenu(dateEnum, symbolEnum, columnNameEnum, date, date2, symbol);
+        break;
       default:
         System.out.println("Please enter a valid choice.");
     }

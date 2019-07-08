@@ -48,7 +48,6 @@ public class DatabaseRequestBuilder {
   }
 
   private static String getSymbolCondition(String symbol, SymbolEnum symbolEnum) {
-    System.out.println(symbolEnum);
     String symbolCode = "";
     if (symbolEnum == SymbolEnum.ATTACHED) {
       if (symbol != null) {
@@ -96,7 +95,6 @@ public class DatabaseRequestBuilder {
   private static String getChartValues(String dateCondition, ColumnNameEnum columnNameEnum, String symbol, SymbolEnum symbolEnum){
     String code = "";
     code = "SELECT * FROM stockbuild " + dateCondition + " " + getSymbolCondition(symbol, symbolEnum) + ";";
-    System.out.println(code);
     return code;
   }
 }
