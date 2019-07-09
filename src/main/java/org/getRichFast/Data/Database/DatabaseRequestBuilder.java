@@ -51,7 +51,7 @@ public class DatabaseRequestBuilder {
     String symbolCode = "";
     if (symbolEnum == SymbolEnum.ATTACHED) {
       if (symbol != null) {
-        symbolCode = " AND \"Symbol\" = '" + symbol + "';";
+        symbolCode = " AND \"Symbol\" = '" + symbol + "'";
       }
     }
     if (symbolEnum == SymbolEnum.SINGLE) {
