@@ -10,9 +10,6 @@ import org.getRichFast.Model.Entity.StockBuild;
 public class Average {
 
   public static BigDecimal arethmeticMean(ArrayList<StockBuild> stocks, ColumnNameEnum columnNameEnum) {
-    for (int i = 0; i < stocks.size(); i++){
-      System.out.println(stocks.get(i).getOpen());
-    }
     BigDecimal result = new BigDecimal(0);
     for (int i = 0; i < stocks.size(); i++) {
       StockBuild stockBuild = stocks.get(i);
@@ -32,7 +29,7 @@ public class Average {
         BigDecimal add = stockBuild.getOpen();
         result = result.add(add);
       }
-      System.out.println("Result " + result);
+      //System.out.println("Result " + result);
     }
     result = result.divide(new BigDecimal(stocks.size()), RoundingMode.DOWN);
     System.out.println("Average " + result);
@@ -59,14 +56,10 @@ public class Average {
         BigDecimal add = stockBuild.getOpen();
         results.add(add);
       }
-      System.out.println("Result " + results.get(i));
     }
     Collections.sort(results);
     Collections.reverse(results);
     BigDecimal result = results.get((stocks.size()/2));
-    for(int i = 0; i < results.size(); i++){
-      System.out.println("Numbers " +results.get(i));
-    }
     System.out.println("Result = " + result);
     return result;
   }
