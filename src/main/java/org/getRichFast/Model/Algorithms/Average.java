@@ -31,9 +31,12 @@ public class Average {
       }
       //System.out.println("Result " + result);
     }
-    result = result.divide(new BigDecimal(stocks.size()), RoundingMode.DOWN);
-    System.out.println("Average " + result);
-    return result;
+    if (stocks.size() >= 1) {
+      result = result.divide(new BigDecimal(stocks.size()), RoundingMode.DOWN);
+      System.out.println("Average " + result);
+      return result;
+    }
+    return null;
   }
 
   public static BigDecimal median(ArrayList<StockBuild> stocks, ColumnNameEnum columnNameEnum) {
@@ -59,9 +62,12 @@ public class Average {
     }
     Collections.sort(results);
     Collections.reverse(results);
-    BigDecimal result = results.get((stocks.size()/2));
-    System.out.println("Result = " + result);
-    return result;
+    if (results.size() >= 1) {
+      BigDecimal result = results.get((stocks.size() / 2));
+      System.out.println("Result = " + result);
+      return result;
+    }
+    return null;
   }
 
   public static void geometricMean(ArrayList<StockBuild> stocks, ColumnNameEnum columnNameEnum) {

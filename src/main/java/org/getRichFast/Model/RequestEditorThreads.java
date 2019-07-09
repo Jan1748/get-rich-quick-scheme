@@ -1,5 +1,6 @@
 package org.getRichFast.Model;
 
+import java.awt.Menu;
 import org.getRichFast.Data.Database.DatabaseConnection;
 import org.getRichFast.Model.Downloading.QuandlCodeFinder;
 import org.getRichFast.Model.Entity.DataShifter;
@@ -16,6 +17,7 @@ import org.getRichFast.Data.Database.DatabaseConnection;
 import org.getRichFast.Model.Downloading.QuandlCodeFinder;
 import org.getRichFast.Model.Entity.DataShifter;
 import org.getRichFast.Model.Entity.StockBuild;
+import org.getRichFast.UI.ConsoleUI.Menus;
 
 public class RequestEditorThreads extends Thread {
     private DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -62,5 +64,6 @@ public class RequestEditorThreads extends Thread {
             }
         }
         System.out.println("Thread nr." +threadnumber +" finished");
+
     }
 }

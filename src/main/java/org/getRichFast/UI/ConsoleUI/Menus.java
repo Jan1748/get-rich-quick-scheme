@@ -43,7 +43,7 @@ public class Menus {
           switch (InputFunctions.scan("What do you want to download? 1: All data from a stock market 2: Single stock")) {
             case "1":
               symbol = InputFunctions.scan("Please enter the symbol for the stock market.");
-              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/ColumnNameEnum)").equals("y")) {
+              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
                 processDecisions.downloadQuandlWholeStockMarket(symbol, quandlApiKey);
               } else {
                 System.out.println("abort");
@@ -51,7 +51,7 @@ public class Menus {
               break;
             case "2":
               symbol = InputFunctions.scan("Please enter the symbol for the stock.");
-              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/ColumnNameEnum)").equals("y")) {
+              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
                 processDecisions.downloadQuandlSingleStock(symbol, quandlApiKey);
               } else {
                 System.out.println("abort");
