@@ -44,8 +44,13 @@ public class CreateCandleStickChartPNG {
   }
 
   protected DefaultHighLowDataset getData(ArrayList<StockBuild> stockBuild) {
-    int scale = 20;
+    int scale = 21;
     int blend = stockBuild.size() % scale;
+
+    if (stockBuild.size() - scale <= 0){
+      blend = 0;
+      scale = 1;
+    }
 
     Date[] date = new Date[((stockBuild.size() - blend) / scale)];
     double[] open = new double[((stockBuild.size() - blend) / scale)];
@@ -56,6 +61,7 @@ public class CreateCandleStickChartPNG {
 
     int y = 0;
 
+    System.out.println(stockBuild.size() - blend);
     for (int x = 0; x < stockBuild.size() - blend; x += scale) {
       date[y] = stockBuild.get(x).getDate().getTime();
       if (stockBuild.get(x).getOpen() != null) {
@@ -72,28 +78,26 @@ public class CreateCandleStickChartPNG {
         high[y] = stockBuild.get(x).getHigh().doubleValue();
       } else {
         if (x != 0) {
-          high[y] = high[y - 1];
+          high[y] = stockBuild.get(x).getClose().doubleValue();
         }
       }
       if (stockBuild.get(x).getLow() != null) {
         low[y] = stockBuild.get(x).getLow().doubleValue();
       } else {
         if (x != 0){
-          low[y] = low[y - 1];
+          low[y] = stockBuild.get(x).getOpen().doubleValue();
         }
       }
       if (stockBuild.get(x).getClose() != null) {
         close[y] = stockBuild.get(x).getClose().doubleValue();
       } else {
         if (x != 0){
-          close[y] = close[y - 1];
+          close[y] = stockBuild.get(x).getHigh().doubleValue();
         }
       }
       volume[y] = 20d;
-      y++;
+      y += 1;
     }
-    System.out.println("Date " + date + " Open " +open+ " High " + high+ " Low " + low  +" Close " +close + " Volume " + volume);
-
     DefaultHighLowDataset item = new DefaultHighLowDataset("test", date, open, high, low, close, volume);
     return item;
   }

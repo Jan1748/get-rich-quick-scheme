@@ -125,7 +125,15 @@ public class Menus {
   }
 
   private void searchForValueMenu(DateEnum dateEnum, SymbolEnum symbolEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
-    switch (InputFunctions.scan("What do you want to search? \n1: Highest value \n2: Lowest value \n3: Create Chart")) {
+    String message = "test";
+    if (dateEnum != DateEnum.EXACT ){
+      message = "What do you want to search? \n1: Highest value \n2: Lowest value \n3: Create Chart";
+    }
+    else {
+      message = "What do you want to search? \n1: Highest value \n2: Lowest value";
+    }
+
+    switch (InputFunctions.scan(message)) {
       case "1":
         processDecisions.searchForValue(ValueEnum.MAX, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
         break;
