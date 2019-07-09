@@ -8,7 +8,7 @@ import org.getRichFast.Data.Database.Enum.ValueEnum;
 
 public class DatabaseRequestBuilder {
 
-  public static String requestBuild(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+  public static String requestBuild(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     String symbolCode = "";
     String dateCode = "";
     if (date != null) {

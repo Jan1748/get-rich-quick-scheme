@@ -18,6 +18,7 @@ import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
+import org.getRichFast.Model.Algorithms.StockPerformanceCalculater;
 import org.getRichFast.Model.Entity.StockBuild;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
 
