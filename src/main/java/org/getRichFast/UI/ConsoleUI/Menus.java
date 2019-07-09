@@ -51,7 +51,7 @@ public class Menus {
               break;
             case "2":
               symbol = InputFunctions.scan("Please enter the symbol for the stock.");
-              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/ColumnNameEnum)").equals("y")) {
+              if (InputFunctions.scan("Start downloading Quandl data: " + symbol + " with api-code: " + quandlApiKey + "? (y/n)").equals("y")) {
                 processDecisions.downloadQuandlSingleStock(symbol, quandlApiKey);
               } else {
                 System.out.println("abort");
@@ -125,7 +125,15 @@ public class Menus {
   }
 
   private void searchForValueMenu(DateEnum dateEnum, SymbolEnum symbolEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
-    switch (InputFunctions.scan("What do you want to search? \n1: Highest value \n2: Lowest value \n3: Create Chart")) {
+    String message = "test";
+    if (dateEnum != DateEnum.EXACT ){
+      message = "What do you want to search? \n1: Highest value \n2: Lowest value \n3: Create Chart";
+    }
+    else {
+      message = "What do you want to search? \n1: Highest value \n2: Lowest value";
+    }
+
+    switch (InputFunctions.scan(message)) {
       case "1":
         processDecisions.searchForValue(ValueEnum.MAX, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
         break;
