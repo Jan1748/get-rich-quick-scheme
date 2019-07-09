@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import org.getRichFast.Data.Database.Enum.ChartEnum;
 import org.getRichFast.Model.Entity.StockBuild;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
@@ -15,7 +16,6 @@ import org.jfree.data.xy.DefaultHighLowDataset;
 public class CreateCandleStickChartPNG {
 
   public void candlestick(ArrayList<StockBuild> input) {
-
     CandlestickRenderer renderer = new CandlestickRenderer();
     DefaultHighLowDataset dataset = getData(input);
     double lowestLow = getLowestLow(dataset);
@@ -25,6 +25,7 @@ public class CreateCandleStickChartPNG {
 
 
     try {
+      String[] names = input.get(0).getSymbol().split("/");
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
       Date testDate = input.get(0).getDate().getTime();
       String dateString1 = dateFormat.format(testDate);
@@ -32,7 +33,8 @@ public class CreateCandleStickChartPNG {
       String dateString2 = dateFormat.format(testDate);
       String name = input.get(0).getSymbol();
       name = name.replace("/", "-");
-      String path = "ChartsPNG's/" + name + "_from_" + dateString2 + "_to_" + dateString1 + ".png";
+      StockFolderCreator.createStockFolder(ChartEnum.CandleStickChart, names[0]);
+      String path = "StockCharts/CandleStickChart/" + names[0]+ "/" + name + "_from_" + dateString2 + "_to_" + dateString1 + ".png";
 
       System.out.println("Path " + path);
       ChartUtils.saveChartAsPNG(new File(path), jFreeChart, 1920, 1080);
@@ -67,31 +69,31 @@ public class CreateCandleStickChartPNG {
       if (stockBuild.get(x).getOpen() != null) {
         open[y] = stockBuild.get(x).getOpen().doubleValue();
       } else {
-        if (x != 0){
+        if (x != 0 && stockBuild.get(x).getOpen() != null){
           open[y] = open[y - 1];
         }
-        else {
+        else if(stockBuild.get(x).getOpen() != null){
           open[y] = stockBuild.get(x).getLow().doubleValue();
         }
       }
       if (stockBuild.get(x).getHigh() != null) {
         high[y] = stockBuild.get(x).getHigh().doubleValue();
       } else {
-        if (x != 0) {
+        if (x != 0 && stockBuild.get(x).getHigh() != null) {
           high[y] = stockBuild.get(x).getClose().doubleValue();
         }
       }
       if (stockBuild.get(x).getLow() != null) {
         low[y] = stockBuild.get(x).getLow().doubleValue();
       } else {
-        if (x != 0){
+        if (x != 0 && stockBuild.get(x).getLow() != null){
           low[y] = stockBuild.get(x).getOpen().doubleValue();
         }
       }
       if (stockBuild.get(x).getClose() != null) {
         close[y] = stockBuild.get(x).getClose().doubleValue();
       } else {
-        if (x != 0){
+        if (x != 0 && stockBuild.get(x).getClose() != null){
           close[y] = stockBuild.get(x).getHigh().doubleValue();
         }
       }

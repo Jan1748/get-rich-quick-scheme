@@ -17,4 +17,6 @@ public interface ProcessDecisions {
 
   void createCandleStickChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol);
 
+  void generateAllChartsFromStock(String stockName, String apiKey , DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2);
+
 }

@@ -13,60 +13,57 @@ public class Average {
     BigDecimal result = new BigDecimal(0);
     for (int i = 0; i < stocks.size(); i++) {
       StockBuild stockBuild = stocks.get(i);
-      if (columnNameEnum == ColumnNameEnum.OPEN && stockBuild.getOpen() != null) {
-        BigDecimal add = stockBuild.getOpen();
+      BigDecimal add = check(stockBuild, columnNameEnum);
+      if (add != null) {
         result = result.add(add);
       }
-      if (columnNameEnum == ColumnNameEnum.HIGH && stockBuild.getHigh() != null) {
-        BigDecimal add = stockBuild.getOpen();
-        result = result.add(add);
-      }
-      if (columnNameEnum == ColumnNameEnum.LOW && stockBuild.getLow() != null) {
-        BigDecimal add = stockBuild.getOpen();
-        result = result.add(add);
-      }
-      if (columnNameEnum == ColumnNameEnum.CLOSE && stockBuild.getClose() != null) {
-        BigDecimal add = stockBuild.getOpen();
-        result = result.add(add);
-      }
-      //System.out.println("Result " + result);
     }
-    result = result.divide(new BigDecimal(stocks.size()), RoundingMode.DOWN);
-    System.out.println("Average " + result);
-    return result;
+    if (stocks.size() >= 1) {
+      result = result.divide(new BigDecimal(stocks.size()), RoundingMode.DOWN);
+      System.out.println("Average " + result);
+      return result;
+    }
+    return null;
   }
 
   public static BigDecimal median(ArrayList<StockBuild> stocks, ColumnNameEnum columnNameEnum) {
     ArrayList<BigDecimal> results = new ArrayList<>();
     for (int i = 0; i < stocks.size(); i++) {
       StockBuild stockBuild = stocks.get(i);
-      if (columnNameEnum == ColumnNameEnum.OPEN && stockBuild.getOpen() != null) {
-        BigDecimal add = stockBuild.getOpen();
-        results.add(add);
-      }
-      if (columnNameEnum == ColumnNameEnum.HIGH && stockBuild.getHigh() != null) {
-        BigDecimal add = stockBuild.getOpen();
-        results.add(add);
-      }
-      if (columnNameEnum == ColumnNameEnum.LOW && stockBuild.getLow() != null) {
-        BigDecimal add = stockBuild.getOpen();
-        results.add(add);
-      }
-      if (columnNameEnum == ColumnNameEnum.CLOSE && stockBuild.getClose() != null) {
-        BigDecimal add = stockBuild.getOpen();
+      BigDecimal add = check(stockBuild, columnNameEnum);
+      if (add != null) {
         results.add(add);
       }
     }
     Collections.sort(results);
     Collections.reverse(results);
-    BigDecimal result = results.get((stocks.size()/2));
-    System.out.println("Result = " + result);
-    return result;
+    if (results.size() >= 1) {
+      BigDecimal result = results.get((stocks.size() / 2));
+      System.out.println("Result = " + result);
+      return result;
+    }
+    return null;
+  }
+  private static BigDecimal check(StockBuild stockBuild, ColumnNameEnum columnNameEnum){
+    if (columnNameEnum == ColumnNameEnum.OPEN && stockBuild.getOpen() != null) {
+      return stockBuild.getOpen();
+    }
+    if (columnNameEnum == ColumnNameEnum.HIGH && stockBuild.getHigh() != null) {
+      return stockBuild.getOpen();
+    }
+    if (columnNameEnum == ColumnNameEnum.LOW && stockBuild.getLow() != null) {
+      return stockBuild.getOpen();
+    }
+    if (columnNameEnum == ColumnNameEnum.CLOSE && stockBuild.getClose() != null) {
+       return stockBuild.getOpen();
+    }
+    return null;
   }
 
   public static void geometricMean(ArrayList<StockBuild> stocks, ColumnNameEnum columnNameEnum) {
 
   }
+
 
 
 }

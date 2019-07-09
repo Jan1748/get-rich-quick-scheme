@@ -1,10 +1,12 @@
 package org.getRichFast.Model.Charts;
 
+import java.awt.Rectangle;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import org.getRichFast.Data.Database.Enum.ChartEnum;
 import org.getRichFast.Model.Entity.StockBuild;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
@@ -26,8 +28,7 @@ public class CreateLineChartPNG {
         dataset);
 
     try {
-      File folder = new File("ChartsPNG's");
-      folder.mkdir();
+      String[] names = stockBuild.getSymbol().split("/");
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
       Date testDate = input.get(0).getDate().getTime();
       String dateString1 = dateFormat.format(testDate);
@@ -35,8 +36,8 @@ public class CreateLineChartPNG {
       String dateString2 = dateFormat.format(testDate);
       String name = stockBuild.getSymbol();
       name = name.replace("/", "-");
-      String path = "ChartsPNG's/" + name + "_from_" +dateString2 + "_to_" + dateString1 + ".png";
-
+      StockFolderCreator.createStockFolder(ChartEnum.LineChart, names[0]);
+      String path = "StockCharts/LineChart/" + names[0]+ "/" + name + "_from_" + dateString2 + "_to_" + dateString1 + ".png";
       System.out.println("Path " + path);
       ChartUtils.saveChartAsPNG(new File(path), chart, 1920, 1080);
       System.out.println("PNG Created");
