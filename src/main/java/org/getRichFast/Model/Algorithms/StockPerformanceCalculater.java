@@ -26,7 +26,7 @@ public class StockPerformanceCalculater {
     ArrayList<BigDecimal> averageInterval = null;
 
     for (int x = 1; x < quandlCodesForStock.size(); x++) {
-      BigDecimal[]
+
       String[][] intervalStartEndDate = getIntervalStartEndDate(numberOfDivisions,
           dataReceiver.getQueriedDataset(ValueEnum.ALL, SymbolEnum.SINGLE, DateEnum.NULL, ColumnNameEnum.ALL, null, null, quandlCodesForStock.get(x)));
       for (int xx = 0; xx < intervalStartEndDate.length; xx++) {

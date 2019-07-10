@@ -9,6 +9,7 @@ import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.Algorithms.Average;
 import org.getRichFast.Model.Algorithms.StockPerformanceCalculater;
+import org.getRichFast.Model.InterfaceConnection.InterfaceConnectorToDatabase;
 import org.getRichFast.UI.ConsoleUI.Menus;
 
 public class Main {
