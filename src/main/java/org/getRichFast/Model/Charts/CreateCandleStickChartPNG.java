@@ -1,15 +1,11 @@
 package org.getRichFast.Model.Charts;
 
-import java.awt.Rectangle;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import org.apache.batik.svggen.SVGGraphics2D;
 import org.getRichFast.Data.Database.Enum.ChartEnum;
 import org.getRichFast.Model.Entity.StockBuild;
 import org.jfree.chart.ChartFactory;
@@ -17,7 +13,6 @@ import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.xy.DefaultHighLowDataset;
-import org.jfree.graphics2d.svg.SVGUtils;
 
 public class CreateCandleStickChartPNG {
 
