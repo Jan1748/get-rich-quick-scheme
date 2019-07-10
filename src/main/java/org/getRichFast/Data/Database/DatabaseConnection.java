@@ -52,6 +52,7 @@ public class DatabaseConnection implements DataReceiver {
       return DriverManager.getConnection(url, user, password);
     } catch (SQLException e) {
       System.out.println("Failed to connect to Database");
+      e.printStackTrace();
       //e.printStackTrace();
     }
     return null;
@@ -109,6 +110,9 @@ public class DatabaseConnection implements DataReceiver {
             stockBuild.setClose(resultSet.getBigDecimal("close"));
             stocks.add(stockBuild);
           }
+          resultSet.close();
+          statement.close();
+          connection.close();
         } catch (SQLException e) {
           e.printStackTrace();
         }

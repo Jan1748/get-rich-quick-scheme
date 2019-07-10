@@ -56,7 +56,7 @@ public class DatabaseRequestBuilder {
     }
     if (symbolEnum == SymbolEnum.SINGLE) {
       if (symbol != null) {
-        symbolCode = "WHERE \"Symbol\" = '" + symbol + "';";
+        symbolCode = "WHERE \"Symbol\" = '" + symbol + "'";
       }
     }
     return symbolCode;
@@ -94,7 +94,7 @@ public class DatabaseRequestBuilder {
 
   private static String getChartValues(String dateCondition, ColumnNameEnum columnNameEnum, String symbol, SymbolEnum symbolEnum){
     String code = "";
-    code = "SELECT * FROM stockbuild " + dateCondition + " " + getSymbolCondition(symbol, symbolEnum) + ";";
+    code = "SELECT * FROM stockbuild " + dateCondition + " " + getSymbolCondition(symbol, symbolEnum) + " ORDER BY \"Date\" DESC;";
     System.out.println(code);
     return code;
   }

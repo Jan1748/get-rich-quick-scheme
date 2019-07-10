@@ -13,8 +13,8 @@ import org.getRichFast.UI.ConsoleUI.Menus;
 
 public class Main {
   public static void main(String[] args) {
-    InterfaceConnectorToDatabase interfaceConnectorToDatabase = new InterfaceConnectorToDatabase();
-    interfaceConnectorToDatabase.generateAllChartsFromStock("FSE", "VAuKhbFRLKYeucyzd868", DateEnum.BEFORE, ColumnNameEnum.ALL,"2015-01-01", null);
+    //InterfaceConnectorToDatabase interfaceConnectorToDatabase = new InterfaceConnectorToDatabase();
+    //interfaceConnectorToDatabase.generateAllChartsFromStock("FSE", "VAuKhbFRLKYeucyzd868", DateEnum.BEFORE, ColumnNameEnum.ALL,"2015-01-01", null);
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Average.median(databaseConnection.getQueriedDataset(ValueEnum.ALL, SymbolEnum.NULL, DateEnum.BEFORE, ColumnNameEnum.ALL, "2015-01-01", null, "FSE/EON_X"), ColumnNameEnum.OPEN);
     Average.arethmeticMean(databaseConnection.getQueriedDataset(ValueEnum.ALL, SymbolEnum.ATTACHED, DateEnum.BEFORE, ColumnNameEnum.ALL, "2019-01-01", null, "FSE/EON_X"), ColumnNameEnum.OPEN);
@@ -23,7 +23,7 @@ public class Main {
 //    Average.arethmeticMean(databaseConnection.getQueriedDataset(ValueEnum.ALL, SymbolEnum.ATTACHED, DateEnum.BEFORE, ColumnNameEnum.ALL, "2015-01-01", null, "FSE/EON_X"), ColumnNameEnum.OPEN);
 
     StockPerformanceCalculater stockPerformanceCalculater = new StockPerformanceCalculater();
-    stockPerformanceCalculater.getBestPerformingStock("FSE", "4nAVrexhFHXrX1TuYNsF", 5);
+    stockPerformanceCalculater.getPerformanceFromStock("FSE", "4nAVrexhFHXrX1TuYNsF", 5);
 
     Menus menus = new Menus();
     menus.startMenu();

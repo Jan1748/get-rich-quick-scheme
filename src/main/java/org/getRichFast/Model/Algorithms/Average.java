@@ -38,7 +38,7 @@ public class Average {
     Collections.sort(results);
     Collections.reverse(results);
     if (results.size() >= 1) {
-      BigDecimal result = results.get((stocks.size() / 2));
+      BigDecimal result = results.get((results.size() / 2));
       System.out.println("Result = " + result);
       return result;
     }

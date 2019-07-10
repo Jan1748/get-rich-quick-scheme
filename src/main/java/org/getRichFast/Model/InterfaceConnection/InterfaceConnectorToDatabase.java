@@ -91,7 +91,7 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
     ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
     if (stockData.size() >= 1) {
       CreateCandleStickChartPNG createCandleStickChartPNG = new CreateCandleStickChartPNG();
-      createCandleStickChartPNG.candlestick(stockData);
+      //createCandleStickChartPNG.candlestick(stockData);
     }
   }
 
