@@ -158,13 +158,16 @@ public class Menus {
   }
 
   private void chartMenu(DateEnum dateEnum, SymbolEnum symbolEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
-    switch (InputFunctions.scan("Choose your preferred chart \n1: LineChart \n2: CandleStickChart")) {
+    switch (InputFunctions.scan("Choose your preferred chart \n1: LineChart \n2: CandleStickChart \n3: AllStocksToChart \n4: Histogram")) {
       case "1":
         processDecisions.createLineChart(ValueEnum.ALL, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol, null);
         break;
       case "2":
         processDecisions.createCandleStickChart(ValueEnum.ALL, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
         break;
+      case "3": processDecisions.generateAllChartsFromStock("FSE", quandlApiKey, dateEnum, ColumnNameEnum.ALL, date, date2); break;
+      case "4": processDecisions.createHistogram(SymbolEnum.ATTACHED, dateEnum, ColumnNameEnum.OPEN, date, date2, symbol, 20);
+      break;
       default:
         System.out.println("Please enter a valid choice.");
         break;
