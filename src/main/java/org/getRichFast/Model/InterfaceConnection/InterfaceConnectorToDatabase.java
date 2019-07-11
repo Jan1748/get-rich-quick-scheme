@@ -105,8 +105,8 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
     try {
       ArrayList<String> codnames = QuandlCodeFinder.getQuandlCodes(stockName, apiKey);
       for (int i = 1; i < codnames.size(); i++) {
-        createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, columnNameEnum, date, date2, codnames.get(i), null);
-        createCandleStickChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, columnNameEnum, date, date2, codnames.get(i));
+        createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, ColumnNameEnum.ALL, date, date2, codnames.get(i), null);
+        createCandleStickChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, ColumnNameEnum.ALL, date, date2, codnames.get(i));
       }
 
     } catch (IOException e) {
