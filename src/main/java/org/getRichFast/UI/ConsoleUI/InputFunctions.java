@@ -17,4 +17,11 @@ public class InputFunctions {
     return date;
   }
 
+  public static int getInputNumberOfDivisions() {
+    System.out.println("Please enter the number of divisions (for the accuracy).");
+    Scanner scanner = new Scanner(System.in);
+    String numberOfDivisions = scanner.nextLine();
+    return Integer.valueOf(numberOfDivisions);
+  }
+
 }

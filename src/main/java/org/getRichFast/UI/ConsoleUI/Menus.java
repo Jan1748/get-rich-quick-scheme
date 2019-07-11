@@ -5,19 +5,26 @@ package org.getRichFast.UI.ConsoleUI;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
+import org.getRichFast.Model.ConnectToUI;
+import org.getRichFast.Model.Entity.PerformingStocks;
 import org.getRichFast.Model.InterfaceConnection.InterfaceConnectorToDatabase;
+import org.getRichFast.Model.InterfaceConnection.ModelToUIConnection;
 import org.getRichFast.Model.ProcessDecisions;
+import org.getRichFast.UI.UIReceiver;
 
 public class Menus {
 
   private String menuChoice;
   private String quandlApiKey;
   private ProcessDecisions processDecisions = new InterfaceConnectorToDatabase();
+  private UIReceiver uiReceiver = new ConsoleOutputReceiver();
+
 
   public void startMenu() {
     menu();
@@ -79,7 +86,7 @@ public class Menus {
     DateEnum dateEnum = DateEnum.NULL;
     SymbolEnum symbolEnum = SymbolEnum.NULL;
     String symbol;
-    menuChoice = InputFunctions.scan("What do you want to search for? \n1: Date \n2: Symbol \n3: Value");
+    menuChoice = InputFunctions.scan("What do you want to search for? \n1: Date \n2: Symbol \n3: Value \n4: Best performing stocks");
     switch (menuChoice) {
       case "1":
         switch (InputFunctions.scan("What type of date do you want to search for? 1: Exact date 2: Interval of dates 3: Everything before date 4: Everything after date")) {
@@ -119,6 +126,9 @@ public class Menus {
       case "3":
         searchForValueMenu(dateEnum, symbolEnum, ColumnNameEnum.ALL, null, null, null);
         break;
+      case "4":
+        stockPerformanceMenu();
+        break;
       default:
         System.out.println("Please enter a valid choice.");
     }
@@ -126,10 +136,9 @@ public class Menus {
 
   private void searchForValueMenu(DateEnum dateEnum, SymbolEnum symbolEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     String message = "test";
-    if (dateEnum != DateEnum.EXACT ){
+    if (dateEnum != DateEnum.EXACT) {
       message = "What do you want to search? \n1: Highest value \n2: Lowest value \n3: Create Chart";
-    }
-    else {
+    } else {
       message = "What do you want to search? \n1: Highest value \n2: Lowest value";
     }
 
@@ -159,6 +168,70 @@ public class Menus {
       default:
         System.out.println("Please enter a valid choice.");
         break;
+    }
+  }
+
+  private void stockPerformanceMenu() {
+    DateEnum dateEnum = DateEnum.NULL;
+    String date = null;
+    String date2 = null;
+    ArrayList<PerformingStocks> performingStocks = null;
+    String stock = InputFunctions.scan("Please enter the stock from witch you want the performance.");
+    int numberOfDivisions = InputFunctions.getInputNumberOfDivisions();
+
+    switch (InputFunctions.scan("What type of date do you want to search for? 1: Interval of dates 2: Everything before date 3: Everything after date 4: All dates")) {
+      case "1":
+        date = InputFunctions.getInputDateString();
+        date2 = InputFunctions.getInputDateString();
+        dateEnum = DateEnum.INTERVAL;
+
+        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")){
+          case "1":
+            processDecisions. getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            break;
+          case "2":
+            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            break;
+        }
+        break;
+      case "2":
+        date = InputFunctions.getInputDateString();
+        dateEnum = DateEnum.BEFORE;
+
+        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")){
+          case "1":
+            processDecisions. getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            break;
+          case "2":
+            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);;
+            break;
+        }
+        break;
+      case "3":
+        date = InputFunctions.getInputDateString();
+        dateEnum = DateEnum.AFTER;
+
+        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")){
+          case "1":
+            processDecisions. getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            break;
+          case "2":
+            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);;
+            break;
+        }
+        break;
+      case "4":
+        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")){
+          case "1":
+            processDecisions. getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            break;
+          case "2":
+            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);;
+            break;
+        }
+        break;
+      default:
+        System.out.println("Please enter a valid choice.");
     }
   }
 }

@@ -1,6 +1,11 @@
 package org.getRichFast.Model.InterfaceConnection;
 
+import java.util.ArrayList;
+import org.getRichFast.Data.Database.Enum.DateEnum;
+import org.getRichFast.Model.Algorithms.StockPerformanceCalculater;
+import org.getRichFast.Model.Algorithms.StockPerformanceSorter;
 import org.getRichFast.Model.ConnectToUI;
+import org.getRichFast.Model.Entity.PerformingStocks;
 import org.getRichFast.UI.ConsoleUI.ConsoleOutputReceiver;
 import org.getRichFast.UI.UIReceiver;
 
@@ -12,4 +17,11 @@ public class ModelToUIConnection implements ConnectToUI {
   public void outputValues(Double[] values) {
     uiReceiver.valueConsoleOutput(values);
   }
+
+  @Override
+  public void getPeformanceStocks(ArrayList<PerformingStocks> performingStocks) {
+     uiReceiver.outputPerformingFromStocks(performingStocks);
+  }
+
+
 }

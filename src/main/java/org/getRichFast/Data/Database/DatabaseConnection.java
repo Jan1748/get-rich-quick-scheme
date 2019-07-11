@@ -53,7 +53,6 @@ public class DatabaseConnection implements DataReceiver {
     } catch (SQLException e) {
       System.out.println("Failed to connect to Database");
       e.printStackTrace();
-      //e.printStackTrace();
     }
     return null;
   }

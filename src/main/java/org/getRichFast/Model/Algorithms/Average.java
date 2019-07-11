@@ -20,7 +20,6 @@ public class Average {
     }
     if (stocks.size() >= 1) {
       result = result.divide(new BigDecimal(stocks.size()), RoundingMode.DOWN);
-      System.out.println("Average " + result);
       return result;
     }
     return null;
@@ -39,12 +38,12 @@ public class Average {
     Collections.reverse(results);
     if (results.size() >= 1) {
       BigDecimal result = results.get((results.size() / 2));
-      System.out.println("Result = " + result);
       return result;
     }
     return null;
   }
-  private static BigDecimal check(StockBuild stockBuild, ColumnNameEnum columnNameEnum){
+
+  private static BigDecimal check(StockBuild stockBuild, ColumnNameEnum columnNameEnum) {
     if (columnNameEnum == ColumnNameEnum.OPEN && stockBuild.getOpen() != null) {
       return stockBuild.getOpen();
     }
@@ -55,7 +54,7 @@ public class Average {
       return stockBuild.getOpen();
     }
     if (columnNameEnum == ColumnNameEnum.CLOSE && stockBuild.getClose() != null) {
-       return stockBuild.getOpen();
+      return stockBuild.getOpen();
     }
     return null;
   }
@@ -63,7 +62,6 @@ public class Average {
   public static void geometricMean(ArrayList<StockBuild> stocks, ColumnNameEnum columnNameEnum) {
 
   }
-
 
 
 }

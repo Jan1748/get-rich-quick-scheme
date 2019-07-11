@@ -1,33 +1,35 @@
 package org.getRichFast.Model.InterfaceConnection;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import org.getRichFast.Data.DataReceiver;
 import org.getRichFast.Data.Database.DatabaseConnection;
-import org.getRichFast.Data.Database.Enum.ChartEnum;
 import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
+import org.getRichFast.Model.Algorithms.StockPerformanceCalculater;
+import org.getRichFast.Model.Algorithms.StockPerformanceSorter;
 import org.getRichFast.Model.Charts.CreateCandleStickChartPNG;
 import org.getRichFast.Model.Charts.CreateLineChartPNG;
 import org.getRichFast.Model.Charts.HistogramValues;
-import org.getRichFast.Model.Charts.StockFolderCreator;
 import org.getRichFast.Model.Downloading.QuandlCodeFinder;
+import org.getRichFast.Model.Entity.PerformingStocks;
 import org.getRichFast.Model.Entity.StockBuild;
 import org.getRichFast.Model.ProcessDecisions;
 import org.getRichFast.Model.RequestEditor;
 import org.getRichFast.Model.RequestEditorThreads;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import org.getRichFast.UI.ConsoleUI.ConsoleOutputReceiver;
 import org.getRichFast.UI.ConsoleUI.Menus;
-import org.jfree.data.jdbc.JDBCCategoryDataset;
-import org.junit.jupiter.api.parallel.Execution;
+import org.getRichFast.UI.UIReceiver;
 
 public class InterfaceConnectorToDatabase implements ProcessDecisions {
 
   private DataReceiver dataReceiver = new DatabaseConnection();
   private RequestEditor requestEditor = new RequestEditor();
-  private DatabaseConnection databaseConnection = new DatabaseConnection();
+  private StockPerformanceCalculater stockPerformanceCalculater = new StockPerformanceCalculater();
+  private UIReceiver uiReceiver = new ConsoleOutputReceiver();
+
 
 
   @Override
@@ -135,5 +137,24 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
     ArrayList<Integer[]> histogramList = HistogramValues.findValuesForHistogram(symbolEnum, dateEnum, date, date2, symbol, accuracy);
     CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
     createLineChartPNG.createHistogram(histogramList);
+  }
+
+  public ArrayList<PerformingStocks> getPerformanceFromStock(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
+    return stockPerformanceCalculater.getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+  }
+
+  @Override
+  public void getSortedPerformingStocksPercent(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
+    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+    ArrayList<PerformingStocks> performingStocks1 = StockPerformanceSorter.sortPerformingStocksPercent(performingStocks);
+    uiReceiver.outputPerformingFromStocks(performingStocks1);
+
+  }
+
+  @Override
+  public void getSortedPerformingStockAbsolute(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
+    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+    ArrayList<PerformingStocks> performingStocks2 = StockPerformanceSorter.sortPerformingStocksAbsolute(performingStocks);
+    uiReceiver.outputPerformingFromStocks(performingStocks2);
   }
 }

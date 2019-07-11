@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import org.getRichFast.Data.DataReceiver;
 import org.getRichFast.Data.Database.DatabaseConnection;
@@ -21,64 +20,29 @@ public class StockPerformanceCalculater {
 
   private DataReceiver dataReceiver = new DatabaseConnection();
 
-  public ArrayList<PerformingStocks> getBestPerformingStocksPercent(String stockCode, String quandlApiKey, int numberOfDivisions) {
-    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions);
-    return sortPerformingStocksPercent(performingStocks);
-  }
+//  public ArrayList<PerformingStocks> getBestPerformingStocksPercent(String stockCode, String quandlApiKey, int numberOfDivisions) {
+//    System.out.println("Start getting performance from stock");
+//    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions);
+//    return sortPerformingStocksPercent(performingStocks);
+//  }
+//
+//  public ArrayList<PerformingStocks> getBestPerformingStocksAbsolute(String stockCode, String quandlApiKey, int numberOfDivisions) {
+//    System.out.println("Start getting performance from stock");
+//    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions);
+//    return sortPerformingStocksAbsolute(performingStocks);
+//  }
 
-  public ArrayList<PerformingStocks> getBestPerformingStocksAbsolute(String stockCode, String quandlApiKey, int numberOfDivisions) {
-    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions);
-    return sortPerformingStocksAbsolute(performingStocks);
-  }
 
-  private ArrayList<PerformingStocks> sortPerformingStocksPercent(ArrayList<PerformingStocks> performingStocks) {
-    PerformingStocks temporary;
-    for (int i = 1; i < performingStocks.size(); i++) {
-      for (int j = 0; j < performingStocks.size() - i; j++) {
-        if (Double.isNaN(performingStocks.get(j).getPerformancePercent()) | Double.isNaN(performingStocks.get(j).getPerformancePercent())) {
-          temporary = new PerformingStocks(performingStocks.get(j).getStockCode(), performingStocks.get(j).getPerformancePercent(), performingStocks.get(j).getPerformanceAbsolute());
-          performingStocks.remove(j);
-          performingStocks.add(temporary);
-        } else {
-          if (performingStocks.get(j).getPerformancePercent() < performingStocks.get(j + 1).getPerformancePercent()) {
-            temporary = new PerformingStocks(performingStocks.get(j).getStockCode(), performingStocks.get(j).getPerformancePercent(), performingStocks.get(j).getPerformanceAbsolute());
-            performingStocks.set(j, performingStocks.get(j + 1));
-            performingStocks.set(j + 1, temporary);
-          }
-        }
-      }
-    }
-    return performingStocks;
-  }
 
-  private ArrayList<PerformingStocks> sortPerformingStocksAbsolute(ArrayList<PerformingStocks> performingStocks) {
-    PerformingStocks temporary;
-    for (int i = 1; i < performingStocks.size(); i++) {
-      for (int j = 0; j < performingStocks.size() - i; j++) {
-        if (Double.isNaN(performingStocks.get(j).getPerformanceAbsolute()) | Double.isNaN(performingStocks.get(j).getPerformanceAbsolute())) {
-          temporary = new PerformingStocks(performingStocks.get(j).getStockCode(), performingStocks.get(j).getPerformancePercent(), performingStocks.get(j).getPerformanceAbsolute());
-          performingStocks.remove(j);
-          performingStocks.add(temporary);
-        } else {
-          if (performingStocks.get(j).getPerformanceAbsolute() < performingStocks.get(j + 1).getPerformanceAbsolute()) {
-            temporary = new PerformingStocks(performingStocks.get(j).getStockCode(), performingStocks.get(j).getPerformancePercent(), performingStocks.get(j).getPerformanceAbsolute());
-            performingStocks.set(j, performingStocks.get(j + 1));
-            performingStocks.set(j + 1, temporary);
-          }
-        }
-      }
-    }
-    return performingStocks;
-  }
-
-  private ArrayList getPerformanceFromStock(String stockCode, String quandlApiKey, int numberOfDivisions) {
+  public ArrayList<PerformingStocks> getPerformanceFromStock(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
+    System.out.println("Start calculating stock performance.");
     ArrayList<String> quandlCodesForStock = getQuandlCodesForStocks(stockCode, quandlApiKey);
     ArrayList<PerformingStocks> averageInterval = new ArrayList<>();
     double performancePercent;
     double performanceAbsolute;
 
     for (int x = 1; x < quandlCodesForStock.size(); x++) {
-      BigDecimal[] averagePerInterval = getAveragePerInterval(quandlCodesForStock.get(x), numberOfDivisions);
+      BigDecimal[] averagePerInterval = getAveragePerInterval(quandlCodesForStock.get(x), numberOfDivisions, dateEnum, date, date2);
       if (getPerformancePercent(averagePerInterval) == null) {
         performancePercent = Double.NaN;
       } else {
@@ -91,6 +55,7 @@ public class StockPerformanceCalculater {
       }
       averageInterval.add(new PerformingStocks(quandlCodesForStock.get(x), performancePercent, performanceAbsolute));
     }
+    System.out.println("Finished calculating stock performance.");
     return averageInterval;
   }
 
@@ -115,8 +80,8 @@ public class StockPerformanceCalculater {
   }
 
 
-  private BigDecimal[] getAveragePerInterval(String quandlCode, int numberOfDivisions) {
-    ArrayList<StockBuild> stock = dataReceiver.getQueriedDataset(ValueEnum.ALL, SymbolEnum.SINGLE, DateEnum.NULL, ColumnNameEnum.ALL, null, null, quandlCode);
+  private BigDecimal[] getAveragePerInterval(String quandlCode, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
+    ArrayList<StockBuild> stock = dataReceiver.getQueriedDataset(ValueEnum.ALL, SymbolEnum.SINGLE, dateEnum, ColumnNameEnum.ALL, date, date2, quandlCode);
     if (stock == null) {
       return null;
     }
