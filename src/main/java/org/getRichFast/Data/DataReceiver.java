@@ -17,7 +17,7 @@ public interface DataReceiver {
 
   void insertDataToDatabase(ArrayList<StockBuild> stocks);
 
-  void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol);
+  Double[] search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol);
 
   ArrayList<StockBuild> getQueriedDataset(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol);
 }

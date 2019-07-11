@@ -151,7 +151,7 @@ public class Menus {
   private void chartMenu(DateEnum dateEnum, SymbolEnum symbolEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     switch (InputFunctions.scan("Choose your preferred chart \n1: LineChart \n2: CandleStickChart")) {
       case "1":
-        processDecisions.createLineChart(ValueEnum.ALL, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
+        processDecisions.createLineChart(ValueEnum.ALL, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol, null);
         break;
       case "2":
         processDecisions.createCandleStickChart(ValueEnum.ALL, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);

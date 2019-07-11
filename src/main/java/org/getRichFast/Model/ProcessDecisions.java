@@ -13,10 +13,12 @@ public interface ProcessDecisions {
 
   void downloadQuandlSingleStock(String symbol, String apiKey);
 
-  void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol);
+  void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol, String symbol2);
 
   void createCandleStickChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol);
 
   void generateAllChartsFromStock(String stockName, String apiKey , DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2);
+
+  void visulizeTwoCharts(String stockName, String apiKey , DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2);
 
 }

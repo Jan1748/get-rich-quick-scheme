@@ -78,14 +78,16 @@ public class DatabaseConnection implements DataReceiver {
   }
 
   @Override
-  public void search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+  public Double[] search(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum,ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
     try {
       Double[] datas = QueryData.getQueriedData(request, this.connection);
       databaseToModel.outputValues(datas);
+      return datas;
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return null;
   }
 
   @Override
@@ -93,15 +95,15 @@ public class DatabaseConnection implements DataReceiver {
     String request = DatabaseRequestBuilder.requestBuild(valueEnum, symbolEnum, dateEnum, columnNameEnum,date1, date2, symbol);
       Connection connection = connect();
       ArrayList<StockBuild> stocks = new ArrayList<>();
+      int counter = 0;
       if(connection != null){
         Statement statement = null;
         try {
           statement = connection.createStatement();
           ResultSet resultSet = statement.executeQuery(request);
-          Date date;
           while (resultSet.next()) {
             Calendar cal = Calendar.getInstance();
-            date = convertDate(resultSet.getDate("Date"));
+            Date date = convertDate(resultSet.getDate("Date"));
             cal.setTime(date);
             StockBuild stockBuild = new StockBuild(resultSet.getString("symbol"), cal);
             stockBuild.setOpen(resultSet.getBigDecimal("open"));
@@ -109,6 +111,10 @@ public class DatabaseConnection implements DataReceiver {
             stockBuild.setLow(resultSet.getBigDecimal("low"));
             stockBuild.setClose(resultSet.getBigDecimal("close"));
             stocks.add(stockBuild);
+            counter++;
+          }
+          if (counter >= 1) {
+            return stocks;
           }
           resultSet.close();
           statement.close();
@@ -117,7 +123,7 @@ public class DatabaseConnection implements DataReceiver {
           e.printStackTrace();
         }
      }
-      return stocks;
+      return null;
     }
 
   public String getValue(ValueEnum valueEnum,SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {

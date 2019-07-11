@@ -20,11 +20,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.getRichFast.UI.ConsoleUI.Menus;
 import org.jfree.data.jdbc.JDBCCategoryDataset;
+import org.junit.jupiter.api.parallel.Execution;
 
 public class InterfaceConnectorToDatabase implements ProcessDecisions {
 
   private DataReceiver dataReceiver = new DatabaseConnection();
   private RequestEditor requestEditor = new RequestEditor();
+  private DatabaseConnection databaseConnection = new DatabaseConnection();
 
 
   @Override
@@ -77,12 +79,12 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
   }
 
   @Override
-  public void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
+  public void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol, String symbol2) {
     ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
-    if (stockData.size() >= 1) {
-      System.out.println(stockData.get(0));
+    ArrayList<StockBuild> stockData2 = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol2);
+    if (stockData!= null && stockData2 != null){
       CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
-      createLineChartPNG.generateChartPNG(stockData);
+      createLineChartPNG.generateChartPNG(stockData, stockData2);
     }
   }
 
@@ -91,7 +93,7 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
     ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
     if (stockData.size() >= 1) {
       CreateCandleStickChartPNG createCandleStickChartPNG = new CreateCandleStickChartPNG();
-      //createCandleStickChartPNG.candlestick(stockData);
+      createCandleStickChartPNG.candlestick(stockData, null);
     }
   }
 
@@ -99,15 +101,31 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
   public void generateAllChartsFromStock(String stockName, String apiKey, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2) {
     try {
       ArrayList<String> codnames = QuandlCodeFinder.getQuandlCodes(stockName, apiKey);
-      System.out.println("Codenames ");
-      System.out.println(" C " + codnames.get(1));
       for (int i = 1; i < codnames.size(); i++) {
-        createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, columnNameEnum, date, date2, codnames.get(i));
+        createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, columnNameEnum, date, date2, codnames.get(i), null);
         createCandleStickChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, columnNameEnum, date, date2, codnames.get(i));
       }
 
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public void visulizeTwoCharts(String stockName, String apiKey, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2) {
+    ArrayList<String> codnames = null;
+    try {
+      codnames = QuandlCodeFinder.getQuandlCodes(stockName, apiKey);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    for (int i =1;i < codnames.size(); i++) {
+      for (int x =1;x < codnames.size(); x++) {
+        if (i != x) {
+          createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, columnNameEnum, date, date2, codnames.get(i), codnames.get(x));
+        }
+      }
+    }
+
   }
 }

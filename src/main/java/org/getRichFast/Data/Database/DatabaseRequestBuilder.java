@@ -78,17 +78,21 @@ public class DatabaseRequestBuilder {
 
   private static String getHighestValues(String dateCondition, String symbol) {
     String code = "";
-    for (ColumnNameEnum columnName : ColumnNameEnum.values()) {
-      code += "SELECT MAX (\"" + columnNameString(columnName) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+    ColumnNameEnum[] columnName = new ColumnNameEnum[]{ColumnNameEnum.OPEN, ColumnNameEnum.HIGH, ColumnNameEnum.LOW, ColumnNameEnum.CLOSE};
+    for (int i = 0; i < 4; i++) {
+      code += "SELECT MAX (\"" + columnNameString(columnName[i]) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
     }
+    System.out.println(code);
     return code;
   }
 
   private static String getLowestValues(String dateCondition, String symbol) {
     String code1 = "";
-    for (ColumnNameEnum columnName : ColumnNameEnum.values()) {
-      code1 += "SELECT MIN (\"" + columnNameString(columnName) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
+    ColumnNameEnum[] columnName = new ColumnNameEnum[]{ColumnNameEnum.OPEN, ColumnNameEnum.HIGH, ColumnNameEnum.LOW, ColumnNameEnum.CLOSE};
+    for (int i = 0; i < 4; i++) {
+      code1 += "SELECT MIN (\"" + columnNameString(columnName[i]) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
     }
+    System.out.println(code1);
     return code1;
   }
 

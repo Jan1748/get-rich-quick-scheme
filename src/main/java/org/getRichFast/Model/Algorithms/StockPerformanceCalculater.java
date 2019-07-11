@@ -19,7 +19,7 @@ public class StockPerformanceCalculater {
 
   private DataReceiver dataReceiver = new DatabaseConnection();
 
-  public ArrayList<String> getTenBestPerforming
+  //public ArrayList<String> getTenBestPerforming
 
   private ArrayList getPerformanceFromStock(String stockCode, String quandlApiKey, int numberOfDivisions) {
     ArrayList<String> quandlCodesForStock = getQuandlCodesForStocks(stockCode, quandlApiKey);

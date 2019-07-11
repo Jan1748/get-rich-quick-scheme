@@ -10,4 +10,10 @@ public class StockFolderCreator {
     file.mkdirs();
   return path;
   }
+  public static String createStockFolders(ChartEnum chartEnum, String stock, String stockName){
+    String path = "StockCharts/" + chartEnum.toString()  + "/" + stock + "/" + stockName;
+    File file = new File(path);
+    file.mkdirs();
+    return path;
+  }
 }
