@@ -9,6 +9,7 @@ import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
 import org.getRichFast.Model.Charts.CreateCandleStickChartPNG;
 import org.getRichFast.Model.Charts.CreateLineChartPNG;
+import org.getRichFast.Model.Charts.HistogramValues;
 import org.getRichFast.Model.Charts.StockFolderCreator;
 import org.getRichFast.Model.Downloading.QuandlCodeFinder;
 import org.getRichFast.Model.Entity.StockBuild;
@@ -127,5 +128,12 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
       }
     }
 
+  }
+
+  @Override
+  public void createHistogram(SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol, int accuracy) {
+    ArrayList<Integer[]> histogramList = HistogramValues.findValuesForHistogram(symbolEnum, dateEnum, date, date2, symbol, accuracy);
+    CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
+    createLineChartPNG.createHistogram(histogramList);
   }
 }

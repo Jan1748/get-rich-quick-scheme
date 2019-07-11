@@ -21,4 +21,6 @@ public interface ProcessDecisions {
 
   void visulizeTwoCharts(String stockName, String apiKey , DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2);
 
+  void createHistogram(SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol,int accuracy);
+
 }

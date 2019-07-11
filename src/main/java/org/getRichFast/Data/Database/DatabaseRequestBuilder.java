@@ -82,7 +82,6 @@ public class DatabaseRequestBuilder {
     for (int i = 0; i < 4; i++) {
       code += "SELECT MAX (\"" + columnNameString(columnName[i]) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
     }
-    System.out.println(code);
     return code;
   }
 
@@ -92,14 +91,12 @@ public class DatabaseRequestBuilder {
     for (int i = 0; i < 4; i++) {
       code1 += "SELECT MIN (\"" + columnNameString(columnName[i]) + "\") FROM stockbuild " + dateCondition + " " + symbol + ";";
     }
-    System.out.println(code1);
     return code1;
   }
 
   private static String getChartValues(String dateCondition, ColumnNameEnum columnNameEnum, String symbol, SymbolEnum symbolEnum){
     String code = "";
     code = "SELECT * FROM stockbuild " + dateCondition + " " + getSymbolCondition(symbol, symbolEnum) + " ORDER BY \"Date\" DESC;";
-    System.out.println(code);
     return code;
   }
 }
