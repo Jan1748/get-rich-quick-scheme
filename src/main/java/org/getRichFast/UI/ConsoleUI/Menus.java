@@ -165,7 +165,7 @@ public class Menus {
       case "2":
         processDecisions.createCandleStickChart(ValueEnum.ALL, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
         break;
-      case "3": processDecisions.generateAllChartsFromStock("FSE", quandlApiKey, dateEnum, ColumnNameEnum.ALL, date, date2); break;
+      case "3": processDecisions.visulizeTwoCharts("FSE", quandlApiKey, dateEnum, ColumnNameEnum.ALL, date, date2); break;
       case "4": processDecisions.createHistogram(SymbolEnum.ATTACHED, dateEnum, ColumnNameEnum.OPEN, date, date2, symbol, 20);
       break;
       default:
