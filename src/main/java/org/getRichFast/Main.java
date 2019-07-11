@@ -26,7 +26,7 @@ public class Main {
 //    Average.arethmeticMean(databaseConnection.getQueriedDataset(ValueEnum.ALL, SymbolEnum.ATTACHED, DateEnum.BEFORE, ColumnNameEnum.ALL, "2015-01-01", null, "FSE/EON_X"), ColumnNameEnum.OPEN);
 
     StockPerformanceCalculater stockPerformanceCalculater = new StockPerformanceCalculater();
-    ArrayList<PerformingStocks> bestPerformingPercent = stockPerformanceCalculater.getBestPerformingStocksPercent("FSE", "4nAVrexhFHXrX1TuYNsF", 5);
+    ArrayList<PerformingStocks> bestPerformingPercent = stockPerformanceCalculater.getBestPerformingStocksAbsolute("FSE", "4nAVrexhFHXrX1TuYNsF", 5);
     for (int x = 0; x < bestPerformingPercent.size(); x++){
       System.out.println(bestPerformingPercent.get(x).toString());
     }

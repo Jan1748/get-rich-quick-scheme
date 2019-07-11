@@ -21,27 +21,50 @@ public class StockPerformanceCalculater {
 
   private DataReceiver dataReceiver = new DatabaseConnection();
 
-  public ArrayList<PerformingStocks> getBestPerformingStocksPercent(String stockCode, String quandlApiKey, int numberOfDivisions){
+  public ArrayList<PerformingStocks> getBestPerformingStocksPercent(String stockCode, String quandlApiKey, int numberOfDivisions) {
     ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions);
     return sortPerformingStocksPercent(performingStocks);
   }
 
-  private ArrayList<PerformingStocks> sortPerformingStocksPercent(ArrayList<PerformingStocks> performingStocks){
+  public ArrayList<PerformingStocks> getBestPerformingStocksAbsolute(String stockCode, String quandlApiKey, int numberOfDivisions) {
+    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions);
+    return sortPerformingStocksAbsolute(performingStocks);
+  }
+
+  private ArrayList<PerformingStocks> sortPerformingStocksPercent(ArrayList<PerformingStocks> performingStocks) {
     PerformingStocks temporary;
-    int counterNaN = 0;
-    for (int i = 1; i < performingStocks.size(); i++){
-      for (int j = 0; j < performingStocks.size() - 1; j++){
-        if (performingStocks.get(j).getPerformancePercent() == Double.NaN | performingStocks.get(j).getPerformanceAbsolute() == Double.NaN){
+    for (int i = 1; i < performingStocks.size(); i++) {
+      for (int j = 0; j < performingStocks.size() - i; j++) {
+        if (Double.isNaN(performingStocks.get(j).getPerformancePercent()) | Double.isNaN(performingStocks.get(j).getPerformancePercent())) {
           temporary = new PerformingStocks(performingStocks.get(j).getStockCode(), performingStocks.get(j).getPerformancePercent(), performingStocks.get(j).getPerformanceAbsolute());
-          performingStocks.set(j, performingStocks.get(performingStocks.size() - (1 + counterNaN)));
-          performingStocks.set(performingStocks.size() - (1 + counterNaN), temporary);
-          counterNaN += 1;
-          j -= 1;
+          performingStocks.remove(j);
+          performingStocks.add(temporary);
+        } else {
+          if (performingStocks.get(j).getPerformancePercent() < performingStocks.get(j + 1).getPerformancePercent()) {
+            temporary = new PerformingStocks(performingStocks.get(j).getStockCode(), performingStocks.get(j).getPerformancePercent(), performingStocks.get(j).getPerformanceAbsolute());
+            performingStocks.set(j, performingStocks.get(j + 1));
+            performingStocks.set(j + 1, temporary);
+          }
         }
-        if (performingStocks.get(j).getPerformancePercent() > performingStocks.get(j + 1).getPerformancePercent()){
+      }
+    }
+    return performingStocks;
+  }
+
+  private ArrayList<PerformingStocks> sortPerformingStocksAbsolute(ArrayList<PerformingStocks> performingStocks) {
+    PerformingStocks temporary;
+    for (int i = 1; i < performingStocks.size(); i++) {
+      for (int j = 0; j < performingStocks.size() - i; j++) {
+        if (Double.isNaN(performingStocks.get(j).getPerformanceAbsolute()) | Double.isNaN(performingStocks.get(j).getPerformanceAbsolute())) {
           temporary = new PerformingStocks(performingStocks.get(j).getStockCode(), performingStocks.get(j).getPerformancePercent(), performingStocks.get(j).getPerformanceAbsolute());
-          performingStocks.set(j, performingStocks.get(j + 1));
-          performingStocks.set(j + 1, temporary);
+          performingStocks.remove(j);
+          performingStocks.add(temporary);
+        } else {
+          if (performingStocks.get(j).getPerformanceAbsolute() < performingStocks.get(j + 1).getPerformanceAbsolute()) {
+            temporary = new PerformingStocks(performingStocks.get(j).getStockCode(), performingStocks.get(j).getPerformancePercent(), performingStocks.get(j).getPerformanceAbsolute());
+            performingStocks.set(j, performingStocks.get(j + 1));
+            performingStocks.set(j + 1, temporary);
+          }
         }
       }
     }
@@ -56,16 +79,14 @@ public class StockPerformanceCalculater {
 
     for (int x = 1; x < quandlCodesForStock.size(); x++) {
       BigDecimal[] averagePerInterval = getAveragePerInterval(quandlCodesForStock.get(x), numberOfDivisions);
-      if (getPerformancePercent(averagePerInterval) == null){
+      if (getPerformancePercent(averagePerInterval) == null) {
         performancePercent = Double.NaN;
-      }
-      else {
+      } else {
         performancePercent = getPerformancePercent(averagePerInterval).doubleValue();
       }
-      if (getPerformanceAbsolute(averagePerInterval) == null){
+      if (getPerformanceAbsolute(averagePerInterval) == null) {
         performanceAbsolute = Double.NaN;
-      }
-      else {
+      } else {
         performanceAbsolute = getPerformanceAbsolute(averagePerInterval).doubleValue();
       }
       averageInterval.add(new PerformingStocks(quandlCodesForStock.get(x), performancePercent, performanceAbsolute));
@@ -73,23 +94,21 @@ public class StockPerformanceCalculater {
     return averageInterval;
   }
 
-  private BigDecimal getPerformancePercent(BigDecimal[] averagePerInterval){
+  private BigDecimal getPerformancePercent(BigDecimal[] averagePerInterval) {
     BigDecimal performancePercent = null;
-    if (averagePerInterval[averagePerInterval.length - 1] == null | averagePerInterval[0] == null){
+    if (averagePerInterval[averagePerInterval.length - 1] == null | averagePerInterval[0] == null) {
       performancePercent = null;
-    }
-    else{
+    } else {
       performancePercent = (averagePerInterval[0].divide(averagePerInterval[averagePerInterval.length - 1], 2, RoundingMode.HALF_UP).subtract(BigDecimal.valueOf(1)).multiply(BigDecimal.valueOf(100)));
     }
     return performancePercent;
   }
 
-  private BigDecimal getPerformanceAbsolute(BigDecimal[] averagePerInterval){
+  private BigDecimal getPerformanceAbsolute(BigDecimal[] averagePerInterval) {
     BigDecimal performanceAbsolute = null;
-    if (averagePerInterval[averagePerInterval.length - 1] == null | averagePerInterval[0] == null){
+    if (averagePerInterval[averagePerInterval.length - 1] == null | averagePerInterval[0] == null) {
       performanceAbsolute = null;
-    }
-    else{
+    } else {
       performanceAbsolute = averagePerInterval[0].subtract(averagePerInterval[averagePerInterval.length - 1]);
     }
     return performanceAbsolute;
@@ -105,11 +124,9 @@ public class StockPerformanceCalculater {
     BigDecimal[] average = new BigDecimal[intervalStartEndDate.length];
 
     for (int x = 0; x < intervalStartEndDate.length; x++) {
-      System.out.println(intervalStartEndDate[x][1] + " | " + intervalStartEndDate[x][0]);
-      if (intervalStartEndDate[x][1] == null | intervalStartEndDate[x][0] == null){
+      if (intervalStartEndDate[x][1] == null | intervalStartEndDate[x][0] == null) {
         average[x] = null;
-      }
-      else {
+      } else {
         average[x] = Average.median(dataReceiver
                 .getQueriedDataset(ValueEnum.ALL, SymbolEnum.ATTACHED, DateEnum.INTERVAL, ColumnNameEnum.ALL, intervalStartEndDate[x][1], intervalStartEndDate[x][0], quandlCode),
             ColumnNameEnum.OPEN);
@@ -139,7 +156,6 @@ public class StockPerformanceCalculater {
       Date date;
       if (y == 0) {
         date = stockBuild.get(x).getDate().getTime();
-        System.out.println(date);
         intervalStartEndDate[y][0] = simpleDateFormat.format(date);
         date = stockBuild.get(x + numberOfIntervals).getDate().getTime();
         intervalStartEndDate[y][1] = simpleDateFormat.format(date);
