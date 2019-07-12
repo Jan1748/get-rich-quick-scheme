@@ -84,7 +84,10 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
   @Override
   public void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol, String symbol2) {
     ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
-    ArrayList<StockBuild> stockData2 = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol2);
+    ArrayList<StockBuild> stockData2 = null;
+    if (symbol2 != null) {
+      stockData2 = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol2);
+    }
     if (stockData!= null && stockData2 != null){
       CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
       createLineChartPNG.generateChartPNG(stockData, stockData2);

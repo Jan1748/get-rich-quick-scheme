@@ -1,9 +1,12 @@
 package org.getRichFast.Model.Charts;
 
+import java.awt.Color;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Date;
 import org.getRichFast.Data.Database.Enum.ChartEnum;
@@ -11,22 +14,45 @@ import org.getRichFast.Model.Entity.StockBuild;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.Axis;
+import org.jfree.chart.axis.AxisSpace;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.DateTickUnit;
+import org.jfree.chart.axis.DateTickUnitType;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.DefaultHighLowDataset;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.FixedWidth;
 
 public class CreateCandleStickChartPNG {
 
+
   public void candlestick(ArrayList<StockBuild> input, ArrayList<StockBuild> input2) {
-    CandlestickRenderer renderer = new CandlestickRenderer();
     DefaultHighLowDataset dataset = getData(input);
     if (dataset == null) {
       System.out.println("Leave");
       return;
     }
-    double lowestLow = getLowestLow(dataset);
-    double highestHigh = getHighestHigh(dataset);
+
+
     JFreeChart jFreeChart = createChart(dataset);
-    jFreeChart.getXYPlot().getRangeAxis().setRange(lowestLow * 0.95, highestHigh * 1.05);
+    XYPlot xyPlot = (XYPlot) jFreeChart.getPlot();
+    xyPlot.setDomainCrosshairVisible(true);
+    xyPlot.setRangeCrosshairVisible(true);
+    XYItemRenderer renderer = xyPlot.getRenderer();
+    renderer.setSeriesPaint(0, Color.blue);
+    DateAxis domain = (DateAxis) xyPlot.getDomainAxis();
+    domain.setRange(0.00, 1.00);
+    domain.setTickUnit(new DateTickUnit(DateTickUnitType.MONTH, 1));
+    domain.setVerticalTickLabels(true);
+    NumberAxis range = (NumberAxis) xyPlot.getRangeAxis();
+    range.setRange(0.0, 1.0);
+    range.setTickUnit(new NumberTickUnit(0.1));
+
+
 
     try {
       String[] names = input.get(0).getSymbol().split("/");
@@ -64,56 +90,58 @@ public class CreateCandleStickChartPNG {
     ArrayList<BigDecimal> closeList = new ArrayList<>();
     ArrayList<Double> volume = new ArrayList<>();
     int counter = 0;
-    while (true) {
-      counter++;
-      openList.clear();
-      highList.clear();
-      lowList.clear();
-      closeList.clear();
-      volume.clear();
-      dateList.clear();
-      for (int x = 0; x < stockBuild.size() - blend; x += scale) {
-        if (stockBuild.get(x).getOpen() == null && stockBuild.get(x).getClose() == null && stockBuild.get(x).getHigh() == null && stockBuild.get(x).getLow() == null ||
-            stockBuild.get(x).getOpen() == null && stockBuild.get(x).getClose() == null && stockBuild.get(x).getHigh() == null || stockBuild.get(x).getHigh() == null ||
-            stockBuild.get(x).getLow() == null) {
-          continue;
-        }
-        if (stockBuild.get(x).getOpen() == null && stockBuild.get(x).getClose() == null || stockBuild.get(x).getOpen() == null || stockBuild.get(x).getClose() == null) {
-          for (int i = scale; i > 0; i--) {
-            if ((x - i) < 1) {
-              continue;
-            }
-            if (stockBuild.get(x - i).getOpen() != null) {
-              stockBuild.get(x).setOpen(stockBuild.get(x - i).getOpen());
-            }
-            if (stockBuild.get(x - i).getClose() != null) {
-              stockBuild.get(x).setClose(stockBuild.get(x - i).getClose());
-            }
-          }
-        } else {
-          dateList.add(stockBuild.get(x).getDate().getTime());
-          openList.add(stockBuild.get(x).getOpen());
-          highList.add(stockBuild.get(x).getHigh());
-          lowList.add(stockBuild.get(x).getLow());
-          closeList.add(stockBuild.get(x).getClose());
-          volume.add(20d);
-
-        }
-      }
-      if(scale <=1 || counter > 100){
+    for (int i = 0; i < stockBuild.size(); i++) {
+      int comparison = stockBuild.size();
+      int result = comparison / scale;
+      if (result <= 1) {
         System.out.println("Scale Limit Reached");
         break;
       }
-      if (dateList.size() > 30){
-        System.out.println("Scale up");
+      if (result > 20) {
+        //System.out.println("Scale up");
         scale++;
-      }else if (dateList.size() < 20){
-        System.out.println("Scale down");
+      } else if (result < 10) {
+        //System.out.println("Scale down");
         scale--;
-      }else {
-        System.out.println("Found right Scale");
+      } else {
         break;
       }
+    }
+
+    openList.clear();
+    highList.clear();
+    lowList.clear();
+    closeList.clear();
+    volume.clear();
+    dateList.clear();
+    for (int x = 0; x < stockBuild.size() - blend; x+=scale) {
+      if (stockBuild.get(x).getOpen() == null && stockBuild.get(x).getClose() == null && stockBuild.get(x).getHigh() == null && stockBuild.get(x).getLow() == null ||
+          stockBuild.get(x).getOpen() == null && stockBuild.get(x).getClose() == null && stockBuild.get(x).getHigh() == null || stockBuild.get(x).getHigh() == null ||
+          stockBuild.get(x).getLow() == null) {
+        continue;
+      }
+      if (stockBuild.get(x).getOpen() == null && stockBuild.get(x).getClose() == null || stockBuild.get(x).getOpen() == null || stockBuild.get(x).getClose() == null) {
+        for (int i = scale; i > 0; i--) {
+          if ((x - i) < 1) {
+            continue;
+          }
+          if (stockBuild.get(x - i).getOpen() != null) {
+            stockBuild.get(x).setOpen(stockBuild.get(x - i).getOpen());
+          }
+          if (stockBuild.get(x - i).getClose() != null) {
+            stockBuild.get(x).setClose(stockBuild.get(x - i).getClose());
+          }
+        }
+      } else {
+        dateList.add(stockBuild.get(x).getDate().getTime());
+        openList.add(stockBuild.get(x).getOpen());
+        highList.add(stockBuild.get(x).getHigh());
+        lowList.add(stockBuild.get(x).getLow());
+        closeList.add(stockBuild.get(x).getClose());
+        volume.add(10d);
+
+      }
+
     }
 
     //System.out.println("Datelist " + dateList.size() + " Openlist " + openList.size() + " highlist " + highList.size() + " Lowlist " + lowList.size()
@@ -138,6 +166,11 @@ public class CreateCandleStickChartPNG {
         + " closelist " + close.length + " volume list " + volumes.length);
 
     DefaultHighLowDataset item = new DefaultHighLowDataset("test", dates, open, high, low, close, volumes);
+    for (int i = 0; i < 10000; i++) {
+      //  System.out.println("X Date " + item.getXDate(0, 0));
+      //System.out.println("X " + item.getX(0, i));
+    }
+
     return item;
 
   }
