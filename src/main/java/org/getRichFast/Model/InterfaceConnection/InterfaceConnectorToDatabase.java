@@ -142,21 +142,21 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
     createLineChartPNG.createHistogram(histogramList);
   }
 
-  public ArrayList<PerformingStocks> getPerformanceFromStock(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
-    return stockPerformanceCalculater.getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+  public ArrayList<PerformingStocks> getPerformanceFromStock(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2, SymbolEnum symbolEnum) {
+    return stockPerformanceCalculater.getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2, symbolEnum);
   }
 
   @Override
-  public void getSortedPerformingStocksPercent(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
-    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+  public void getSortedPerformingStocksPercent(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2, SymbolEnum symbolEnum) {
+    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2, symbolEnum);
     ArrayList<PerformingStocks> performingStocks1 = StockPerformanceSorter.sortPerformingStocksPercent(performingStocks);
     uiReceiver.outputPerformingFromStocks(performingStocks1);
 
   }
 
   @Override
-  public void getSortedPerformingStockAbsolute(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
-    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+  public void getSortedPerformingStockAbsolute(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2, SymbolEnum symbolEnum) {
+    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2, symbolEnum);
     ArrayList<PerformingStocks> performingStocks2 = StockPerformanceSorter.sortPerformingStocksAbsolute(performingStocks);
     uiReceiver.outputPerformingFromStocks(performingStocks2);
   }

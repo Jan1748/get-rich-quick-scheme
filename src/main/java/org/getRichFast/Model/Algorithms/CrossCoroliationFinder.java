@@ -46,6 +46,7 @@ public class CrossCoroliationFinder {
         BigDecimal firstDifference = averageFirstIntervalMainStock.subtract(averageFirstIntervalComparedStock).abs();
         BigDecimal lastDifference = averageLastIntervalMainStock.subtract(averageLastIntervalComparedStock).abs();
         System.out.println(averageLastIntervalMainStock + " | " + averageLastIntervalComparedStock);
+        System.out.println("test");
 
         if (lastDifference != BigDecimal.ZERO) {
           if (firstDifference.divide(lastDifference, 2, RoundingMode.HALF_UP).subtract(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).compareTo(tolerancePercent) <= 0) {

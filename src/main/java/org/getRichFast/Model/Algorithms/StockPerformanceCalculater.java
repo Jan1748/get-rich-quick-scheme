@@ -59,7 +59,6 @@ public class StockPerformanceCalculater {
     BigDecimal performanceAbsolute = null;
     if (averagePerInterval == null) {
       performanceAbsolute = null;
-      System.out.println("test");
     } else {
       if (averagePerInterval[averagePerInterval.length - 1] != null && averagePerInterval[0] != null) {
         performanceAbsolute = averagePerInterval[0].subtract(averagePerInterval[averagePerInterval.length - 1]);
