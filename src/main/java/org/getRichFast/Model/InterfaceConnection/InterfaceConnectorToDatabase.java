@@ -31,6 +31,7 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
   private UIReceiver uiReceiver = new ConsoleOutputReceiver();
 
 
+
   @Override
   public void searchForValue(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol) {
     dataReceiver.search(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
@@ -83,8 +84,11 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
   @Override
   public void createLineChart(ValueEnum valueEnum, SymbolEnum symbolEnum, DateEnum dateEnum, ColumnNameEnum columnNameEnum, String date, String date2, String symbol, String symbol2) {
     ArrayList<StockBuild> stockData = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
-    ArrayList<StockBuild> stockData2 = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol2);
-    if (stockData != null && stockData2 != null) {
+    ArrayList<StockBuild> stockData2 = null;
+    if (symbol2 != null) {
+      stockData2 = dataReceiver.getQueriedDataset(valueEnum, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol2);
+    }
+    if (stockData!= null && stockData2 != null){
       CreateLineChartPNG createLineChartPNG = new CreateLineChartPNG();
       createLineChartPNG.generateChartPNG(stockData, stockData2);
     }
@@ -121,8 +125,8 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    for (int i = 1; i < codnames.size(); i++) {
-      for (int x = 1; x < codnames.size(); x++) {
+    for (int i =1;i < codnames.size(); i++) {
+      for (int x =1;x < codnames.size(); x++) {
         if (i != x) {
           createLineChart(ValueEnum.ALL, SymbolEnum.ATTACHED, dateEnum, columnNameEnum, date, date2, codnames.get(i), codnames.get(x));
         }
@@ -138,21 +142,21 @@ public class InterfaceConnectorToDatabase implements ProcessDecisions {
     createLineChartPNG.createHistogram(histogramList);
   }
 
-  public ArrayList<PerformingStocks> getPerformanceFromStock(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2, SymbolEnum symbolEnum) {
-    return stockPerformanceCalculater.getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2, symbolEnum);
+  public ArrayList<PerformingStocks> getPerformanceFromStock(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
+    return stockPerformanceCalculater.getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
   }
 
   @Override
-  public void getSortedPerformingStocksPercent(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2, SymbolEnum symbolEnum) {
-    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2, symbolEnum);
+  public void getSortedPerformingStocksPercent(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
+    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
     ArrayList<PerformingStocks> performingStocks1 = StockPerformanceSorter.sortPerformingStocksPercent(performingStocks);
     uiReceiver.outputPerformingFromStocks(performingStocks1);
 
   }
 
   @Override
-  public void getSortedPerformingStockAbsolute(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2, SymbolEnum symbolEnum) {
-    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2, symbolEnum);
+  public void getSortedPerformingStockAbsolute(String stockCode, String quandlApiKey, int numberOfDivisions, DateEnum dateEnum, String date, String date2) {
+    ArrayList<PerformingStocks> performingStocks = getPerformanceFromStock(stockCode, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
     ArrayList<PerformingStocks> performingStocks2 = StockPerformanceSorter.sortPerformingStocksAbsolute(performingStocks);
     uiReceiver.outputPerformingFromStocks(performingStocks2);
   }

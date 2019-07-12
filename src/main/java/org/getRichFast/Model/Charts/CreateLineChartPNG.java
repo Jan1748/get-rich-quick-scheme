@@ -14,6 +14,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.RegularTimePeriod;
@@ -120,7 +121,7 @@ public class CreateLineChartPNG {
   }
 
   public void createHistogram(ArrayList<Integer[]> histogramList) {
-    JFreeChart lineChart = ChartFactory.createLineChart(
+    JFreeChart barChart = ChartFactory.createBarChart(
         "Histogram",
         "Columns", "Number of Values in Interval",
         createDataset(histogramList),
@@ -129,14 +130,14 @@ public class CreateLineChartPNG {
     String path = "Histogram.png";
     System.out.println("Path " + path);
     try {
-      ChartUtils.saveChartAsPNG(new File(path), lineChart, 1920, 1080);
+      ChartUtils.saveChartAsPNG(new File(path), barChart, 1920, 1080);
       System.out.println("PNG Created");
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-  private DefaultCategoryDataset createDataset(ArrayList<Integer[]> histogramList) {
+  private CategoryDataset createDataset(ArrayList<Integer[]> histogramList) {
     DefaultCategoryDataset dataset = new DefaultCategoryDataset();
     String[] names = new String[]{"Open", "High", "Low", "Close"};
     for (int a = 0; a < 4; a++) {
