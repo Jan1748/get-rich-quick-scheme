@@ -11,10 +11,8 @@ import org.getRichFast.Data.Database.Enum.ColumnNameEnum;
 import org.getRichFast.Data.Database.Enum.DateEnum;
 import org.getRichFast.Data.Database.Enum.SymbolEnum;
 import org.getRichFast.Data.Database.Enum.ValueEnum;
-import org.getRichFast.Model.ConnectToUI;
 import org.getRichFast.Model.Entity.PerformingStocks;
 import org.getRichFast.Model.InterfaceConnection.InterfaceConnectorToDatabase;
-import org.getRichFast.Model.InterfaceConnection.ModelToUIConnection;
 import org.getRichFast.Model.ProcessDecisions;
 import org.getRichFast.UI.UIReceiver;
 
@@ -165,9 +163,12 @@ public class Menus {
       case "2":
         processDecisions.createCandleStickChart(ValueEnum.ALL, symbolEnum, dateEnum, columnNameEnum, date, date2, symbol);
         break;
-      case "3": processDecisions.visulizeTwoCharts("FSE", quandlApiKey, dateEnum, ColumnNameEnum.ALL, date, date2); break;
-      case "4": processDecisions.createHistogram(SymbolEnum.ATTACHED, dateEnum, ColumnNameEnum.OPEN, date, date2, symbol, 20);
-      break;
+      case "3":
+        processDecisions.visulizeTwoCharts("FSE", quandlApiKey, dateEnum, ColumnNameEnum.ALL, date, date2);
+        break;
+      case "4":
+        processDecisions.createHistogram(SymbolEnum.ATTACHED, dateEnum, ColumnNameEnum.OPEN, date, date2, symbol, 20);
+        break;
       default:
         System.out.println("Please enter a valid choice.");
         break;
@@ -188,12 +189,12 @@ public class Menus {
         date2 = InputFunctions.getInputDateString();
         dateEnum = DateEnum.INTERVAL;
 
-        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")){
+        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")) {
           case "1":
-            processDecisions. getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            processDecisions.getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2, SymbolEnum.ATTACHED);
             break;
           case "2":
-            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2, SymbolEnum.ATTACHED);
             break;
         }
         break;
@@ -201,12 +202,13 @@ public class Menus {
         date = InputFunctions.getInputDateString();
         dateEnum = DateEnum.BEFORE;
 
-        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")){
+        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")) {
           case "1":
-            processDecisions. getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            processDecisions.getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2, SymbolEnum.ATTACHED);
             break;
           case "2":
-            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);;
+            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2, SymbolEnum.ATTACHED);
+            ;
             break;
         }
         break;
@@ -214,22 +216,24 @@ public class Menus {
         date = InputFunctions.getInputDateString();
         dateEnum = DateEnum.AFTER;
 
-        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")){
+        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")) {
           case "1":
-            processDecisions. getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            processDecisions.getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2, SymbolEnum.ATTACHED);
             break;
           case "2":
-            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);;
+            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2, SymbolEnum.ATTACHED);
+            ;
             break;
         }
         break;
       case "4":
-        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")){
+        switch (InputFunctions.scan("For which value should the performance be sorted. 1: Percentage profit 2: Absolute profit")) {
           case "1":
-            processDecisions. getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);
+            processDecisions.getSortedPerformingStocksPercent(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2, SymbolEnum.SINGLE);
             break;
           case "2":
-            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2);;
+            processDecisions.getSortedPerformingStockAbsolute(stock, quandlApiKey, numberOfDivisions, dateEnum, date, date2, SymbolEnum.SINGLE);
+            ;
             break;
         }
         break;

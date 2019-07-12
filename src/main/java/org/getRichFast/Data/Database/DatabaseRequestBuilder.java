@@ -94,9 +94,10 @@ public class DatabaseRequestBuilder {
     return code1;
   }
 
-  private static String getChartValues(String dateCondition, ColumnNameEnum columnNameEnum, String symbol, SymbolEnum symbolEnum){
+  private static String getChartValues(String dateCondition, ColumnNameEnum columnNameEnum, String symbol, SymbolEnum symbolEnum) {
     String code = "";
     code = "SELECT * FROM stockbuild " + dateCondition + " " + getSymbolCondition(symbol, symbolEnum) + " ORDER BY \"Date\" DESC;";
+    System.out.println(code);
     return code;
   }
 }

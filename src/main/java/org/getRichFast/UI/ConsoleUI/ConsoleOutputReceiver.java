@@ -1,8 +1,6 @@
 package org.getRichFast.UI.ConsoleUI;
 
 import java.util.ArrayList;
-import org.getRichFast.Data.Database.Enum.DateEnum;
-import org.getRichFast.Model.Algorithms.StockPerformanceCalculater;
 import org.getRichFast.Model.Entity.PerformingStocks;
 import org.getRichFast.UI.UIReceiver;
 
@@ -21,10 +19,12 @@ public class ConsoleOutputReceiver implements UIReceiver {
     }
     System.out.println(" ");
   }
+
   @Override
   public void outputPerformingFromStocks(ArrayList<PerformingStocks> sortedPerformingFromStocks) {
     for (int x = 0; x < sortedPerformingFromStocks.size(); x++) {
-      System.out.println("Stock: " + sortedPerformingFromStocks.get(x).getStockCode() + "Percent profit: " + sortedPerformingFromStocks.get(x).getPerformancePercent() + "Performance profit: " + sortedPerformingFromStocks.get(x).getPerformanceAbsolute());
+      System.out.println("Stock: " + sortedPerformingFromStocks.get(x).getStockCode() + " Percent profit: " + sortedPerformingFromStocks.get(x).getPerformancePercent() + " Performance profit: "
+          + sortedPerformingFromStocks.get(x).getPerformanceAbsolute());
     }
   }
 }
